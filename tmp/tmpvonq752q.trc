@@ -1,0 +1,105 @@
+*** [ Unix process pid: 32172 ]
+*** 2018-07-21T12:45:24.461851-05:00
+ 
+EXEC #139790820632224:c=0,e=113,p=0,cr=0,cu=0,mis=0,r=1,dep=0,og=1,plh=0,tim=8416501681
+XCTEND rlbk=0, rd_only=1, tim=8416501739
+
+*** 2018-07-21T12:45:24.462961-05:00 (CDB$ROOT(1))
+PARSE #139790819434792:c=0,e=12,p=0,cr=0,cu=0,mis=0,r=0,dep=1,og=4,plh=749386351,tim=8416502788
+EXEC #139790819434792:c=0,e=26,p=0,cr=0,cu=0,mis=0,r=0,dep=1,og=4,plh=749386351,tim=8416502895
+FETCH #139790819434792:c=0,e=23,p=0,cr=4,cu=0,mis=0,r=1,dep=1,og=4,plh=749386351,tim=8416502941
+CLOSE #139790819434792:c=0,e=11,dep=1,type=3,tim=8416502973
+PARSE #139790819434792:c=0,e=7,p=0,cr=0,cu=0,mis=0,r=0,dep=1,og=4,plh=749386351,tim=8416503136
+EXEC #139790819434792:c=0,e=11,p=0,cr=0,cu=0,mis=0,r=0,dep=1,og=4,plh=749386351,tim=8416503175
+FETCH #139790819434792:c=0,e=10,p=0,cr=4,cu=0,mis=0,r=1,dep=1,og=4,plh=749386351,tim=8416503201
+CLOSE #139790819434792:c=0,e=6,dep=1,type=3,tim=8416503222
+PARSE #139790819434792:c=0,e=6,p=0,cr=0,cu=0,mis=0,r=0,dep=1,og=4,plh=749386351,tim=8416503353
+EXEC #139790819434792:c=0,e=10,p=0,cr=0,cu=0,mis=0,r=0,dep=1,og=4,plh=749386351,tim=8416503396
+FETCH #139790819434792:c=0,e=19,p=0,cr=5,cu=0,mis=0,r=1,dep=1,og=4,plh=749386351,tim=8416503432
+CLOSE #139790819434792:c=0,e=5,dep=1,type=3,tim=8416503452
+PARSE #139790819434792:c=0,e=8,p=0,cr=0,cu=0,mis=0,r=0,dep=1,og=4,plh=749386351,tim=8416504574
+EXEC #139790819434792:c=0,e=14,p=0,cr=0,cu=0,mis=0,r=0,dep=1,og=4,plh=749386351,tim=8416504620
+FETCH #139790819434792:c=0,e=14,p=0,cr=4,cu=0,mis=0,r=1,dep=1,og=4,plh=749386351,tim=8416504651
+CLOSE #139790819434792:c=0,e=7,dep=1,type=3,tim=8416504674
+PARSE #139790819434792:c=0,e=7,p=0,cr=0,cu=0,mis=0,r=0,dep=1,og=4,plh=749386351,tim=8416504858
+EXEC #139790819434792:c=0,e=12,p=0,cr=0,cu=0,mis=0,r=0,dep=1,og=4,plh=749386351,tim=8416504894
+FETCH #139790819434792:c=0,e=9,p=0,cr=4,cu=0,mis=0,r=1,dep=1,og=4,plh=749386351,tim=8416504918
+CLOSE #139790819434792:c=0,e=6,dep=1,type=3,tim=8416504938
+PARSE #139790819434792:c=0,e=6,p=0,cr=0,cu=0,mis=0,r=0,dep=1,og=4,plh=749386351,tim=8416505140
+EXEC #139790819434792:c=0,e=11,p=0,cr=0,cu=0,mis=0,r=0,dep=1,og=4,plh=749386351,tim=8416505177
+FETCH #139790819434792:c=0,e=8,p=0,cr=4,cu=0,mis=0,r=1,dep=1,og=4,plh=749386351,tim=8416505200
+CLOSE #139790819434792:c=0,e=6,dep=1,type=3,tim=8416505220
+
+*** 2018-07-21T12:45:24.688530-05:00 (SALES_REPORTING_PDB(5))
+EXEC #139790821929784:c=0,e=30,p=0,cr=0,cu=0,mis=0,r=0,dep=1,og=4,plh=1072382624,tim=8416728355
+FETCH #139790821929784:c=0,e=18,p=0,cr=2,cu=0,mis=0,r=0,dep=1,og=4,plh=1072382624,tim=8416728438
+CLOSE #139790821929784:c=0,e=2,dep=1,type=3,tim=8416728468
+EXEC #139790821929784:c=0,e=13,p=0,cr=0,cu=0,mis=0,r=0,dep=1,og=4,plh=1072382624,tim=8416728512
+FETCH #139790821929784:c=0,e=5,p=0,cr=2,cu=0,mis=0,r=0,dep=1,og=4,plh=1072382624,tim=8416728530
+CLOSE #139790821929784:c=0,e=1,dep=1,type=3,tim=8416728547
+EXEC #139790821929784:c=0,e=8,p=0,cr=0,cu=0,mis=0,r=0,dep=1,og=4,plh=1072382624,tim=8416728580
+FETCH #139790821929784:c=0,e=4,p=0,cr=2,cu=0,mis=0,r=0,dep=1,og=4,plh=1072382624,tim=8416728596
+CLOSE #139790821929784:c=0,e=0,dep=1,type=3,tim=8416728612
+EXEC #139790821929784:c=0,e=8,p=0,cr=0,cu=0,mis=0,r=0,dep=1,og=4,plh=1072382624,tim=8416728644
+FETCH #139790821929784:c=0,e=4,p=0,cr=2,cu=0,mis=0,r=0,dep=1,og=4,plh=1072382624,tim=8416728662
+CLOSE #139790821929784:c=0,e=1,dep=1,type=3,tim=8416728678
+=====================
+PARSING IN CURSOR #139790820822584 len=36 dep=0 uid=108 oct=3 lid=108 tim=8416729108 hv=1228314924 ad='62990490' sqlid='faw4pzt4md69c'
+select count(*) from all_tab_columns
+END OF STMT
+PARSE #139790820822584:c=224248,e=226846,p=0,cr=33,cu=0,mis=1,r=0,dep=0,og=1,plh=3781246121,tim=8416729107
+EXEC #139790820822584:c=0,e=50,p=0,cr=0,cu=0,mis=0,r=0,dep=0,og=1,plh=3781246121,tim=8416729204
+
+*** 2018-07-21T12:45:25.183286-05:00 (SALES_REPORTING_PDB(5))
+FETCH #139790820822584:c=485348,e=493825,p=0,cr=64762,cu=0,mis=0,r=1,dep=0,og=1,plh=3781246121,tim=8417223105
+STAT #139790820822584 id=1 cnt=1 pid=0 pos=1 obj=0 op='SORT AGGREGATE (cr=64762 pr=0 pw=0 str=1 time=493824 us)'
+STAT #139790820822584 id=2 cnt=23184 pid=1 pos=1 obj=0 op='FILTER  (cr=64762 pr=0 pw=0 str=1 time=1270369 us)'
+STAT #139790820822584 id=3 cnt=110332 pid=2 pos=1 obj=0 op='HASH JOIN RIGHT OUTER (cr=5300 pr=0 pw=0 str=1 time=14353855 us cost=2077 size=12788115 card=111201)'
+STAT #139790820822584 id=4 cnt=136 pid=3 pos=1 obj=47 op='INDEX FULL SCAN I_USER2 (cr=1 pr=0 pw=0 str=1 time=7 us cost=1 size=544 card=136)'
+STAT #139790820822584 id=5 cnt=110332 pid=3 pos=2 obj=0 op='HASH JOIN RIGHT OUTER (cr=5299 pr=0 pw=0 str=1 time=14324158 us cost=2076 size=12343311 card=111201)'
+STAT #139790820822584 id=6 cnt=2938 pid=5 pos=1 obj=18 op='TABLE ACCESS BY INDEX ROWID BATCHED OBJ$ (cr=414 pr=0 pw=0 str=1 time=3259 us cost=263 size=26442 card=2938)'
+STAT #139790820822584 id=7 cnt=2938 pid=6 pos=1 obj=36 op='INDEX SKIP SCAN I_OBJ1 (cr=208 pr=0 pw=0 str=1 time=1722 us cost=208 size=0 card=2938)'
+STAT #139790820822584 id=8 cnt=110332 pid=5 pos=2 obj=0 op='HASH JOIN RIGHT OUTER (cr=4885 pr=0 pw=0 str=1 time=14267365 us cost=1812 size=11342502 card=111201)'
+STAT #139790820822584 id=9 cnt=2978 pid=8 pos=1 obj=111 op='TABLE ACCESS BY INDEX ROWID BATCHED COLTYPE$ (cr=333 pr=0 pw=0 str=1 time=1627 us cost=331 size=77428 card=2978)'
+STAT #139790820822584 id=10 cnt=2978 pid=9 pos=1 obj=113 op='INDEX FULL SCAN I_COLTYPE2 (cr=9 pr=0 pw=0 str=1 time=259 us cost=9 size=0 card=2971)'
+STAT #139790820822584 id=11 cnt=110332 pid=8 pos=2 obj=0 op='HASH JOIN RIGHT OUTER (cr=4552 pr=0 pw=0 str=1 time=14211625 us cost=1481 size=8450744 card=111194)'
+STAT #139790820822584 id=12 cnt=43686 pid=11 pos=1 obj=70 op='INDEX FAST FULL SCAN I_HH_OBJ#_INTCOL# (cr=159 pr=0 pw=0 str=1 time=4912 us cost=42 size=436540 card=43654)'
+STAT #139790820822584 id=13 cnt=110332 pid=11 pos=2 obj=0 op='HASH JOIN  (cr=4393 pr=0 pw=0 str=1 time=14120676 us cost=1438 size=7338804 card=111194)'
+STAT #139790820822584 id=14 cnt=136 pid=13 pos=1 obj=47 op='INDEX FULL SCAN I_USER2 (cr=1 pr=0 pw=0 str=1 time=77 us cost=1 size=3264 card=136)'
+STAT #139790820822584 id=15 cnt=110332 pid=13 pos=2 obj=0 op='HASH JOIN RIGHT OUTER (cr=4392 pr=0 pw=0 str=1 time=125509 us cost=1437 size=4670148 card=111194)'
+STAT #139790820822584 id=16 cnt=2266 pid=15 pos=1 obj=4 op='TABLE ACCESS FULL TAB$ (cr=1585 pr=0 pw=0 str=1 time=4813 us cost=430 size=11300 card=2260)'
+STAT #139790820822584 id=17 cnt=110332 pid=15 pos=2 obj=0 op='HASH JOIN  (cr=2807 pr=0 pw=0 str=1 time=117417 us cost=1006 size=4114178 card=111194)'
+STAT #139790820822584 id=18 cnt=136 pid=17 pos=1 obj=47 op='INDEX FULL SCAN I_USER2 (cr=1 pr=0 pw=0 str=1 time=6 us cost=1 size=544 card=136)'
+STAT #139790820822584 id=19 cnt=110332 pid=17 pos=2 obj=0 op='HASH JOIN  (cr=2806 pr=0 pw=0 str=1 time=110682 us cost=1005 size=3669402 card=111194)'
+STAT #139790820822584 id=20 cnt=72867 pid=19 pos=1 obj=18 op='TABLE ACCESS FULL OBJ$ (cr=1221 pr=0 pw=0 str=1 time=11592 us cost=333 size=1530102 card=72862)'
+STAT #139790820822584 id=21 cnt=111194 pid=19 pos=2 obj=21 op='TABLE ACCESS FULL COL$ (cr=1585 pr=0 pw=0 str=1 time=175280 us cost=431 size=1334328 card=111194)'
+STAT #139790820822584 id=22 cnt=20 pid=2 pos=2 obj=4 op='TABLE ACCESS CLUSTER TAB$ (cr=4766 pr=0 pw=0 str=2153 time=12361 us cost=2 size=13 card=1)'
+STAT #139790820822584 id=23 cnt=2153 pid=22 pos=1 obj=3 op='INDEX UNIQUE SCAN I_OBJ# (cr=2323 pr=0 pw=0 str=2153 time=4641 us cost=1 size=0 card=1)'
+STAT #139790820822584 id=24 cnt=2184 pid=2 pos=3 obj=0 op='NESTED LOOPS SEMI (cr=54696 pr=0 pw=0 str=9332 time=141263 us cost=2 size=15 card=1)'
+STAT #139790820822584 id=25 cnt=37928 pid=24 pos=1 obj=0 op='FIXED TABLE FULL X$KZSRO (cr=0 pr=0 pw=0 str=9332 time=48331 us cost=0 size=12 card=2)'
+STAT #139790820822584 id=26 cnt=2184 pid=24 pos=2 obj=63 op='INDEX RANGE SCAN I_OBJAUTH2 (cr=54696 pr=0 pw=0 str=37928 time=81960 us cost=1 size=9 card=1)'
+STAT #139790820822584 id=27 cnt=0 pid=2 pos=4 obj=0 op='FIXED TABLE FULL X$KZSPR (cr=0 pr=0 pw=0 str=1 time=42 us cost=0 size=9 card=1)'
+STAT #139790820822584 id=28 cnt=0 pid=2 pos=5 obj=131 op='TABLE ACCESS FULL USER_EDITIONING$ (cr=0 pr=0 pw=0 str=0 time=0 us cost=2 size=6 card=1)'
+STAT #139790820822584 id=29 cnt=0 pid=2 pos=6 obj=131 op='TABLE ACCESS FULL USER_EDITIONING$ (cr=0 pr=0 pw=0 str=0 time=0 us cost=2 size=6 card=1)'
+STAT #139790820822584 id=30 cnt=0 pid=2 pos=7 obj=0 op='NESTED LOOPS SEMI (cr=0 pr=0 pw=0 str=0 time=0 us cost=2 size=29 card=1)'
+STAT #139790820822584 id=31 cnt=0 pid=30 pos=1 obj=47 op='INDEX SKIP SCAN I_USER2 (cr=0 pr=0 pw=0 str=0 time=0 us cost=1 size=20 card=1)'
+STAT #139790820822584 id=32 cnt=0 pid=30 pos=2 obj=39 op='INDEX RANGE SCAN I_OBJ4 (cr=0 pr=0 pw=0 str=0 time=0 us cost=1 size=9 card=1)'
+CLOSE #139790820822584:c=0,e=15,dep=0,type=0,tim=8417225741
+=====================
+PARSING IN CURSOR #139790820822584 len=60 dep=0 uid=108 oct=47 lid=108 tim=8417225883 hv=1294383719 ad='7db560b8' sqlid='f4qptcx6kdfm7'
+begin :trace_file_name := logger.get_trace_file_name(); end;
+END OF STMT
+PARSE #139790820822584:c=0,e=80,p=0,cr=0,cu=0,mis=0,r=0,dep=0,og=1,plh=0,tim=8417225882
+EXEC #139790821462416:c=0,e=21,p=0,cr=0,cu=0,mis=0,r=0,dep=1,og=1,plh=1636480816,tim=8417226038
+FETCH #139790821462416:c=0,e=36,p=0,cr=0,cu=0,mis=0,r=1,dep=1,og=1,plh=1636480816,tim=8417226122
+CLOSE #139790821462416:c=0,e=9,dep=1,type=3,tim=8417226152
+EXEC #139790820822584:c=335,e=249,p=0,cr=0,cu=0,mis=0,r=1,dep=0,og=1,plh=0,tim=8417226182
+XCTEND rlbk=0, rd_only=1, tim=8417226212
+CLOSE #139790820969200:c=0,e=11,dep=0,type=0,tim=8417290671
+CLOSE #139790820822584:c=0,e=19,dep=0,type=0,tim=8417290753
+CLOSE #139790820632224:c=0,e=7,dep=0,type=0,tim=8417290785
+CLOSE #139790820998984:c=0,e=12,dep=0,type=0,tim=8417290816
+CLOSE #139790821005160:c=0,e=6,dep=0,type=0,tim=8417290840
+CLOSE #139790821014448:c=0,e=5,dep=0,type=0,tim=8417290865
+CLOSE #139790820653392:c=0,e=19,dep=0,type=0,tim=8417290899
+CLOSE #139790821732024:c=0,e=11,dep=0,type=0,tim=8417290939

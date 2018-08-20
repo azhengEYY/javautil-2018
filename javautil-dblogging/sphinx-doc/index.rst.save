@@ -1,0 +1,160 @@
+.. Springboot Sample Projects documentation master file, created by
+   sphinx-quickstart on Tue Jul 10 16:07:36 2018.
+
+Database Instrumentation
+========================
+
+
+Where is your application consuming most of its resources?  What can be done to speed it 
+up? Are all components running at as usual, are things degrading?
+
+Instrumentation is a essential part of a robust application.   Fortunately, for projects using java and the Spring Framework it is easy to capture run time performance information from the Oracle database.
+
+This was intended to be an introduction for Oracle DBAs unfamiliar with Spring and
+Hibernate.
+
+Introduction
+============
+
+Spring Developers
+-----------------
+Oracle tracing is a powerful tool that logs detailed information about all calls
+to the Oracle database.
+
+In order to use this 
+* one must turn on tracing for the current connection
+* set the log file
+* stop tracing
+* call a service to store the trace
+
+
+* store the raw trace file
+* analyze the trace file
+* store the analyzed trace file
+* examine
+
+Oracle Tracing
+**************
+The first call in a transaction should be 
+
+.. code-block:: java
+
+   OracleHelper.traceOn(final Connection connection, final String module);
+
+Intermediate calls can be made to record various steps to see activity within
+that particular step. This call is extremely lightweight and only results in 
+a change to a structure in oracle memory *SGA v_$session.Action*.
+
+.. code-block:: java
+
+    OracleHelper.setAction(final String action);
+
+If the connection is not an Oracle connection this is logged in the slf4j logger
+which may be ignored by configuring log4j.xml or your appropriate logger setup
+for the class org.javautil.oracle.OraclHelper and the call does nothing.
+
+Now the log file must be retrieved and analyzed or simply stored for later analysis.
+
+.. code-block:: java
+
+    OracleHelper.
+    OracleHelper.saveTrace(final String action);
+
+
+
+
+Tracing should do the following
+
+* Begin with any transaction as annotated by @Transactional
+
+Tracing
+-------
+Oracle tracing is enabled 
+
+Concepts
+********
+
+DBMS_APPLICATION_INFO
+&&&&&&&&&&&&&&&&&&&&&
+In memory fields associated with your current session can be performed extremely quickly.
+This is stored in a session level data structure in the Oracle SGA, *sys.v_$session*, 
+
+Benefits:
+        The state of your connection can be quickly and easily viewed outside your app
+        by a DBA.
+
+        This information is written to the oracle trace log.
+
+        In order to aggregate this information all of the oracle trace logs must be
+        scanned to look for this module.
+
+Module
+&&&&&&
+
+What is a module?  For this purpose consider it any transaction.
+Once spring starts a transaction as Annoted with @Transactional an AOP
+aspect can start the trace process.
+
+Action
+&&&&&&
+
+Turning on statistic and trace
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+.. code-block:: sql
+
+        alter session set timed_statistics = true;
+        alter session set max_dump_file_size = unlimited
+        alter session set sql_trace = true
+        alter session set events '10046 trace name context forever, level 12'
+
+Setting the trace file identifier
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+.. code-block:: sql
+
+        alter session set tracefile_identifier = 'text'
+
+Getting the name of the trace file
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+        "SELECT VALUE FROM V$DIAG_INFO WHERE NAME = 'Default Trace File'"
+
+Setting identifier
+&&&&&&&&&&&&&&&&&&
+        dbms_session.set_identifier(:txt)
+
+Setting client info
+&&&&&&&&&&&&&&&&&&&
+        dbms_application_info.set_client_info(:txt)
+
+Setting module
+&&&&&&&&&&&&&&
+        dbms_application_info.set_module(:module_name,:action_name)
+
+Setting Action
+&&&&&&&&&&&&&&
+        dbms_application_info.set_action(:action_name)
+
+Logging
+-------
+        
+Concepts
+--------
+
+References
+----------
+http://www.dba-oracle.com/t_trcsess_tips.htm
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+   SpringDeveloperIntroduction
+   OracleDbaIntroduction
+   TODO
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`

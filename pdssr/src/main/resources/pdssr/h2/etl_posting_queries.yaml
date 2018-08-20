@@ -1,0 +1,8 @@
+etl_sale_for_file_count:
+  sql: >
+     select count(s.etl_sale_id) etl_sale_id_count,
+            count(s.org_distrib_id)  org_distrib_id_count,
+            count(s.org_mfr_id) org_mfr_id_count,
+            count(s.product_id) product_id _count,
+            count(s.distributor_customer_id) distributor_customer_id_count
+     from etl_sale where etl_file_id = :etl_file_id

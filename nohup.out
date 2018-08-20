@@ -1,0 +1,21 @@
+ERROR - [UNKNOWN] undefined object type: MINING MODEL
+DEBUG - [ORACLE-SQL] undefined element type: xml_type_column_properties
+DEBUG - [ORACLE-SQL] undefined element type: alter_external_table_clauses
+DEBUG - [ORACLE-SQL] undefined element type: records_per_block_clause
+DEBUG - [ORACLE-SQL] undefined element type: ref_attribute
+DEBUG - [ORACLE-SQL] undefined element type: physical_properties
+DEBUG - [ORACLE-SQL] undefined element type: redo_logfile_spec
+DEBUG - [ORACLE-SQL] undefined element type: row_movement_clause
+DEBUG - [ORACLE-SQL] undefined element type: hash_subpartition_quantity
+DEBUG - [ORACLE-SQL] undefined element type: primary_operator
+DEBUG - [ORACLE-SQL] undefined element type: parameter_types
+DEBUG - [ORACLE-SQL] undefined element type: partition_value
+DEBUG - [ORACLE-SQL] undefined element type: lob_partition_storage
+DEBUG - [ORACLE-SQL] undefined element type: create_cluster
+DEBUG - [ORACLE-SQL] undefined element type: index_attributes
+DEBUG - [ORACLE-SQL] undefined element type: parameter_type
+DEBUG - [ORACLE-SQL] undefined element type: return_type
+DEBUG - [ORACLE-SQL] undefined element type: scn_value
+DEBUG - [ORACLE-SQL] undefined element type: move_table_clause
+DEBUG - [ORACLE-SQL] undefined element type: data_item
+DEBUG - [ORACLE-SQL] undefined element type: create_index_statement

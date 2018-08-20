@@ -1,0 +1,130 @@
+begin_job => :
+    sql => : >
+        begin
+           begin_job (parm_process_name =>  => :p_process_name);
+        end;
+begin_java_job => :
+    sql => : > 
+       begin
+         begin_java_job (
+	   p_process_name => :p_process_name,  -- VARCHAR2,
+           p_class_name   => :p_class_name,    -- varchar2,
+           p_module_name  => :p_module_name,   -- varchar2,
+           p_status_msg   => :p_status_msg,    -- varchar2,
+           p_thread_name  => :p_thread_name,   -- varchar2
+          );
+       end;
+severe:
+    sql => : > 
+    begin
+        dblogging.severe (
+            p_unit            => :p_unit,          --VARCHAR2,
+            p_line            => :p_line,          --PLS_INTEGER,
+            p_log_msg         => :p_log_msg,       --VARCHAR2 DEFAULT '',
+            p_record_stack    => :p_record_stack  --BOOLEAN DEFAULT FALSE 
+        ) ;
+    end;
+warning:
+    sql => : > 
+    begin
+        dblogging.warning (
+            p_unit            => :p_unit,         --       VARCHAR2,
+            p_line            => :p_line,         --       PLS_INTEGER,
+            p_log_msg         => :p_log_msg,      --       VARCHAR2 DEFAULT '',
+            p_record_stack    => :p_record_stack --       BOOLEAN DEFAULT FALSE ) ;
+    end;
+    sql => : > 
+    begin
+        dblogging.info (
+            p_unit            => :p_unit,        --       VARCHAR2,
+            p_line            => :p_line,        --       PLS_INTEGER,
+            p_log_msg         => :p_log_msg,     --       VARCHAR2 DEFAULT '',
+            p_record_stack    => :p_record_stack --       BOOLEAN DEFAULT FALSE ) ;
+    end;
+    sql => : > 
+    begin
+        dblogging.entering (
+            p_unit           => :p_unit,          --VARCHAR2,
+            p_line           => :p_line,          --PLS_INTEGER,
+            p_log_msg        => :p_log_msg,       --VARCHAR2 DEFAULT '',
+            p_record_stack   => :p_record_stack,  --BOOLEAN DEFAULT FALSE,
+            p_set_action     => :p_set_action.    --BOOLEAN DEFAULT TRUE ) ;
+    end;
+    sql => : > 
+    begin
+    dblogging.exiting (
+        p_unit           => :p_unit           --       VARCHAR2,
+        p_line           => :p_line           --       PLS_INTEGER,
+        p_log_msg        => :p_log_msg        --       VARCHAR2 DEFAULT '',
+        p_record_stack   => :p_record_stack   --       BOOLEAN DEFAULT FALSE ) ;
+    end;
+    sql => : > 
+    begin
+    dblogging.fine (
+        p_unit           => :p_unit         --       VARCHAR2,
+        p_line           => :p_line         --       PLS_INTEGER,
+        p_log_msg        => :p_log_msg      --       VARCHAR2 DEFAULT '',
+        p_record_stack   => :p_record_stack --       BOOLEAN DEFAULT FALSE ) ;
+    end;
+    sql => : > 
+    begin
+    dblogging.finer (
+        p_unit           => :p_unit        --       VARCHAR2,
+        p_line           => :p_line        --       PLS_INTEGER,
+        p_log_msg        => :p_log_msg     --       VARCHAR2 DEFAULT '',
+        p_record_stack   => :p_record_stack--       BOOLEAN DEFAULT FALSE ) ;
+    end;
+    sql => : > 
+    begin
+    dblogging.finest (
+        p_unit           => :p_unit           --       VARCHAR2,
+        p_line           => :p_line           --       PLS_INTEGER,
+        p_log_msg        => :p_log_msg        --       VARCHAR2 DEFAULT '',
+        p_record_stack   => :p_record_stack   --       BOOLEAN DEFAULT FALSE ) ;
+    end;
+    sql => : > 
+    begin
+    dblogging.end_job ;
+    end;
+    sql => : > 
+    begin
+    dblogging.abort_job ;
+    end;
+    sql => : > 
+    begin
+    dblogging.log_snap (
+        p_unit        => :p_unit     --       VARCHAR2,
+        p_line        => :p_line     --       PLS_INTEGER,
+        p_log_msg     => :p_log_msg  --       VARCHAR2 ) ;
+    end;
+    sql => : > 
+    begin
+    dblogging.snap_stats (
+        p_snap_name      => :p_snap_name   --       VARCHAR2 ) ;
+    end;
+    sql => : > 
+    begin
+    dblogging.set_action (
+        p_action   => :--       VARCHAR2) ;
+    end;
+    sql => : > 
+    begin
+    dblogging.set_module (
+        p_module   => :p_module   --       VARCHAR2,
+        p_action   => :p_action   --       VARCHAR2 default null) ;
+    end;
+    sql => : > 
+    begin
+    dblogging.set_dbms_output_level(
+        p_level    => :p_level --       PLS_INTEGER ) ;
+    end;
+    sql => : > 
+    begin
+    dblogging.set_filter_level (  
+        p_level    => :p_level -PLS_INTEGER ) ;
+    end;
+    sql => : > 
+    begin
+    dblogging.set_record_level (
+        p_level    => :p_level --       PLS_INTEGER ) ;
+    end;

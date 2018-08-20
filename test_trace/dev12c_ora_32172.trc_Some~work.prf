@@ -1,0 +1,183 @@
+
+TKPROF: Release 12.2.0.1.0 - Development on Sat Jul 21 16:07:06 2018
+
+Copyright (c) 1982, 2017, Oracle and/or its affiliates.  All rights reserved.
+
+Trace file: test_trace/dev12c_ora_32172.trc_Some~work.trc
+Sort options: default
+
+********************************************************************************
+count    = number of times OCI procedure was executed
+cpu      = cpu time in seconds executing 
+elapsed  = elapsed time in seconds executing
+disk     = number of physical reads of buffers from disk
+query    = number of buffers gotten for consistent read
+current  = number of buffers gotten in current mode (usually for update)
+rows     = number of rows processed by the fetch or execute call
+********************************************************************************
+
+SQL ID: 9hk9mvkz24khr Plan Hash: 1871343802
+
+select * 
+from
+ user_tab_columns, user_tables
+
+
+call     count       cpu    elapsed       disk      query    current        rows
+------- ------  -------- ---------- ---------- ---------- ----------  ----------
+Parse        1      0.67       0.70          0          0          0           0
+Execute      1      0.00       0.00          0          0          0           0
+Fetch     6049      0.27       0.74          0       7131          0        6048
+------- ------  -------- ---------- ---------- ---------- ----------  ----------
+total     6051      0.95       1.45          0       7131          0        6048
+
+Misses in library cache during parse: 1
+Optimizer mode: ALL_ROWS
+Parsing user id: 108  
+Number of plan statistics captured: 1
+
+Rows (1st) Rows (avg) Rows (max)  Row Source Operation
+---------- ---------- ----------  ---------------------------------------------------
+         0          0          0  TABLE ACCESS BY INDEX ROWID BATCHED OBJ$ (cr=0 pr=0 pw=0 time=0 us starts=0 cost=3 size=40 card=1)
+         0          0          0   INDEX RANGE SCAN I_OBJ1 (cr=0 pr=0 pw=0 time=0 us starts=0 cost=2 size=0 card=1)(object id 36)
+         0          0          0  TABLE ACCESS BY INDEX ROWID BATCHED OBJ$ (cr=0 pr=0 pw=0 time=0 us starts=0 cost=3 size=40 card=1)
+         0          0          0   INDEX RANGE SCAN I_OBJ1 (cr=0 pr=0 pw=0 time=0 us starts=0 cost=2 size=0 card=1)(object id 36)
+         0          0          0  TABLE ACCESS BY INDEX ROWID BATCHED OBJ$ (cr=0 pr=0 pw=0 time=0 us starts=0 cost=3 size=40 card=1)
+         0          0          0   INDEX RANGE SCAN I_OBJ1 (cr=0 pr=0 pw=0 time=0 us starts=0 cost=2 size=0 card=1)(object id 36)
+         0          0          0  TABLE ACCESS BY INDEX ROWID BATCHED OBJ$ (cr=0 pr=0 pw=0 time=0 us starts=0 cost=3 size=40 card=1)
+         0          0          0   INDEX RANGE SCAN I_OBJ1 (cr=0 pr=0 pw=0 time=0 us starts=0 cost=2 size=0 card=1)(object id 36)
+         0          0          0  TABLE ACCESS BY INDEX ROWID BATCHED OBJ$ (cr=0 pr=0 pw=0 time=0 us starts=0 cost=3 size=40 card=1)
+         0          0          0   INDEX RANGE SCAN I_OBJ1 (cr=0 pr=0 pw=0 time=0 us starts=0 cost=2 size=0 card=1)(object id 36)
+         0          0          0  NESTED LOOPS  (cr=0 pr=0 pw=0 time=4 us starts=1 cost=3 size=156 card=1)
+         0          0          0   INDEX RANGE SCAN I_OBJ1 (cr=0 pr=0 pw=0 time=3 us starts=1 cost=2 size=8 card=1)(object id 36)
+         0          0          0   TABLE ACCESS CLUSTER USER$ (cr=0 pr=0 pw=0 time=0 us starts=0 cost=1 size=148 card=1)
+         0          0          0    INDEX UNIQUE SCAN I_USER# (cr=0 pr=0 pw=0 time=0 us starts=0 cost=0 size=0 card=1)(object id 11)
+         0          0          0  COUNT STOPKEY (cr=0 pr=0 pw=0 time=0 us starts=0)
+         0          0          0   TABLE ACCESS CLUSTER HISTGRM$ (cr=0 pr=0 pw=0 time=0 us starts=0 cost=2 size=11 card=1)
+         0          0          0    INDEX UNIQUE SCAN I_OBJ#_INTCOL# (cr=0 pr=0 pw=0 time=0 us starts=0 cost=1 size=0 card=1)(object id 65)
+         0          0          0  COUNT STOPKEY (cr=0 pr=0 pw=0 time=0 us starts=0)
+         0          0          0   TABLE ACCESS CLUSTER HISTGRM$ (cr=0 pr=0 pw=0 time=0 us starts=0 cost=2 size=11 card=1)
+         0          0          0    INDEX UNIQUE SCAN I_OBJ#_INTCOL# (cr=0 pr=0 pw=0 time=0 us starts=0 cost=1 size=0 card=1)(object id 65)
+         0          0          0  TABLE ACCESS BY INDEX ROWID BATCHED OBJ$ (cr=2 pr=0 pw=0 time=11 us starts=1 cost=3 size=40 card=1)
+         0          0          0   INDEX RANGE SCAN I_OBJ1 (cr=2 pr=0 pw=0 time=10 us starts=1 cost=2 size=0 card=1)(object id 36)
+         0          0          0  TABLE ACCESS BY INDEX ROWID BATCHED OBJ$ (cr=0 pr=0 pw=0 time=0 us starts=0 cost=3 size=40 card=1)
+         0          0          0   INDEX RANGE SCAN I_OBJ1 (cr=0 pr=0 pw=0 time=0 us starts=0 cost=2 size=0 card=1)(object id 36)
+         0          0          0  TABLE ACCESS BY INDEX ROWID BATCHED OBJ$ (cr=0 pr=0 pw=0 time=0 us starts=0 cost=3 size=40 card=1)
+         0          0          0   INDEX RANGE SCAN I_OBJ1 (cr=0 pr=0 pw=0 time=0 us starts=0 cost=2 size=0 card=1)(object id 36)
+      6048       6048       6048  FILTER  (cr=7075 pr=0 pw=0 time=911355 us starts=1)
+      6048       6048       6048   HASH JOIN RIGHT OUTER (cr=6959 pr=0 pw=0 time=886199 us starts=1 cost=26121 size=566097740 card=422461)
+       136        136        136    TABLE ACCESS FULL USER$ (cr=9 pr=0 pw=0 time=45 us starts=1 cost=4 size=20128 card=136)
+      6048       6048       6048    HASH JOIN RIGHT OUTER (cr=6950 pr=0 pw=0 time=876430 us starts=1 cost=26116 size=503573512 card=422461)
+      2938       2938       2938     TABLE ACCESS BY INDEX ROWID BATCHED OBJ$ (cr=414 pr=0 pw=0 time=3438 us starts=1 cost=263 size=129272 card=2938)
+      2938       2938       2938      INDEX SKIP SCAN I_OBJ1 (cr=208 pr=0 pw=0 time=1513 us starts=1 cost=208 size=0 card=2938)(object id 36)
+      6048       6048       6048     HASH JOIN RIGHT OUTER (cr=6536 pr=0 pw=0 time=855298 us starts=1 cost=25852 size=484985228 card=422461)
+      2978       2978       2978      TABLE ACCESS BY INDEX ROWID BATCHED COLTYPE$ (cr=333 pr=0 pw=0 time=4286 us starts=1 cost=331 size=95072 card=2971)
+      2978       2978       2978       INDEX FULL SCAN I_COLTYPE2 (cr=9 pr=0 pw=0 time=180 us starts=1 cost=9 size=0 card=2971)(object id 113)
+      6048       6048       6048      HASH JOIN RIGHT OUTER (cr=6203 pr=0 pw=0 time=843289 us starts=1 cost=25520 size=471466476 card=422461)
+     43686      43686      43686       TABLE ACCESS FULL HIST_HEAD$ (cr=349 pr=0 pw=0 time=8254 us starts=1 cost=96 size=2182700 card=43654)
+      6048       6048       6048       HASH JOIN RIGHT OUTER (cr=5854 pr=0 pw=0 time=801879 us starts=1 cost=3767 size=450343426 card=422461)
+      2266       2266       2266        TABLE ACCESS FULL TAB$ (cr=1585 pr=0 pw=0 time=9892 us starts=1 cost=430 size=11300 card=2260)
+      6048       6048       6048        HASH JOIN  (cr=4269 pr=0 pw=0 time=785495 us starts=1 cost=3335 size=448231121 card=422461)
+    111194     111194     111194         TABLE ACCESS FULL COL$ (cr=1585 pr=0 pw=0 time=83350 us starts=1 cost=433 size=7116416 card=111194)
+      4914       4914       4914         HASH JOIN  (cr=2684 pr=0 pw=0 time=74040 us starts=1 cost=836 size=34792309 card=34897)
+       182        182        182          TABLE ACCESS FULL OBJ$ (cr=1221 pr=0 pw=0 time=11032 us starts=1 cost=333 size=10738 card=182)
+      3672       3672       3672          MERGE JOIN CARTESIAN (cr=1463 pr=0 pw=0 time=22437 us starts=1 cost=503 size=24460226 card=26077)
+        27         27         27           NESTED LOOPS OUTER (cr=1459 pr=0 pw=0 time=17432 us starts=1 cost=450 size=175488 card=192)
+        27         27         27            HASH JOIN RIGHT OUTER (cr=1459 pr=0 pw=0 time=17296 us starts=1 cost=436 size=167808 card=192)
+       136        136        136             TABLE ACCESS FULL USER$ (cr=9 pr=0 pw=0 time=36 us starts=1 cost=4 size=2448 card=136)
+        27         27         27             HASH JOIN OUTER (cr=1450 pr=0 pw=0 time=15980 us starts=1 cost=432 size=164352 card=192)
+        27         27         27              NESTED LOOPS OUTER (cr=1450 pr=0 pw=0 time=16772 us starts=1 cost=432 size=164352 card=192)
+        27         27         27               STATISTICS COLLECTOR  (cr=1385 pr=0 pw=0 time=16048 us starts=1)
+        27         27         27                NESTED LOOPS OUTER (cr=1385 pr=0 pw=0 time=15755 us starts=1 cost=374 size=162816 card=192)
+        27         27         27                 HASH JOIN  (cr=1385 pr=0 pw=0 time=15639 us starts=1 cost=374 size=58944 card=192)
+         6          6          6                  TABLE ACCESS FULL TS$ (cr=9 pr=0 pw=0 time=46 us starts=1 cost=4 size=132 card=6)
+        27         27         27                  HASH JOIN OUTER (cr=1376 pr=0 pw=0 time=14593 us starts=1 cost=370 size=54720 card=192)
+        27         27         27                   NESTED LOOPS OUTER (cr=1302 pr=0 pw=0 time=12319 us starts=1 cost=370 size=54720 card=192)
+        27         27         27                    STATISTICS COLLECTOR  (cr=1302 pr=0 pw=0 time=12261 us starts=1)
+        27         27         27                     HASH JOIN OUTER (cr=1302 pr=0 pw=0 time=11599 us starts=1 cost=349 size=43680 card=182)
+        27         27         27                      HASH JOIN  (cr=1271 pr=0 pw=0 time=10475 us starts=1 cost=340 size=38220 card=182)
+        27         27         27                       NESTED LOOPS  (cr=1271 pr=0 pw=0 time=10416 us starts=1 cost=340 size=38220 card=182)
+       182        182        182                        STATISTICS COLLECTOR  (cr=1222 pr=0 pw=0 time=10042 us starts=1)
+       182        182        182                         HASH JOIN  (cr=1222 pr=0 pw=0 time=9645 us starts=1 cost=334 size=22932 card=182)
+       136        136        136                          INDEX FULL SCAN I_USER2 (cr=1 pr=0 pw=0 time=21 us starts=1 cost=1 size=3264 card=136)(object id 47)
+       182        182        182                          MERGE JOIN CARTESIAN (cr=1221 pr=0 pw=0 time=9141 us starts=1 cost=333 size=18564 card=182)
+         1          1          1                           NESTED LOOPS  (cr=0 pr=0 pw=0 time=144 us starts=1 cost=0 size=43 card=1)
+         1          1          1                            FIXED TABLE FIXED INDEX X$KSPPI (ind:1) (cr=0 pr=0 pw=0 time=124 us starts=1 cost=0 size=31 card=1)
+         1          1          1                            FIXED TABLE FIXED INDEX X$KSPPCV (ind:1) (cr=0 pr=0 pw=0 time=18 us starts=1 cost=0 size=12 card=1)
+       182        182        182                           BUFFER SORT (cr=1221 pr=0 pw=0 time=9033 us starts=1 cost=333 size=10738 card=182)
+       182        182        182                            TABLE ACCESS FULL OBJ$ (cr=1221 pr=0 pw=0 time=8947 us starts=1 cost=333 size=10738 card=182)
+        27         27         27                        TABLE ACCESS CLUSTER TAB$ (cr=49 pr=0 pw=0 time=275 us starts=182 cost=1 size=84 card=1)
+        35         35         35                         INDEX UNIQUE SCAN I_OBJ# (cr=9 pr=0 pw=0 time=98 us starts=182 cost=0 size=0 card=1)(object id 3)
+         0          0          0                       TABLE ACCESS FULL TAB$ (cr=0 pr=0 pw=0 time=0 us starts=0 cost=1 size=84 card=1)
+      3598       3598       3598                      TABLE ACCESS FULL DEFERRED_STG$ (cr=31 pr=0 pw=0 time=2106 us starts=1 cost=9 size=107850 card=3595)
+         0          0          0                    TABLE ACCESS CLUSTER SEG$ (cr=0 pr=0 pw=0 time=0 us starts=0 cost=21 size=45 card=1)
+         0          0          0                     INDEX UNIQUE SCAN I_FILE#_BLOCK# (cr=0 pr=0 pw=0 time=0 us starts=0)(object id 9)
+      2406       2406       2406                   TABLE ACCESS FULL SEG$ (cr=74 pr=0 pw=0 time=1041 us starts=1 cost=21 size=107190 card=2382)
+         0          0          0                 TABLE ACCESS BY INDEX ROWID BATCHED IMSVC$ (cr=0 pr=0 pw=0 time=54 us starts=27 cost=0 size=541 card=1)
+         0          0          0                  INDEX RANGE SCAN I_IMSVC1 (cr=0 pr=0 pw=0 time=0 us starts=0 cost=0 size=0 card=1)(object id 211)
+        26         26         26               INDEX RANGE SCAN I_OBJ1 (cr=65 pr=0 pw=0 time=329 us starts=27 cost=58 size=8 card=1)(object id 36)
+         0          0          0              INDEX FAST FULL SCAN I_OBJ1 (cr=0 pr=0 pw=0 time=0 us starts=0 cost=58 size=584656 card=73082)(object id 36)
+         0          0          0            TABLE ACCESS BY INDEX ROWID BATCHED OBJ$ (cr=0 pr=0 pw=0 time=91 us starts=27 cost=2 size=40 card=1)
+         0          0          0             INDEX RANGE SCAN I_OBJ1 (cr=0 pr=0 pw=0 time=42 us starts=27 cost=1 size=0 card=1)(object id 36)
+      3672       3672       3672           BUFFER SORT (cr=4 pr=0 pw=0 time=1055 us starts=27 cost=501 size=3264 card=136)
+       136        136        136            INDEX FAST FULL SCAN I_USER2 (cr=4 pr=0 pw=0 time=111 us starts=1 cost=0 size=3264 card=136)(object id 47)
+         0          0          0   TABLE ACCESS CLUSTER TAB$ (cr=116 pr=0 pw=0 time=1670 us starts=53 cost=2 size=13 card=1)
+        53         53         53    INDEX UNIQUE SCAN I_OBJ# (cr=58 pr=0 pw=0 time=800 us starts=53 cost=1 size=0 card=1)(object id 3)
+         0          0          0   TABLE ACCESS FULL USER_EDITIONING$ (cr=0 pr=0 pw=0 time=0 us starts=0 cost=2 size=6 card=1)
+         0          0          0   TABLE ACCESS FULL USER_EDITIONING$ (cr=0 pr=0 pw=0 time=0 us starts=0 cost=2 size=6 card=1)
+         0          0          0   NESTED LOOPS  (cr=0 pr=0 pw=0 time=0 us starts=0 cost=2 size=29 card=1)
+         0          0          0    INDEX SKIP SCAN I_USER2 (cr=0 pr=0 pw=0 time=0 us starts=0 cost=1 size=20 card=1)(object id 47)
+         0          0          0    INDEX RANGE SCAN I_OBJ4 (cr=0 pr=0 pw=0 time=0 us starts=0 cost=1 size=9 card=1)(object id 39)
+         0          0          0   TABLE ACCESS FULL USER_EDITIONING$ (cr=0 pr=0 pw=0 time=0 us starts=0 cost=2 size=6 card=1)
+         0          0          0   TABLE ACCESS FULL USER_EDITIONING$ (cr=0 pr=0 pw=0 time=0 us starts=0 cost=2 size=6 card=1)
+         0          0          0   NESTED LOOPS  (cr=0 pr=0 pw=0 time=0 us starts=0 cost=2 size=29 card=1)
+         0          0          0    INDEX SKIP SCAN I_USER2 (cr=0 pr=0 pw=0 time=0 us starts=0 cost=1 size=20 card=1)(object id 47)
+         0          0          0    INDEX RANGE SCAN I_OBJ4 (cr=0 pr=0 pw=0 time=0 us starts=0 cost=1 size=9 card=1)(object id 39)
+
+
+
+
+********************************************************************************
+
+OVERALL TOTALS FOR ALL NON-RECURSIVE STATEMENTS
+
+call     count       cpu    elapsed       disk      query    current        rows
+------- ------  -------- ---------- ---------- ---------- ----------  ----------
+Parse        1      0.67       0.70          0          0          0           0
+Execute      1      0.00       0.00          0          0          0           0
+Fetch     6049      0.27       0.74          0       7131          0        6048
+------- ------  -------- ---------- ---------- ---------- ----------  ----------
+total     6051      0.95       1.45          0       7131          0        6048
+
+Misses in library cache during parse: 1
+
+
+OVERALL TOTALS FOR ALL RECURSIVE STATEMENTS
+
+call     count       cpu    elapsed       disk      query    current        rows
+------- ------  -------- ---------- ---------- ---------- ----------  ----------
+Parse       13      0.00       0.00          0          0          0           0
+Execute     16      0.00       0.00          0          0          0           0
+Fetch       16      0.00       0.00          0         52          0          12
+------- ------  -------- ---------- ---------- ---------- ----------  ----------
+total       45      0.00       0.00          0         52          0          12
+
+Misses in library cache during parse: 0
+
+    1  user  SQL statements in session.
+    5  internal SQL statements in session.
+    6  SQL statements in session.
+********************************************************************************
+Trace file: test_trace/dev12c_ora_32172.trc_Some~work.trc
+Trace file compatibility: 12.2.0.0
+Sort options: default
+
+       0  session in tracefile.
+       1  user  SQL statements in trace file.
+       5  internal SQL statements in trace file.
+       6  SQL statements in trace file.
+       6  unique SQL statements in trace file.
+    7304  lines in trace file.
+       3  elapsed seconds in trace file.
+
+

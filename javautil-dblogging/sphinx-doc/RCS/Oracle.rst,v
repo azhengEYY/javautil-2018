@@ -1,0 +1,28 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2018.07.14.11.43.06;	author jjs;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@alter pluggable database sales_reporting_pdb open;
+alter session set container = sales_reporting_open;
+grant connect to sa identified  by tutorial container=current;
+
+
+@

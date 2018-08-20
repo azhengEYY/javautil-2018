@@ -1,0 +1,98 @@
+head	1.1;
+access;
+symbols;
+locks
+	jjs:1.1; strict;
+comment	@# @;
+
+
+1.1
+date	2018.07.14.11.43.06;	author jjs;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@.. Springboot Sample Projects documentation master file, created by
+   sphinx-quickstart on Tue Jul 10 16:07:36 2018.
+
+Welcome to Springboot Sample Projects's documentation!
+======================================================
+
+
+Where is your application consuming most of its resources?  What can be done to speed it 
+up? Are all components running at as usual, are things degrading?
+
+Instrumentation is a essential part of a robust application.   Fortunately, for projects using java and the Spring Framework it is easy to capture run time performance information from the Oracle database.
+
+This was intended to be an introduction for Oracle DBAs unfamiliar with Spring and
+Hibernate.
+
+
+Spring Developers
+-----------------
+Oracle tracing is a powerful tool that logs detailed information about all calls
+to the Oracle database.
+
+In order to use this 
+* one must turn on tracing for the current connection
+* set the log file
+* stop tracing
+* call a service to store the trace
+
+
+* store the raw trace file
+* analyze the trace file
+* store the analyzed trace file
+* examine
+
+Oracle Tracing
+**************
+The first call in a transaction should be 
+
+.. code-block:: java
+
+   OracleHelper.traceOn(final Connection connection, final String module);
+
+Intermediate calls can be made to record various steps to see activity within
+that particular step. This call is extremely lightweight and only results in 
+a change to a structure in oracle memory *SGA v_$session.Action*.
+
+.. code-block:: java
+
+    OracleHelper.setAction(final String action);
+
+If the connection is not an Oracle connection this is logged in the slf4j logger
+which may be ignored by configuring log4j.xml or your appropriate logger setup
+for the class org.javautil.oracle.OraclHelper and the call does nothing.
+
+Now the log file must be retrieved and analyzed or simply stored for later analysis.
+
+.. code-block:: java
+
+    OracleHelper.
+    OracleHelper.saveTrace(final String action);
+
+
+
+
+Tracing should do the following
+
+* Begin with any transaction as annotated by @@Transactional
+
+Tracing
+-------
+Oracle tracing is enabled 
+
+Concepts
+********
+
+@

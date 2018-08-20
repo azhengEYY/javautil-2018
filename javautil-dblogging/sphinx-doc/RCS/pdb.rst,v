@@ -1,0 +1,73 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2018.07.14.11.43.06;	author jjs;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@Pluggable Database
+==================
+
+Creating 
+--------
+
+Opening 
+-------
+alter pluggable database sales_reporting open;
+
+Connecting
+----------
+alter session set container = sales_reporting_pdb;
+
+
+Auto open
+---------
+
+https://asktom.oracle.com/pls/asktom/f?p=100:11:0::::P11_QUESTION_ID:9531671900346425939
+
+alter pluggable database pdb_name save state;
+
+
+Oracle will then preserve the mode when you restart the CDB. You can find the current saved state by querying dba_pdb_saved_states. 
+
+If you have several and want them all to open on restart, you can do: 
+
+alter pluggable database all save state;
+
+
+You can use this to keep the state of all but a few with the except clause: 
+
+alter pluggable database all except pdb_name1, pdb_name2 save state;
+
+
+Note saving state is only available from 12.1.0.2. If you're on 12.1.0.1 then the trigger is the way to go. 
+
+Examples
+--------
+
+SQL> alter pluggable database sales_reporting_pdb open;
+
+Pluggable database altered.
+
+SQL> alter pluggable database sales_reporting_pdb save state;
+
+Pluggable database altered.
+
+SQL> 
+
+@

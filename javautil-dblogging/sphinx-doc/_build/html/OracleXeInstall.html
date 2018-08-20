@@ -1,0 +1,159 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Installing Oracle XE &#8212; Springboot Sample Projects 1.0.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Pluggable Database" href="pdb.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="Oracle.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="installing-oracle-xe">
+<h1>Installing Oracle XE<a class="headerlink" href="#installing-oracle-xe" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="http://www.oracle.com/technetwork/database/database-technologies/express-edition/downloads/index.html">http://www.oracle.com/technetwork/database/database-technologies/express-edition/downloads/index.html</a></p>
+<p>unzip oracle-xe-11.2.0-1.0.x86_64.rpm.zip
+cd Disk1</p>
+<p>sudo rpm -i oracle-xe-11.2.0-1.0.x86_64.rpm
+sudo /etc/init.d/oracle-xe configure
+sudo /etc/init.d/oracle-xe configure</p>
+<div class="section" id="oracle-database-11g-express-edition-configuration">
+<h2>Oracle Database 11g Express Edition Configuration<a class="headerlink" href="#oracle-database-11g-express-edition-configuration" title="Permalink to this headline">¶</a></h2>
+<p>This will configure on-boot properties of Oracle Database 11g Express
+Edition.  The following questions will determine whether the database should
+be starting upon system boot, the ports it will use, and the passwords that
+will be used for database accounts.  Press &lt;Enter&gt; to accept the defaults.
+Ctrl-C will abort.</p>
+<p>Specify the HTTP port that will be used for Oracle Application Express [8080]:</p>
+<p>Specify a port that will be used for the database listener [1521]:1523</p>
+<p>Specify a password to be used for database accounts.  Note that the same
+password will be used for SYS and SYSTEM.  Oracle recommends the use of
+different passwords for each database account.  This can be done after
+initial configuration:
+Confirm the password:</p>
+<p>Do you want Oracle Database 11g Express Edition to be started on boot (y/n) [y]:n</p>
+<p>Starting Oracle Net Listener…Done
+Configuring database…grep: /u01/app/oracle/product/11.2.0/xe/config/log/<em>.log: No such file or directory
+grep: /u01/app/oracle/product/11.2.0/xe/config/log/</em>.log: No such file or directory
+Done
+/bin/chmod: cannot access ‘/u01/app/oracle/diag’: No such file or directory
+Starting Oracle Database 11g Express Edition instance…Done
+Installation completed successfully.</p>
+<p>/usr/lib64/libc.so.6
+GNU C Library (GNU libc) stable release version 2.27.
+Copyright (C) 2018 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.
+There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE.
+Compiled by GNU CC version 8.1.1 20180502 (Red Hat 8.1.1-1).
+libc ABIs: UNIQUE IFUNC
+For bug reporting instructions, please see:
+&lt;<a class="reference external" href="http://www.gnu.org/software/libc/bugs.html">http://www.gnu.org/software/libc/bugs.html</a>&gt;.</p>
+</div>
+<div class="section" id="fedora">
+<h2>Fedora<a class="headerlink" href="#fedora" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="todo">
+<h2>TODO<a class="headerlink" href="#todo" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://docs.oracle.com/cd/E18283_01/server.112/e16638/sqltrace.htm">https://docs.oracle.com/cd/E18283_01/server.112/e16638/sqltrace.htm</a></p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="index.html">Table Of Contents</a></h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="JpaRepository.html">Create a repository interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OraclePipes.html">Tips</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installing Oracle XE</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#oracle-database-11g-express-edition-configuration">Oracle Database 11g Express Edition Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fedora">Fedora</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#todo">TODO</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pdb.html">Pluggable Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="References.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reveng.html">Reverse Engineering a database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TemplateBuilder.html">Template Builder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TODO.html">TODO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TODO.html#oracle">Oracle</a></li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="Oracle.html" title="previous chapter">&lt;no title&gt;</a></li>
+      <li>Next: <a href="pdb.html" title="next chapter">Pluggable Database</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/OracleXeInstall.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, jjs.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
+      
+      |
+      <a href="_sources/OracleXeInstall.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

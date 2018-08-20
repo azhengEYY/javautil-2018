@@ -1,0 +1,8 @@
+Postgresql
+==========
+
+postgres_start
+
+postgres
+
+set search_path to integration_schema

@@ -1,0 +1,30 @@
+configure 
+
+javautil-dblogging/src/test/resources/jdbc:oracle:thin:@//localhost:1521/sales_reporting_pdb
+
+create pluggable database sales_reporting_pdb 
+admin user sr identified by tutorial 
+file_name_convert = ('/pdbseed/', '/sales_reporting_pdb/');
+
+alter pluggable database sales_reporting_pdb open;
+alter pluggable database sales_reporting_pdb save state;
+alter pluggable database all save state; /* saves all */
+
+default tablespace sr;
+
+create pluggable database
+  cont01_plug01
+admin user
+   app_admin identified by mypass
+file_name_convert = ('/pdbseed/', '/cont01plug01/');
+
+alter pluggable database cont01_plug01 open;
+-- alter pluggable database ALL open;
+alter tnsnames.ora listener.ora
+
+cd javautil-dblogging/install
+create_dblogger_user.sql
+
+
+:wq
+

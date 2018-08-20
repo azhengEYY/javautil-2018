@@ -1,0 +1,320 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Database Instrumentation &#8212; Springboot Sample Projects 1.0.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Overview" href="Overview.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="database-instrumentation">
+<h1>Database Instrumentation<a class="headerlink" href="#database-instrumentation" title="Permalink to this headline">¶</a></h1>
+<p>Where is your application consuming most of its resources?  What can be done to speed it
+up? Are all components running at as usual, are things degrading?</p>
+<p>Instrumentation is a essential part of a robust application.   Fortunately, for projects using java and the Spring Framework it is easy to capture run time performance information from the Oracle database.</p>
+<p>This was intended to be an introduction for Oracle DBAs unfamiliar with Spring and
+Hibernate.</p>
+</div>
+<div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Overview.html#terminology">Terminology</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Overview.html#what-is-a-transaction">What is a transaction?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Overview.html#session">Session</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Overview.html#tracking-level">Tracking Level</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Overview.html#redo">Redo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Overview.html#bind-variables">Bind Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Overview.html#compression">Compression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Overview.html#id3">Redo</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Overview.html#connection-pools">Connection Pools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Overview.html#after-getting-a-connection">After Getting a connection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Overview.html#id4">Client Identifier</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Overview.html#module">Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Overview.html#action">Action</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Overview.html#metrics">Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Overview.html#todo">TODO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Overview.html#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="QuickStart.html">Quick Start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="QuickStart.html#add-the-dependency-to-your-pom">Add the dependency to your pom</a></li>
+<li class="toctree-l2"><a class="reference internal" href="QuickStart.html#configure-dblogger-properties">Configure dblogger.properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="QuickStart.html#add-calls">Add calls</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="SpringDeveloperIntroduction.html">Spring Developers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="SpringDeveloperIntroduction.html#oracle-tracing">Oracle Tracing</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="SpringDeveloperIntroduction.html#tracing">Tracing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="SpringDeveloperIntroduction.html#concepts">Concepts</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="OracleTracing.html">Oracle Tracing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="OracleTracing.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="OracleTracing.html#trace-levels">Trace Levels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="OracleTracing.html#trace-analysis">Trace Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="OracleTracing.html#tracing-tools">Tracing Tools</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="TraceRecords.html">Trace Records</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="TraceRecords.html#fields">Fields</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="OracleDbaIntroduction.html">DBMS_APPLICATION_INFO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OracleDbaIntroduction.html#module">Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OracleDbaIntroduction.html#action">Action</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OracleDbaIntroduction.html#turning-on-statistic-and-trace">Turning on statistic and trace</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OracleDbaIntroduction.html#setting-the-trace-file-identifier">Setting the trace file identifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OracleDbaIntroduction.html#getting-the-name-of-the-trace-file">Getting the name of the trace file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OracleDbaIntroduction.html#setting-identifier">Setting identifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OracleDbaIntroduction.html#setting-client-info">Setting client info</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OracleDbaIntroduction.html#setting-module">Setting module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OracleDbaIntroduction.html#setting-action">Setting Action</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ConnectionPools.html">Connection Pools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ConnectionPools.html#after-getting-a-connection">After Getting a connection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ConnectionPools.html#dbms-session">DBMS_SESSION</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ConnectionPools.html#identifier">Identifier</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ConnectionPools.html#metrics">Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ConnectionPools.html#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="FurtherReading.html">Further Reading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TODO.html">TODO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TODO.html#oracle">Oracle</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="TODO.html#daemon">Daemon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="TODO.html#client">Client</a></li>
+<li class="toctree-l2"><a class="reference internal" href="TODO.html#web-and-api-client">Web and Api Client</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="structure">
+<h1>Structure<a class="headerlink" href="#structure" title="Permalink to this headline">¶</a></h1>
+<p>It’s difficult to use words like <em>service</em>, <em>component</em> without ambiguity as they
+are used to mean so many different things.</p>
+<p>TODO rephrase all of this</p>
+<div class="section" id="transactional-interceptor">
+<h2>&#64;Transactional Interceptor<a class="headerlink" href="#transactional-interceptor" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="begin">
+<h3>begin<a class="headerlink" href="#begin" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>start database tracing</li>
+<li>clean up connection state</li>
+</ul>
+</div>
+<div class="section" id="end">
+<h3>end<a class="headerlink" href="#end" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>save trace information</li>
+<li>clean up connection state</li>
+</ul>
+</div>
+</div>
+<div class="section" id="logging">
+<h2>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h2>
+<p>Log activity to a database or to flat files
+Log aggregate statistics</p>
+</div>
+<div class="section" id="trace-repository-management">
+<h2>Trace Repository Management<a class="headerlink" href="#trace-repository-management" title="Permalink to this headline">¶</a></h2>
+<p>Stores trace information into a relational database for querying and compresses the data</p>
+<p>Example:</p>
+<p>No need to store a million copies of a sql statement.</p>
+<p>Look for strings of the exact same size, fast hash, compare.</p>
+<p>Fast hash is a lot quicker than an MD5, there may be collisions, but the full compare
+will resolve.</p>
+</div>
+<div class="section" id="oralit-components">
+<h2>Oralit Components<a class="headerlink" href="#oralit-components" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="connection-initializer">
+<h2>Connection Initializer<a class="headerlink" href="#connection-initializer" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="tracing-client">
+<h2>Tracing Client<a class="headerlink" href="#tracing-client" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="oralit-daemon">
+<h2>Oralit Daemon<a class="headerlink" href="#oralit-daemon" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="analytics">
+<h2>Analytics<a class="headerlink" href="#analytics" title="Permalink to this headline">¶</a></h2>
+<p>Starting with a data model</p>
+<p>Reverse engineer into hibernate</p>
+<p>Forward Generate into a different database</p>
+<p>Unit Tests</p>
+<p>Integration Tests Multiple Databases</p>
+<p>Data Services</p>
+<p>Data models for web</p>
+<p>logging</p>
+<p>performance logging for hibernate</p>
+<p>Builders Maven and Gradle</p>
+<p>Generate foreign keys</p>
+<p>Extend base classes generated by reveng or change the generation</p>
+<p>Generating fake data</p>
+</div>
+</div>
+<div class="section" id="oracle">
+<h1>Oracle<a class="headerlink" href="#oracle" title="Permalink to this headline">¶</a></h1>
+<p>Turning on oracle trace</p>
+<p>Tracing accross threads</p>
+<p>entityManager.getRerefence(theId);</p>
+<p>include all available properties even if commented</p>
+<p>What happens if a listener on a pipe disappears?  Will the SGA just fill?</p>
+<p>Need to get a unique identifier and A</p>
+<p><a class="reference external" href="https://oracle-base.com/articles/misc/dbms_session">https://oracle-base.com/articles/misc/dbms_session</a></p>
+<p>Connection Pooling</p>
+<p>client_identifier
+Before the session is released back into the connection pool, the application should call the CLEAR_IDENTIFIER procedure.</p>
+<div class="section" id="daemon">
+<h2>Daemon<a class="headerlink" href="#daemon" title="Permalink to this headline">¶</a></h2>
+<p>Listen for changes to dbstats and populate
+Retain in file name
+aggregate sql statements</p>
+<blockquote>
+<div>text
+references
+stats
+provides service names
+where is this statement used</div></blockquote>
+</div>
+<div class="section" id="client">
+<h2>Client<a class="headerlink" href="#client" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div>stacktrace
+finding line of code</div></blockquote>
+</div>
+<div class="section" id="web-and-api-client">
+<h2>Web and Api Client<a class="headerlink" href="#web-and-api-client" title="Permalink to this headline">¶</a></h2>
+<p>Top statements</p>
+</div>
+<div class="section" id="trace-repository-analysis">
+<h2>Trace Repository Analysis<a class="headerlink" href="#trace-repository-analysis" title="Permalink to this headline">¶</a></h2>
+<p>Look for literals in statements, ok for warehouses,</p>
+<p>Store count, min, max, standard deviation by statement, module, action.</p>
+</div>
+<div class="section" id="analysis-dashboard">
+<h2>Analysis Dashboard<a class="headerlink" href="#analysis-dashboard" title="Permalink to this headline">¶</a></h2>
+<p>TODO explain</p>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
+<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
+<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+</ul>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="#">Table Of Contents</a></h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Overview.html#connection-pools">Connection Pools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="QuickStart.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SpringDeveloperIntroduction.html">Spring Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SpringDeveloperIntroduction.html#tracing">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OracleTracing.html">Oracle Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TraceRecords.html">Trace Records</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OracleDbaIntroduction.html">DBMS_APPLICATION_INFO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OracleDbaIntroduction.html#module">Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OracleDbaIntroduction.html#action">Action</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OracleDbaIntroduction.html#turning-on-statistic-and-trace">Turning on statistic and trace</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OracleDbaIntroduction.html#setting-the-trace-file-identifier">Setting the trace file identifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OracleDbaIntroduction.html#getting-the-name-of-the-trace-file">Getting the name of the trace file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OracleDbaIntroduction.html#setting-identifier">Setting identifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OracleDbaIntroduction.html#setting-client-info">Setting client info</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OracleDbaIntroduction.html#setting-module">Setting module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OracleDbaIntroduction.html#setting-action">Setting Action</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ConnectionPools.html">Connection Pools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FurtherReading.html">Further Reading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TODO.html">TODO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TODO.html#oracle">Oracle</a></li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+      <li>Next: <a href="Overview.html" title="next chapter">Overview</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, jjs.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

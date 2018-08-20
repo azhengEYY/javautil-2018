@@ -1,0 +1,2 @@
+export SYS_UID=system/diamondmine@sales_reporting_pdb
+export USER_UID=sa/tutorial@sales_reporting_pdb

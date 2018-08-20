@@ -1,0 +1,8 @@
+Sqldeveloper
+============
+
+missing cursor
+
+https://dba.stackexchange.com/questions/159519/oracle-sql-developer-textcursor-disappearing
+
+

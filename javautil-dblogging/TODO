@@ -1,0 +1,6 @@
+Level for job step
+to json 
+analyzer
+
+install
+    sqlplus / as sysdba create user

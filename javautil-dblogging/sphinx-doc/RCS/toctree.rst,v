@@ -1,0 +1,39 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2018.07.14.11.24.49;	author jjs;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+   Introduction
+   JpaRepository
+   OraclePipes
+   Oracle
+   OracleXeInstall
+   pdb
+   References
+   reveng
+   TemplateBuilder
+   TODO
+
+@

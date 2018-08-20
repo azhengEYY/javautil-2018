@@ -1,0 +1,221 @@
+History of Jim Schmidt and Custom Data Solutions
+================================================
+
+Creation
+--------
+
+Custom Data Solutions was initially called CDS for Chuck and Dee Schmidt.
+
+Chuck is my older brother and Dee is his wife.
+
+Chuck left his job at Michigan National Bank to offer data processing services, initially using a TRS-80 to print mailing labels.
+
+He subsequently bought an Alpha Micro http://www.s100computers.com/Hardware%20Folder/Alpha%20Micro/History/History.htm and wrote some business applications.
+
+On a visit to Detroit I explained to him the benefits of Unix and got him started, installing Interactive Unix from Kodak on a PC from 133 floppy disks in 1990.
+
+Between 1983 and 1990 I worked as Vice President of International Banking Systems for RepublicBank Dallas, as a principal at a Distribution Requirements Planning Company and then at Computer Associates where I single handedly designed and wrote the ACH settlement software system in six weeks.
+
+In 1990 I started Trinity Technical Services with two partners and ended up buying them both out.
+
+My first contract was the selection of an ERP system for a distributor in Texas.  The chosen vendor was CIM-JIT and it was my first exposure to Oracle. I soon
+became more proficient in the CIM-JIT software than the vendor and flew around 
+country to modify to delivered software to comply with commitments to customers.
+
+In the process I became quite proficient in fixing performance problems.
+
+Convinced that Oracle was the finest relational database, I convinced Chuck to
+come down to my Dallas office for a quick introduction.
+
+He immediately saw the benefits of SQL over procedural file manipulation and 
+also became an Oracle Partner.
+
+
+CDS somehow happened to land a contract to handle rebates for Leaf Gum.
+
+Technologies
+------------
+
+Unix
+****
+
+Oracle
+******
+
+Oracle Forms
+&&&&&&&&&&&&
+
+Oracle Reports
+&&&&&&&&&&&&&&
+
+PL/SQL
+&&&&&
+
+C
+*
+
+Java
+****
+
+JSP
+***
+
+Graphics
+********
+
+Javascript 
+**********
+
+Spreadsheets
+************
+
+Digital Unix
+************
+
+
+
+Linux
+*****
+
+Build tools
+***********
+
+Unit Tests
+**********
+
+Integration Tests
+*****************
+
+Chuck Retires
+-------------
+
+Database Consolidation
+&&&&&&&&&&&&&&&&&&&&&&
+
+Customer Matching
+&&&&&&&&&&&&&&&&&
+
+Address Validation
+&&&&&&&&&&&&&&&&&&
+
+Geo Encoding
+&&&&&&&&&&&&
+
+Exception Processing
+&&&&&&&&&&&&&&&&&&&&
+
+Spring
+&&&&&&
+
+Hibernate
+&&&&&&&&&
+
+
+
+
+
+
+Help
+****
+Make files
+C
+Pro*C
+Forms
+
+****
+V
+
+
+
+
+Business Model
+==============
+
+Custom Data Solutions
+---------------------
+
+http://custdata.com
+
+Relationship
+************
+
+Custom Data Services was created by my brother Chuck.  I consulted to them for over 25 years and
+taught him everything he knew from linux to relational databases, website creation, c and java.
+
+In 2007 I accepted the position of CIO when my brother sold the company.  I gave up my consulting practice
+on the promise that I could work remotely after my son went to college.
+
+After I completely revised all of the infrastructure, which was horrible in more ways than can be credibly described
+including the fact that they were seven years out of date on Oracle and had 14 instances running on three different 
+machines, I upgraded to Oracle 10 and migrated everything to one instance and finally into one schema.
+
+After I sold my house and all my possessions and moved to Costa Rica, they fired me.
+
+They stole my javautil code, there was a lawsuit, but I would have had to have their current employees testify that
+the code they were using was in production at my customer sites before I joined CDS.
+
+A settlement was reached, I allowed them to continue to use the code while retaining all rights.
+
+Business Process
+----------------
+Manufacturers who distribute their product through specialty channels:
+
+* Vending Machine Operators
+* Fund Raising (Hershey)
+* Concession (Hershey)
+
+Have their distributors report sales in the format described elsewhere.
+
+Processing Steps
+----------------
+
+Data is uploaded to the data processing service.
+
+The file loads are analyzed at CDS using an old version of my javautil conditionidentification package.
+
+The data is loading into prepost tables.
+
+The data is posted
+
+A snapshot of the data is made once a day for online web reporting in the form of spreadsheets.
+
+Rebate programs are designed and the sales are tracked and the rebates calculated.
+
+Rebate checks are mailed out.
+
+
+Manufacturers
+-------------
+If you go to custdata.com links you can see what manufacturers they process data for.
+http://custdata.com/links.html
+
+* www.hersheys.com/vending
+* www.hersheys.com/concession
+* www.hersheys.com/fundraising
+* Cadbury Gum & Candy
+* Ford Gum
+* Wrigley Gum
+* Coke
+* Dr. Pepper 
+* Snapple
+* Pepsi
+* Frito Lay
+* www.inventurefoods.com
+* www.justborn.com
+* www.whitewave.com
+* www.promotioninmotion.com
+* www.deliexpress.com
+* www.generalmillscstore.com
+* www.fafh.com (kelloggs)
+* www.snyderslance.com
+* www.mars.com
+* www.karsnuts.com
+* www.hostesscakes.com
+* www.monogramfoods.com
+* www.herrs.com
+* www.conagrabrands.com
+* www.americanlicorice.com
+
+
+Distributors
+------------

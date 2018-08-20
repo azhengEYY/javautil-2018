@@ -1,0 +1,72 @@
+Business Model
+==============
+
+Custom Data Solutions
+---------------------
+
+http://custdata.com
+
+
+Business Process
+----------------
+Manufacturers who distribute their product through specialty channels:
+
+* Vending Machine Operators
+* Fund Raising (Hershey)
+* Concession (Hershey)
+
+Have their distributors report sales in the format described elsewhere.
+
+Processing Steps
+----------------
+
+Data is uploaded to the data processing service.
+
+The file loads are analyzed at CDS using an old version of my javautil conditionidentification package.
+
+The data is loading into prepost tables.
+
+The data is posted
+
+A snapshot of the data is made once a day for online web reporting in the form of spreadsheets.
+
+Rebate programs are designed and the sales are tracked and the rebates calculated.
+
+Rebate checks are mailed out.
+
+
+Manufacturers
+-------------
+If you go to custdata.com links you can see what manufacturers they process data for.
+http://custdata.com/links.html
+
+* www.hersheys.com/vending
+* www.hersheys.com/concession
+* www.hersheys.com/fundraising
+* Cadbury Gum & Candy
+* Ford Gum
+* Wrigley Gum
+* Coke
+* Dr. Pepper 
+* Snapple
+* Pepsi
+* Frito Lay
+* www.inventurefoods.com
+* www.justborn.com
+* www.whitewave.com
+* www.promotioninmotion.com
+* www.deliexpress.com
+* www.generalmillscstore.com
+* www.fafh.com (kelloggs)
+* www.snyderslance.com
+* www.mars.com
+* www.karsnuts.com
+* www.hostesscakes.com
+* www.monogramfoods.com
+* www.herrs.com
+* www.conagrabrands.com
+* www.americanlicorice.com
+
+
+Distributors
+------------

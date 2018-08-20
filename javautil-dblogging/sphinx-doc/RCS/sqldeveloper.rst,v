@@ -1,0 +1,31 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2018.07.14.11.43.06;	author jjs;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@Sqldeveloper
+============
+
+missing cursor
+
+https://dba.stackexchange.com/questions/159519/oracle-sql-developer-textcursor-disappearing
+
+
+@

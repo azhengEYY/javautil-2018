@@ -1,0 +1,138 @@
+
+TKPROF: Release 12.2.0.1.0 - Development on Sat Jul 21 16:07:06 2018
+
+Copyright (c) 1982, 2017, Oracle and/or its affiliates.  All rights reserved.
+
+Trace file: test_trace/dev12c_ora_32172.trc_Another~set~of~work.trc
+Sort options: default
+
+********************************************************************************
+count    = number of times OCI procedure was executed
+cpu      = cpu time in seconds executing 
+elapsed  = elapsed time in seconds executing
+disk     = number of physical reads of buffers from disk
+query    = number of buffers gotten for consistent read
+current  = number of buffers gotten in current mode (usually for update)
+rows     = number of rows processed by the fetch or execute call
+********************************************************************************
+
+SQL ID: faw4pzt4md69c Plan Hash: 3781246121
+
+select count(*) 
+from
+ all_tab_columns
+
+
+call     count       cpu    elapsed       disk      query    current        rows
+------- ------  -------- ---------- ---------- ---------- ----------  ----------
+Parse        1      0.22       0.22          0          0          0           0
+Execute      1      0.00       0.00          0          0          0           0
+Fetch        1      0.48       0.49          0      64762          0           1
+------- ------  -------- ---------- ---------- ---------- ----------  ----------
+total        3      0.70       0.72          0      64762          0           1
+
+Misses in library cache during parse: 1
+Optimizer mode: ALL_ROWS
+Parsing user id: 108  
+Number of plan statistics captured: 1
+
+Rows (1st) Rows (avg) Rows (max)  Row Source Operation
+---------- ---------- ----------  ---------------------------------------------------
+         1          1          1  SORT AGGREGATE (cr=64762 pr=0 pw=0 time=493824 us starts=1)
+     23184      23184      23184   FILTER  (cr=64762 pr=0 pw=0 time=1270369 us starts=1)
+    110332     110332     110332    HASH JOIN RIGHT OUTER (cr=5300 pr=0 pw=0 time=14353855 us starts=1 cost=2077 size=12788115 card=111201)
+       136        136        136     INDEX FULL SCAN I_USER2 (cr=1 pr=0 pw=0 time=7 us starts=1 cost=1 size=544 card=136)(object id 47)
+    110332     110332     110332     HASH JOIN RIGHT OUTER (cr=5299 pr=0 pw=0 time=14324158 us starts=1 cost=2076 size=12343311 card=111201)
+      2938       2938       2938      TABLE ACCESS BY INDEX ROWID BATCHED OBJ$ (cr=414 pr=0 pw=0 time=3259 us starts=1 cost=263 size=26442 card=2938)
+      2938       2938       2938       INDEX SKIP SCAN I_OBJ1 (cr=208 pr=0 pw=0 time=1722 us starts=1 cost=208 size=0 card=2938)(object id 36)
+    110332     110332     110332      HASH JOIN RIGHT OUTER (cr=4885 pr=0 pw=0 time=14267365 us starts=1 cost=1812 size=11342502 card=111201)
+      2978       2978       2978       TABLE ACCESS BY INDEX ROWID BATCHED COLTYPE$ (cr=333 pr=0 pw=0 time=1627 us starts=1 cost=331 size=77428 card=2978)
+      2978       2978       2978        INDEX FULL SCAN I_COLTYPE2 (cr=9 pr=0 pw=0 time=259 us starts=1 cost=9 size=0 card=2971)(object id 113)
+    110332     110332     110332       HASH JOIN RIGHT OUTER (cr=4552 pr=0 pw=0 time=14211625 us starts=1 cost=1481 size=8450744 card=111194)
+     43686      43686      43686        INDEX FAST FULL SCAN I_HH_OBJ#_INTCOL# (cr=159 pr=0 pw=0 time=4912 us starts=1 cost=42 size=436540 card=43654)(object id 70)
+    110332     110332     110332        HASH JOIN  (cr=4393 pr=0 pw=0 time=14120676 us starts=1 cost=1438 size=7338804 card=111194)
+       136        136        136         INDEX FULL SCAN I_USER2 (cr=1 pr=0 pw=0 time=77 us starts=1 cost=1 size=3264 card=136)(object id 47)
+    110332     110332     110332         HASH JOIN RIGHT OUTER (cr=4392 pr=0 pw=0 time=125509 us starts=1 cost=1437 size=4670148 card=111194)
+      2266       2266       2266          TABLE ACCESS FULL TAB$ (cr=1585 pr=0 pw=0 time=4813 us starts=1 cost=430 size=11300 card=2260)
+    110332     110332     110332          HASH JOIN  (cr=2807 pr=0 pw=0 time=117417 us starts=1 cost=1006 size=4114178 card=111194)
+       136        136        136           INDEX FULL SCAN I_USER2 (cr=1 pr=0 pw=0 time=6 us starts=1 cost=1 size=544 card=136)(object id 47)
+    110332     110332     110332           HASH JOIN  (cr=2806 pr=0 pw=0 time=110682 us starts=1 cost=1005 size=3669402 card=111194)
+     72867      72867      72867            TABLE ACCESS FULL OBJ$ (cr=1221 pr=0 pw=0 time=11592 us starts=1 cost=333 size=1530102 card=72862)
+    111194     111194     111194            TABLE ACCESS FULL COL$ (cr=1585 pr=0 pw=0 time=175280 us starts=1 cost=431 size=1334328 card=111194)
+        20         20         20    TABLE ACCESS CLUSTER TAB$ (cr=4766 pr=0 pw=0 time=12361 us starts=2153 cost=2 size=13 card=1)
+      2153       2153       2153     INDEX UNIQUE SCAN I_OBJ# (cr=2323 pr=0 pw=0 time=4641 us starts=2153 cost=1 size=0 card=1)(object id 3)
+      2184       2184       2184    NESTED LOOPS SEMI (cr=54696 pr=0 pw=0 time=141263 us starts=9332 cost=2 size=15 card=1)
+     37928      37928      37928     FIXED TABLE FULL X$KZSRO (cr=0 pr=0 pw=0 time=48331 us starts=9332 cost=0 size=12 card=2)
+      2184       2184       2184     INDEX RANGE SCAN I_OBJAUTH2 (cr=54696 pr=0 pw=0 time=81960 us starts=37928 cost=1 size=9 card=1)(object id 63)
+         0          0          0    FIXED TABLE FULL X$KZSPR (cr=0 pr=0 pw=0 time=42 us starts=1 cost=0 size=9 card=1)
+         0          0          0    TABLE ACCESS FULL USER_EDITIONING$ (cr=0 pr=0 pw=0 time=0 us starts=0 cost=2 size=6 card=1)
+         0          0          0    TABLE ACCESS FULL USER_EDITIONING$ (cr=0 pr=0 pw=0 time=0 us starts=0 cost=2 size=6 card=1)
+         0          0          0    NESTED LOOPS SEMI (cr=0 pr=0 pw=0 time=0 us starts=0 cost=2 size=29 card=1)
+         0          0          0     INDEX SKIP SCAN I_USER2 (cr=0 pr=0 pw=0 time=0 us starts=0 cost=1 size=20 card=1)(object id 47)
+         0          0          0     INDEX RANGE SCAN I_OBJ4 (cr=0 pr=0 pw=0 time=0 us starts=0 cost=1 size=9 card=1)(object id 39)
+
+********************************************************************************
+
+SQL ID: f4qptcx6kdfm7 Plan Hash: 0
+
+begin :trace_file_name := logger.get_trace_file_name(); end;
+
+
+call     count       cpu    elapsed       disk      query    current        rows
+------- ------  -------- ---------- ---------- ---------- ----------  ----------
+Parse        1      0.00       0.00          0          0          0           0
+Execute      1      0.00       0.00          0          0          0           1
+Fetch        0      0.00       0.00          0          0          0           0
+------- ------  -------- ---------- ---------- ---------- ----------  ----------
+total        2      0.00       0.00          0          0          0           1
+
+Misses in library cache during parse: 0
+Optimizer mode: ALL_ROWS
+Parsing user id: 108  
+
+
+
+********************************************************************************
+
+OVERALL TOTALS FOR ALL NON-RECURSIVE STATEMENTS
+
+call     count       cpu    elapsed       disk      query    current        rows
+------- ------  -------- ---------- ---------- ---------- ----------  ----------
+Parse        2      0.22       0.22          0          0          0           0
+Execute      2      0.00       0.00          0          0          0           1
+Fetch        1      0.48       0.49          0      64762          0           1
+------- ------  -------- ---------- ---------- ---------- ----------  ----------
+total        5      0.70       0.72          0      64762          0           2
+
+Misses in library cache during parse: 1
+
+
+OVERALL TOTALS FOR ALL RECURSIVE STATEMENTS
+
+call     count       cpu    elapsed       disk      query    current        rows
+------- ------  -------- ---------- ---------- ---------- ----------  ----------
+Parse        0      0.00       0.00          0          0          0           0
+Execute      0      0.00       0.00          0          0          0           0
+Fetch        0      0.00       0.00          0          0          0           0
+------- ------  -------- ---------- ---------- ---------- ----------  ----------
+total        0      0.00       0.00          0          0          0           0
+
+Misses in library cache during parse: 0
+
+    2  user  SQL statements in session.
+    0  internal SQL statements in session.
+    2  SQL statements in session.
+********************************************************************************
+Trace file: test_trace/dev12c_ora_32172.trc_Another~set~of~work.trc
+Trace file compatibility: 12.2.0.0
+Sort options: default
+
+       0  session in tracefile.
+       2  user  SQL statements in trace file.
+       0  internal SQL statements in trace file.
+       2  SQL statements in trace file.
+       2  unique SQL statements in trace file.
+     105  lines in trace file.
+       0  elapsed seconds in trace file.
+
+

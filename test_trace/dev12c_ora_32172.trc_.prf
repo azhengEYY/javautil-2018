@@ -1,0 +1,30 @@
+
+TKPROF: Release 12.2.0.1.0 - Development on Sat Jul 21 16:07:06 2018
+
+Copyright (c) 1982, 2017, Oracle and/or its affiliates.  All rights reserved.
+
+Trace file: test_trace/dev12c_ora_32172.trc_.trc
+Sort options: default
+
+********************************************************************************
+count    = number of times OCI procedure was executed
+cpu      = cpu time in seconds executing 
+elapsed  = elapsed time in seconds executing
+disk     = number of physical reads of buffers from disk
+query    = number of buffers gotten for consistent read
+current  = number of buffers gotten in current mode (usually for update)
+rows     = number of rows processed by the fetch or execute call
+********************************************************************************
+Trace file: test_trace/dev12c_ora_32172.trc_.trc
+Trace file compatibility: 12.2.0.0
+Sort options: default
+
+       0  session in tracefile.
+       0  user  SQL statements in trace file.
+       0  internal SQL statements in trace file.
+       0  SQL statements in trace file.
+       0  unique SQL statements in trace file.
+       0  lines in trace file.
+       0  elapsed seconds in trace file.
+
+

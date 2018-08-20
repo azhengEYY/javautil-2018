@@ -1,0 +1,187 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Quick Start &#8212; Springboot Sample Projects 1.0.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Spring Developers" href="SpringDeveloperIntroduction.html" />
+    <link rel="prev" title="Overview" href="Overview.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="quick-start">
+<h1>Quick Start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="add-the-dependency-to-your-pom">
+<h2>Add the dependency to your pom<a class="headerlink" href="#add-the-dependency-to-your-pom" title="Permalink to this headline">¶</a></h2>
+<p>code-block:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">dependency</span><span class="o">&gt;</span>
+     <span class="o">&lt;</span><span class="n">groupId</span><span class="o">&gt;</span><span class="n">org</span><span class="o">.</span><span class="n">javautil</span><span class="o">&lt;/</span><span class="n">groupId</span><span class="o">&gt;</span>
+     <span class="o">&lt;</span><span class="n">artifactId</span><span class="o">&gt;</span><span class="n">javautil</span><span class="o">-</span><span class="n">core</span><span class="o">&lt;/</span><span class="n">artifactId</span><span class="o">&gt;</span>
+     <span class="o">&lt;</span><span class="n">version</span><span class="o">&gt;</span><span class="mf">2018.0</span><span class="o">.</span><span class="mi">5</span><span class="o">-</span><span class="n">SNAPSHOT</span><span class="o">&lt;/</span><span class="n">version</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">dependency</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">dependency</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">groupId</span><span class="o">&gt;</span><span class="n">org</span><span class="o">.</span><span class="n">javautil</span><span class="o">&lt;/</span><span class="n">groupId</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">artifactId</span><span class="o">&gt;</span><span class="n">javautil</span><span class="o">-</span><span class="n">dblogging</span><span class="o">&lt;/</span><span class="n">artifactId</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">version</span><span class="o">&gt;</span><span class="mf">2018.0</span><span class="o">.</span><span class="mi">5</span><span class="o">-</span><span class="n">SNAPSHOT</span><span class="o">&lt;/</span><span class="n">version</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">dependency</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="configure-dblogger-properties">
+<h2>Configure dblogger.properties<a class="headerlink" href="#configure-dblogger-properties" title="Permalink to this headline">¶</a></h2>
+<p>code-block:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dblogger</span><span class="o">.</span><span class="n">datasource</span><span class="o">.</span><span class="n">driver</span><span class="o">-</span><span class="n">class</span><span class="o">-</span><span class="n">name</span><span class="o">=</span><span class="n">org</span><span class="o">.</span><span class="n">h2</span><span class="o">.</span><span class="n">Driver</span>
+<span class="n">dblogger</span><span class="o">.</span><span class="n">datasource</span><span class="o">.</span><span class="n">url</span><span class="o">=</span><span class="n">jdbc</span><span class="p">:</span><span class="n">h2</span><span class="p">:</span><span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">dbloggerh2</span><span class="p">;</span><span class="n">AUTO_SERVER</span><span class="o">=</span><span class="n">TRUE</span><span class="p">;</span><span class="n">COMPRESS</span><span class="o">=</span><span class="n">TRUE</span>
+<span class="n">dblogger</span><span class="o">.</span><span class="n">datasource</span><span class="o">.</span><span class="n">username</span><span class="o">=</span><span class="n">sr</span>
+<span class="n">dblogger</span><span class="o">.</span><span class="n">datasource</span><span class="o">.</span><span class="n">password</span><span class="o">=</span><span class="n">tutorial</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="add-calls">
+<h2>Add calls<a class="headerlink" href="#add-calls" title="Permalink to this headline">¶</a></h2>
+<p>code-block:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dblogger</span><span class="o">.</span><span class="n">beginJob</span><span class="p">(</span><span class="n">jobName</span><span class="p">,</span> <span class="n">this</span><span class="o">.</span><span class="n">getClass</span><span class="p">()</span><span class="o">.</span><span class="n">getCanonicalName</span><span class="p">(),</span> <span class="s2">&quot;LoadProcessor&quot;</span><span class="p">,</span>
+            <span class="n">getClass</span><span class="p">()</span><span class="o">.</span><span class="n">getName</span><span class="p">(),</span>
+<span class="n">Thread</span><span class="o">.</span><span class="n">currentThread</span><span class="p">()</span><span class="o">.</span><span class="n">getName</span><span class="p">(),</span> <span class="n">traceFileName</span><span class="p">);</span>
+<span class="k">try</span> <span class="p">{</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;tracing to&quot;</span> <span class="o">+</span> <span class="n">traceFileName</span><span class="p">);</span>
+    <span class="n">dblogger</span><span class="o">.</span><span class="n">setAction</span><span class="p">(</span><span class="s2">&quot;loadFile&quot;</span><span class="p">);</span>
+    <span class="n">etlFileId</span> <span class="o">=</span> <span class="n">loadFile</span><span class="p">(</span><span class="n">datafile</span><span class="p">,</span> <span class="n">dblogger</span><span class="p">);</span>
+    <span class="n">dblogger</span><span class="o">.</span><span class="n">setAction</span><span class="p">(</span><span class="s2">&quot;runConditions&quot;</span><span class="p">);</span>
+    <span class="n">runConditions</span><span class="p">(</span><span class="n">etlFileId</span><span class="p">);</span>
+    <span class="n">dblogger</span><span class="o">.</span><span class="n">setAction</span><span class="p">(</span><span class="s2">&quot;prepost&quot;</span><span class="p">);</span>
+    <span class="n">prepost</span><span class="p">(</span><span class="n">etlFileId</span><span class="p">);</span>
+    <span class="n">dblogger</span><span class="o">.</span><span class="n">endJob</span><span class="p">();</span>
+    <span class="n">connection</span><span class="o">.</span><span class="n">commit</span><span class="p">();</span> <span class="o">//</span> <span class="n">TODO</span> <span class="n">without</span> <span class="n">a</span> <span class="n">commit</span> <span class="n">there</span> <span class="ow">is</span> <span class="n">nothing</span> <span class="n">here</span><span class="o">.</span> <span class="n">We</span> <span class="n">should</span> <span class="n">just</span> <span class="n">leave</span> <span class="n">on</span> <span class="n">autocommit</span>
+<span class="n">catch</span> <span class="p">(</span><span class="n">final</span> <span class="ne">Exception</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">dblogger</span><span class="o">.</span><span class="n">abortJob</span><span class="p">();</span> <span class="o">//</span> <span class="n">TODO</span> <span class="n">needs</span> <span class="n">stacktrace</span>
+    <span class="n">throw</span> <span class="n">e</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="section" id="instrument-called-routines">
+<h3>Instrument Called Routines<a class="headerlink" href="#instrument-called-routines" title="Permalink to this headline">¶</a></h3>
+<p>code-block:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@Autoinject</span>
+<span class="n">private</span> <span class="n">DatabaseInstrumentation</span> <span class="n">dblogger</span><span class="p">;</span>
+
+<span class="o">...</span>
+<span class="n">long</span> <span class="n">stepId</span> <span class="o">=</span> <span class="n">dblogger</span><span class="o">.</span><span class="n">insertStep</span><span class="p">(</span><span class="s2">&quot;ConditionIdentification&quot;</span><span class="p">,</span><span class="n">rule</span><span class="o">.</span><span class="n">getRuleName</span><span class="p">(),</span><span class="n">getClass</span><span class="p">()</span><span class="o">.</span><span class="n">getName</span><span class="p">());</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="index.html">Table Of Contents</a></h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Overview.html#connection-pools">Connection Pools</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quick Start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#add-the-dependency-to-your-pom">Add the dependency to your pom</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configure-dblogger-properties">Configure dblogger.properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#add-calls">Add calls</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#instrument-called-routines">Instrument Called Routines</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="SpringDeveloperIntroduction.html">Spring Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SpringDeveloperIntroduction.html#tracing">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OracleTracing.html">Oracle Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OracleDbaIntroduction.html">DBMS_APPLICATION_INFO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OracleDbaIntroduction.html#module">Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OracleDbaIntroduction.html#action">Action</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OracleDbaIntroduction.html#turning-on-statistic-and-trace">Turning on statistic and trace</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OracleDbaIntroduction.html#setting-the-trace-file-identifier">Setting the trace file identifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OracleDbaIntroduction.html#getting-the-name-of-the-trace-file">Getting the name of the trace file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OracleDbaIntroduction.html#setting-identifier">Setting identifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OracleDbaIntroduction.html#setting-client-info">Setting client info</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OracleDbaIntroduction.html#setting-module">Setting module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OracleDbaIntroduction.html#setting-action">Setting Action</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ConnectionPools.html">Connection Pools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FurtherReading.html">Further Reading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TODO.html">TODO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TODO.html#oracle">Oracle</a></li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="Overview.html" title="previous chapter">Overview</a></li>
+      <li>Next: <a href="SpringDeveloperIntroduction.html" title="next chapter">Spring Developers</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/QuickStart.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, jjs.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
+      
+      |
+      <a href="_sources/QuickStart.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

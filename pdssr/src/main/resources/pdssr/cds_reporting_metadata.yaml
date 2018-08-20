@@ -1,0 +1,429 @@
+'customer':
+  -
+    field_name: 'FILLER_00_05'
+    field_type: 'LITERAL'
+    str_format: '{:>6}'
+    fixed_literal: '999999'
+    fixed_length: 6
+    fixed_offset: 0
+    persisted: false
+  -
+    field_name: 'CLASS_OF_TRADE'
+    field_type: 'TEXT'
+    str_format: '{:<4s}'
+    fixed_length: 4
+    fixed_offset: 6
+  -
+    field_name: 'SHIP_TO_CUST_ID'
+    field_type: 'TEXT'
+    str_format: '{:0>10s}'
+    fixed_length: 10
+    fixed_offset: 10
+  -
+    field_name: 'CUST_NM'
+    field_type: 'TEXT'
+    str_format: '{:<30s}'
+    fixed_length: 30
+    fixed_offset: 20
+  -
+    field_name: 'ADDR_1'
+    field_type: 'TEXT'
+    str_format: '{:<30s}'
+    fixed_length: 30
+    fixed_offset: 50
+  -
+    field_name: 'ADDR_2'
+    field_type: 'TEXT'
+    str_format: '{:<30s}'
+    fixed_length: 30
+    fixed_offset: 80
+  -
+    field_name: 'CITY'
+    field_type: 'TEXT'
+    str_format: '{:<25s}'
+    fixed_length: 25
+    fixed_offset: 110
+  -
+    field_name: 'STATE'
+    field_type: 'TEXT'
+    str_format: '{:<2s}'
+    fixed_length: 2
+    fixed_offset: 135
+  -
+    field_name: 'POSTAL_CD'
+    field_type: 'DIGITS'
+    str_format: '{:0>9s}'
+    fixed_length: 9
+    fixed_offset: 137
+  -
+    field_name: 'TEL_NBR'
+    field_type: 'DIGITS'
+    str_format: '{:0>10s}'
+    fixed_length: 10
+    fixed_offset: 146
+  -
+    field_name: 'NATIONAL_ACCT_ID'
+    field_type: 'TEXT'
+    str_format: '{:0>10s}'
+    fixed_length: 10
+    fixed_offset: 156
+  -
+    field_name: 'SPECIAL_FLG'
+    field_type: 'TEXT'
+    str_format: '{:>1s}'
+    fixed_length: 1
+    fixed_offset: 166
+  -
+    field_name: 'FILLER_1'
+    field_type: 'LITERAL'
+    str_format: '{:>1s}'
+    fixed_literal: ' '
+    fixed_length: 1
+    fixed_offset: 167
+    persisted: false
+  -
+    field_name: 'RECORD_TYPE'
+    field_type: 'LITERAL'
+    str_format: '{:>2s}'
+    fixed_literal: 'CD'
+    fixed_length: 2
+    fixed_offset: 168
+    persisted: false
+'inventory_total':
+  -
+    field_name: 'HEADER'
+    field_type: 'LITERAL'
+    str_format: '{:>1s}'
+    fixed_literal: '99999999999'
+    fixed_length: 10
+    fixed_offset: 0
+    persisted: false
+  -
+    field_name: 'FILLER36'
+    field_type: 'LITERAL'
+    str_format: '{:>36}'
+    fixed_literal: '                                    '
+    fixed_length: 36
+    fixed_offset: 10
+    persisted: false
+  -
+    field_name: 'INVENTORY_DT'
+    field_type: 'DATE'
+    fixed_length: 8
+    fixed_offset: 46
+    str_format: '%Y%m%d'
+  -
+    field_name: 'FILE_CREATION_DT'
+    field_type: 'DATE'
+    fixed_length: 8
+    fixed_offset: 54
+    str_format: '%Y%m%d'
+  -
+    field_name: 'RECORD_CNT_REPORTED'
+    field_type: 'INTEGER'
+    fixed_length: 9
+    fixed_offset: 62
+    str_format: '{0:09d}'
+    java_format: "%09d"
+  -
+    field_name: 'FILLER97'
+    field_type: 'LITERAL'
+    fixed_literal: '                         '
+    fixed_length: 97
+    fixed_offset: 71
+    str_format: '{:>97}'
+    persisted: false
+  -
+    field_name: 'RECORD_TYPE'
+    field_type: 'LITERAL'
+    fixed_literal: 'IT'
+    fixed_length: 2
+    fixed_offset: 168
+    str_format: '{:>2}'
+    persisted: false
+'sales':
+  -
+    field_name: 'DISTRIB_ID'
+    field_type: 'TEXT'
+    str_format: '{:0>10s}'
+    fixed_length: 10
+    fixed_offset: 0
+  -
+    field_name: 'MFR_ID'
+    field_type: 'TEXT'
+    str_format: '{:0>10s}'
+    fixed_length: 10
+    fixed_offset: 10
+  -
+    field_name: 'MFR_PRODUCT_ID'
+    field_type: 'TEXT'
+    str_format: '{:0>8s}'
+    fixed_length: 8
+    fixed_offset: 20
+  -
+    field_name: 'SHIP_TO_CUST_ID'
+    field_type: 'TEXT'
+    str_format: '{:0>10s}'
+    fixed_length: 10
+    fixed_offset: 28
+  -
+    field_name: 'INVOICE_CD'
+    field_type: 'TEXT'
+    str_format: '{:0>10s}'
+    fixed_length: 10
+    fixed_offset: 38
+  -
+    field_name: 'INVOICE_DT'
+    field_type: 'DATE'
+    str_format: '%Y%m%d'
+    fixed_length: 8
+    fixed_offset: 48
+  -
+    field_name: 'SHIP_DT'
+    field_type: 'DATE'
+    str_format: '%Y%m%d'
+    fixed_length: 8
+    fixed_offset: 56
+  -
+    field_name: 'FILLER'
+    field_type: 'LITERAL'
+    str_format: '{:<9s}'
+    fixed_literal: '         '
+    fixed_length: 9
+    fixed_offset: 64
+    persisted: false
+  -
+    field_name: 'EXTENDED_NET_AMT'
+    field_type: 'INTEGER'
+    str_format: '{0:09d}'
+    fixed_length: 9
+    fixed_offset: 73
+    java_format: "%09d"
+  -
+    field_name: 'DISTRIB_PRODUCT_REF'
+    field_type: 'TEXT'
+    str_format: '{:<12s}'
+    fixed_length: 12
+    fixed_offset: 82
+  -
+    field_name: 'PRODUCT_DESCR'
+    field_type: 'TEXT'
+    str_format: '{:<30s}'
+    fixed_length: 30
+    fixed_offset: 94
+  -
+    field_name: 'CASES_SHIPPED'
+    field_type: 'INTEGER'
+    str_format: '{0:06d}'
+    fixed_length: 6
+    fixed_offset: 124
+    java_format: "%06d"
+  -
+    field_name: 'BOXES_SHIPPED'
+    field_type: 'INTEGER'
+    str_format: '{0:06d}'
+    fixed_length: 6
+    fixed_offset: 130
+    java_format: "%06d"
+  -
+    field_name: 'UNITS_SHIPPED'
+    field_type: 'INTEGER'
+    str_format: '{0:06d}'
+    fixed_length: 6
+    fixed_offset: 136
+    java_format: "%06d"
+  -
+    field_name: 'CASE_GTIN'
+    field_type: 'TEXT'
+    str_format: '{:0>14s}'
+    fixed_length: 14
+    fixed_offset: 142
+  -
+    field_name: 'FILLER_12'
+    field_type: 'LITERAL'
+    str_format: '{:>12s}'
+    fixed_literal: '            '
+    fixed_length: 12
+    fixed_offset: 156
+    persisted: false
+  -
+    field_name: 'RECORD_TYPE'
+    field_type: 'LITERAL'
+    str_format: '{:<2s}'
+    fixed_literal: 'SA'
+    fixed_length: 2
+    fixed_offset: 168
+    persisted: false
+'customer_total':
+  -
+    field_name: 'HEADER'
+    field_type: 'LITERAL'
+    str_format: '{:>10s}'
+    fixed_literal: '999999999999'
+    fixed_length: 10
+    fixed_offset: 0
+    persisted: false
+  -
+    field_name: 'FILLER_127'
+    field_type: 'LITERAL'
+    str_format: '{:>127s}'
+    fixed_literal: '            '
+    fixed_length: 127
+    fixed_offset: 10
+    persisted: false
+  -
+    field_name: 'CUSTOMER_COUNT'
+    field_type: 'INTEGER'
+    fixed_length: 9
+    fixed_offset: 137
+    str_format: '{0:09d}'
+    java_format: '%09d'
+  -
+    field_name: 'FILLER_22'
+    field_type: 'LITERAL'
+    str_format: '{:>22s}'
+    fixed_literal: '            '
+    fixed_length: 22
+    fixed_offset: 146
+    persisted: false
+  -
+    field_name: 'RECORD_TYPE'
+    field_type: 'LITERAL'
+    fixed_literal: 'CT'
+    fixed_length: 2
+    fixed_offset: 168
+    str_format: '{:>2s}'
+    persisted: false
+'sales_total':
+  -
+    field_name: 'HEADER'
+    field_type: 'LITERAL'
+    str_format: '{:>10s}'
+    fixed_literal: '999999999999'
+    fixed_length: 10
+    fixed_offset: 0
+    persisted: false
+  -
+    field_name: 'FILLER_28'
+    field_type: 'LITERAL'
+    str_format: '{:>28s}'
+    fixed_literal: '            '
+    fixed_length: 28
+    fixed_offset: 10
+    persisted: false
+  -
+    field_name: 'SALES_START_DT'
+    field_type: 'DATE'
+    str_format: '%Y%m%d'
+    fixed_length: 8
+    fixed_offset: 38
+  -
+    field_name: 'SALES_END_DT'
+    field_type: 'DATE'
+    str_format: '%Y%m%d'
+    fixed_length: 8
+    fixed_offset: 46
+  -
+    field_name: 'FILE_CREATE_DT'
+    field_type: 'DATE'
+    str_format: '%Y%m%d'
+    fixed_length: 8
+    fixed_offset: 54
+  -
+    field_name: 'SALES_REC_CNT'
+    field_type: 'INTEGER'
+    str_format: '{:0>9d}'
+    fixed_length: 9
+    fixed_offset: 62
+    java_format: "%011d"
+  -
+    field_name: 'SUM_EXT_NET_AMT'
+    field_type: 'INTEGER'
+    str_format: '{:0>11d}'
+    fixed_length: 11
+    fixed_offset: 71
+    java_format: "%011d"
+  -
+    field_name: 'FILLER_86'
+    field_type: 'LITERAL'
+    str_format: '{:>86s}'
+    fixed_literal: '            '
+    fixed_length: 86
+    fixed_offset: 82
+    persisted: false
+  -
+    field_name: 'RECORD_TYPE'
+    field_type: 'LITERAL'
+    fixed_literal: 'AT'
+    str_format: '{:<2s}'
+    fixed_length: 2
+    fixed_offset: 168
+    persisted: false
+'inventory':
+  -
+    field_name: 'DISTRIBUTOR_ID'
+    field_type: 'DIGITS'
+    str_format: '{:0>10s}'
+    fixed_length: 10
+    fixed_offset: 0
+  -
+    field_name: 'MFR_ID'
+    field_type: 'DIGITS'
+    str_format: '{:0>10s}'
+    fixed_length: 10
+    fixed_offset: 10
+  -
+    field_name: 'MFR_PRODUCT_ID'
+    field_type: 'DIGITS'
+    str_format: '{:0>8s}'
+    fixed_length: 8
+    fixed_offset: 20
+  -
+    field_name: 'COMMENTS'
+    field_type: 'TEXT'
+    str_format: '{:<96s}'
+    fixed_length: 96
+    fixed_offset: 28
+  -
+    field_name: 'CASES'
+    field_type: 'INTEGER'
+    str_format: '{0:06d}'
+    fixed_length: 6
+    fixed_offset: 124
+    java_format: "%06d"
+  -
+    field_name: 'BOXES'
+    field_type: 'INTEGER'
+    str_format: '{0:06d}'
+    fixed_length: 6
+    fixed_offset: 130
+    java_format: "%06d"
+  -
+    field_name: 'UNITS'
+    field_type: 'INTEGER'
+    str_format: '{0:06d}'
+    fixed_length: 6
+    fixed_offset: 136
+    java_format: "%06d"
+  -
+    field_name: 'CASE_GTIN'
+    field_type: 'DIGITS'
+    str_format: '{:0<14s}'
+    fixed_length: 14
+    fixed_offset: 142
+  -
+    field_name: 'FILLER'
+    field_type: 'LITERAL'
+    str_format: '{:<12s}'
+    fixed_literal: '            '
+    fixed_length: 12
+    fixed_offset: 156
+    persisted: false
+  -
+    field_name: 'RECORD_TYPE'
+    field_type: 'LITERAL'
+    fixed_literal: 'IR'
+    str_format: '{:<2s}'
+    fixed_length: 2
+    fixed_offset: 168
+    persisted: false
