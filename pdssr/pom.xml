@@ -30,6 +30,11 @@
 			<artifactId>javautil-dblogging</artifactId>
 			<version>2018.0.6-SNAPSHOT</version>
 		</dependency>
+			<dependency>
+			<groupId>org.javautil</groupId>
+			<artifactId>javautil-condition-identification</artifactId>
+			<version>2018.0.6-SNAPSHOT</version>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/junit/junit -->
 		<dependency>
 			<groupId>junit</groupId>

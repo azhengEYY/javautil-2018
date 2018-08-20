@@ -13,8 +13,3 @@ alter pluggable database sales_reporting_pdb open;
 
 alter session set container = sales_reporting_pdb;
 
-/*create tablespace sales_reporting
-    DATAFILE '/common/oracle/oradata/dev18b/sales_reporting/sales_reporting.dbf' 
-       SIZE 32M AUTOEXTEND ON;
---  PATH_PREFIX = '/common/oracle/oradata/dev12c/sales_reporting_pdb' 
-*/

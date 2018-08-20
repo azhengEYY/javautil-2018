@@ -32,33 +32,20 @@ public class DbloggerH2 implements DatabaseInstrumentation {
 
     private static Logger      logger            = LoggerFactory.getLogger(DbloggerForOracle.class);
 
-    // private int jobId;
     private long               jobStartMilliseconds;
 
     private String             moduleName;
 
     private String             actionName;
 
-    SequenceHelper             sequenceHelper;
+    private SequenceHelper             sequenceHelper;
 
     private long               utProcessStatusId = -1;
 
     private long               utProcessStepId;
 
-    // public static DbloggerH2 getScratchLogger() throws Exception,
-    // SqlSplitterException {
-    // DataSource ds = DataSourceFactory.getH2Permanent("/scratch/dblogger", "sa",
-    // "tutorial");
-    // Connection connection = ds.getConnection();
-    // CreateDbloggerDatabaseObjects installer = new
-    // H2Install(connection).setDrop(true).setNoFail(false)
-    // .setShowSql(true);
-    // installer.process();
-    // DbloggerH2 dblogger = new DbloggerH2(connection);
-    // return dblogger;
-    // }
 
-    public DbloggerH2(Connection connection) throws IOException, SqlSplitterException, SQLException {
+    public DbloggerH2(Connection connection) throws IOException, SQLException {
         if (connection == null) {
             throw new IllegalArgumentException("connection is null");
         }
