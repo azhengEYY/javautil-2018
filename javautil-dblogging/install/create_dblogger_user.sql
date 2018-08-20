@@ -25,9 +25,13 @@ alter user &test_dblogger quota unlimited on sales_reporting;
 #grant execute on sys.utl_http to &test_dblogger with grant option;
 --
 
-create directory ut_process_log_dir as '/common/scratch/ut_process_log_dir';
 drop directory udump_dir;
 create directory udump_dir as '/common/oracle/diag/rdbms/dev18b/dev18b/trace/';
 create public synonym udump_dir for udump_dir;
 grant read on directory udump_dir to &test_dblogger;
+
+drop directory ut_process_log_dir;
+create directory ut_process_log_dir as '/common/scratch/ut_process_log_dir';
 grant read, write on directory ut_process_log_dir to &test_dblogger;
+drop public synonym ut_process_log_dir;
+create public synonym ut_process_log_dir for ut_process_log_dir;

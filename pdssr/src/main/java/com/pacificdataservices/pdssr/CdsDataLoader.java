@@ -10,7 +10,7 @@ import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.javautil.dblogging.DatabaseInstrumentation;
+import org.javautil.dblogging.Dblogger;
 import org.javautil.io.ResourceHelper;
 import org.javautil.sql.Binds;
 import org.javautil.sql.Dialect;
@@ -37,10 +37,10 @@ public class CdsDataLoader implements FilenameFilter {
     private final Map<String, String> sqlNameByType = new HashMap<>();
 
     private final SequenceHelper      sequenceHelper;
-    DatabaseInstrumentation           dblogger;
+    Dblogger           dblogger;
 
     // TODO pretend we need the sales pk
-    public CdsDataLoader(Connection conn, DatabaseInstrumentation dblogger) throws SQLException, IOException {
+    public CdsDataLoader(Connection conn, Dblogger dblogger) throws SQLException, IOException {
         if (conn == null) {
             logger.error("conn is null");
             throw new IllegalArgumentException("conn is null");

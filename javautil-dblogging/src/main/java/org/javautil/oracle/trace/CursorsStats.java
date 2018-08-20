@@ -39,8 +39,6 @@ public class CursorsStats {
 
     private transient HashMap<Long, String>     sqlIdByCursorNumber       = new HashMap<>();
 
-    private transient CursorInfo                aggregateNonSysCursorInfo = new CursorInfo();
-    private transient CursorInfo                aggregateSysCusorInfo;
     private transient Tracer                    tracer;
 
     public HashMap<Long, CursorInfo> getCursorStatsByCursorStatsNumber() {

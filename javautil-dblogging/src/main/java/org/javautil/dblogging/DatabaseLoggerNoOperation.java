@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.Writer;
 import java.sql.SQLException;
 
-public class DatabaseLoggerNoOperation implements DatabaseInstrumentation {
+public class DatabaseLoggerNoOperation implements Dblogger {
 
 	@Override
 	public void prepareConnection() throws SQLException {
@@ -60,19 +60,20 @@ public class DatabaseLoggerNoOperation implements DatabaseInstrumentation {
 
 	@Override
 	public void finishStep() throws SQLException {
-		
 	}
 
 	@Override
 	public void showConnectionInformation() {
-
-		
 	}
 
 	@Override
 	public long insertStep(String stepName, String stepInfo, String className) {
-		// TODO Auto-generated method stub
 		return -1;
 	}
+
+    @Override
+    public long getUtProcessStatusId() {
+        return -1;
+    }
 
 }

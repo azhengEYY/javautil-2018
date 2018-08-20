@@ -12,7 +12,7 @@ import org.javautil.sql.SqlSplitterException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class H2LoggerForOracle extends DbloggerForOracle implements DatabaseInstrumentation {
+public class H2LoggerForOracle extends DbloggerForOracle implements Dblogger {
 
     private DbloggerH2    h2logger;
 

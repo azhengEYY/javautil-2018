@@ -10,7 +10,7 @@ import java.util.Arrays;
 
 import javax.sql.DataSource;
 
-import org.javautil.dblogging.DatabaseInstrumentation;
+import org.javautil.dblogging.Dblogger;
 import org.javautil.dblogging.H2LoggerDataSourceCheck;
 import org.javautil.dblogging.H2LoggerForOracle;
 import org.javautil.sql.SqlSplitterException;
@@ -95,7 +95,7 @@ public class LoadProcessor implements FilenameFilter {
         return etlFileId;
     }
 
-    public long loadFile(File loadFile, DatabaseInstrumentation dblogger)
+    public long loadFile(File loadFile, Dblogger dblogger)
             throws SQLException, ParseException, IOException {
         return loader.process(loadFile.getAbsolutePath(), "EXOTICTX", false);
     }

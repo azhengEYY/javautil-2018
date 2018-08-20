@@ -17,7 +17,7 @@ CREATE OR REPLACE PACKAGE logger AS
     function get_my_tracefile return clob;
 
   FUNCTION begin_java_job ( p_process_name in varchar2,
-                             p_class_name   in varchar2,
+                             p_classname   in varchar2,
                              p_module_name  in varchar2,
                              p_status_msg   in varchar2,
                              p_thread_name  in varchar2,
@@ -90,15 +90,6 @@ CREATE OR REPLACE PACKAGE logger AS
     --
     PROCEDURE abort_job ;
     --
-    --
-    PROCEDURE log_snap (
-        p_unit      IN        VARCHAR2,
-        p_line      IN        PLS_INTEGER,
-        p_log_msg   IN        VARCHAR2 ) ;
-    --
-    --
-    PROCEDURE snap_stats (
-        p_snap_name    IN        VARCHAR2 ) ;
     --
     --
     PROCEDURE set_action (

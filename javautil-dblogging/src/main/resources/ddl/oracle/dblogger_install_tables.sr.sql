@@ -1,70 +1,95 @@
---#<
--- notes
--- --# ignored line by sqlrunner
--- --< begin extract for markdown (javadoc type)
--- --> end  extract for markdown
--- TODO document specification and write plsql to extract and format
---#<  begin ignore for sqlrunner
--- todo uglify to lower must look for things in quotes
-set echo on --#
---#>
-  create sequence ut_process_status_id_seq cache 1000;
+create sequence ut_process_status_id_seq;
+create sequence ut_process_log_id_seq;
 
-  CREATE TABLE UT_PROCESS_STATUS
-   (    UT_PROCESS_STATUS_ID NUMBER(9,0),
-        SCHEMA_NAME          VARCHAR2(30),
-        PROCESS_NAME         VARCHAR2(128),
-        THREAD_NAME          VARCHAR2(128),
-        PROCESS_RUN_NBR      NUMBER(9,0),
-        STATUS_MSG           VARCHAR2(256),
-        STATUS_ID 	     VARCHAR2(1),
-        STATUS_TS 	     TIMESTAMP (6),
-        TOTAL_ELAPSED        INTERVAL DAY (2) TO SECOND (6),
-        SID                  NUMBER,
-        SERIAL#              NUMBER,
-        IGNORE_FLG           VARCHAR2(1) DEFAULT 'N',
-        MODULE_NAME          VARCHAR2(64),
-        CLASS_NAME           VARCHAR2(255),
-        trace_file_name      varchar2(255),
-         CHECK ( IGNORE_FLG IN ('Y', 'N')) ENABLE,
-         CONSTRAINT UT_PROCESS_STATUS_PK PRIMARY KEY (UT_PROCESS_STATUS_ID)
-   ); -- end;
+create table ut_process_status (    
+    ut_process_status_id number(9),
+    schema_name          varchar(30),
+    process_name         varchar(128),
+    thread_name          varchar(128),
+    process_run_nbr      number(9,0),
+    status_msg           varchar(256),
+    status_id 	         varchar(1),
+    status_ts 	         timestamp (9),
+    end_ts               timestamp(9),
+    sid                  number,
+    serial_nbr           number,
+    ignore_flg           varchar(1) default 'N',
+    module_name          varchar(64),
+    classname            varchar(255),
+    tracefile_name       varchar(4000),
+    tracefile_data       clob,
+    tracefile_json       clob,
+    check ( ignore_flg in ('Y', 'N')) ,
+    constraint ut_process_status_pk primary key (ut_process_status_id)
+   ); 
 
 
-  CREATE TABLE UT_PROCESS_LOG
-   (    UT_PROCESS_LOG_ID 	NUMBER(9,0),
-        UT_PROCESS_STATUS_ID 	NUMBER(9,0),
-        LOG_MSG_ID 		VARCHAR2(8),
-        LOG_MSG 		VARCHAR2(256),
-        LOG_MSG_CLOB 		CLOB,
-        LOG_MSG_TS 		TIMESTAMP (6),
-        ELAPSED_TIME 		INTERVAL DAY (2) TO SECOND (6),
-        LOG_SEQ_NBR 		NUMBER(18,0) NOT NULL ENABLE,
-        CALLER_NAME 		VARCHAR2(100),
-        LINE_NBR 		NUMBER(5,0),
-        CALL_STACK 		CLOB,
-        LOG_LEVEL 		NUMBER(2,0),
-         CONSTRAINT UT_PROCESS_LOG_PK PRIMARY KEY (UT_PROCESS_STATUS_ID, LOG_SEQ_NBR)
-  );  --end ut_process_log
+  create table ut_process_log
+   (    ut_process_log_id 	  number(9),
+        ut_process_status_id 	  number(9),
+        log_msg_id 		  varchar2(8),
+        log_msg 		  varchar2(256),
+        log_msg_clob 		  clob,
+        log_msg_ts 		  timestamp (9),
+        elapsed_time_milliseconds number(9),
+        log_seq_nbr 		  number(18,0) not null,
+        caller_name 		  varchar2(100),
+        line_nbr 		  number(5,0),
+        call_stack 		  clob,
+        log_level 		  number(2,0),
+         constraint ut_process_log_pk primary key (ut_process_status_id, log_seq_nbr)
+  ); 
+
+create sequence ut_process_step_id_seq;
+
+ create table ut_process_step (    
+        ut_process_step_id      number(9),
+        ut_process_status_id 	number(9),
+	step_name               varchar(64),
+	classname               varchar(256),
+	step_info               varchar(2000),
+        start_ts    		timestamp(9),
+        end_ts  		timestamp(9),
+        dbstats                 clob,
+        step_info_json          clob,
+         constraint ut_process_step_pk primary key (ut_process_step_id),
+         constraint step_status_fk
+	    foreign key (ut_process_status_id) references ut_process_status
+  );
 
 alter table ut_process_log 
 add constraint upl_ups_fk 
 foreign key (ut_process_status_id) 
 references ut_process_status(ut_process_status_id);
 
-  CREATE TABLE UT_PROCESS_STAT 
-  (    
-	UT_PROCESS_STATUS_ID 	NUMBER(9,0) NOT NULL ENABLE,
-        LOG_SEQ_NBR 		NUMBER(9,0) NOT NULL ENABLE,
-        SID 			NUMBER,
-        STATISTIC# 		NUMBER,
-        VALUE 			NUMBER,
-         CONSTRAINT UT_PROCESS_STAT_PK PRIMARY KEY (UT_PROCESS_STATUS_ID, LOG_SEQ_NBR, STATISTIC#)
-   ) organization index;
+create or replace view ut_process_step_vw as
+select
+        ut_process_step_id,
+        ut_process_status_id,
+	step_name,
+	classname ,
+	step_info,
+        start_ts,
+        end_ts ,
+        end_ts - start_ts elapsed_millis
+from ut_process_step;
 
--- todo compress 2 on index
-alter table ut_process_stat 
-add constraint up_process_stat_fk 
-              foreign key(ut_process_status_id, log_seq_nbr)
-references ut_process_log(ut_process_status_id, log_seq_nbr);
-
+create or replace view ut_process_status_vw as 
+select  
+   ut_process_status_id, 
+   schema_name,         
+   process_name,        
+   thread_name,         
+   process_run_nbr,     
+   status_msg,          
+   status_id,                         
+   status_ts,                        
+   end_ts,                               
+   sid,                                      
+   serial_nbr,                       
+   ignore_flg,    
+   module_name,    
+   classname,             
+   tracefile_name,                 
+   end_ts - status_ts elapsed_millis 
+from ut_process_status;

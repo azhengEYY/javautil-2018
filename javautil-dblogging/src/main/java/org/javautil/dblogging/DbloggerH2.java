@@ -15,7 +15,6 @@ import org.javautil.oracle.trace.OracleTraceProcessor;
 import org.javautil.sql.Binds;
 import org.javautil.sql.NamedSqlStatements;
 import org.javautil.sql.SequenceHelper;
-import org.javautil.sql.SqlSplitterException;
 import org.javautil.sql.SqlStatement;
 import org.javautil.util.ListOfNameValue;
 import org.javautil.util.NameValue;
@@ -24,7 +23,7 @@ import org.slf4j.LoggerFactory;
 
 // TODO these should all throw Dblogger exception, don't want
 //  to blow up a job because of an error in the logger
-public class DbloggerH2 implements DatabaseInstrumentation {
+public class DbloggerH2 implements Dblogger {
 
     private final Connection   connection;
 
@@ -63,9 +62,13 @@ public class DbloggerH2 implements DatabaseInstrumentation {
     public void prepareConnection() throws SQLException {
     }
 
-    protected long getUtProcessStatusId() throws SQLException {
-        SequenceHelper sh = new SequenceHelper(connection);
-        utProcessStatusId = sh.getSequence("ut_process_status_id_seq");
+    public long getUtProcessStatusId() {
+        long utProcessStatusId = -1;
+        try {
+            utProcessStatusId = sequenceHelper.getSequence("ut_process_status_id_seq");
+        } catch (SQLException sqe) {
+            logger.error(sqe.getMessage());
+        }
         return utProcessStatusId;
     }
 
@@ -80,7 +83,6 @@ public class DbloggerH2 implements DatabaseInstrumentation {
     public int beginJob(final String processName, String className, String moduleName, String statusMsg,
             String threadName, String tracefileName) throws SQLException {
 
-        SequenceHelper sh = new SequenceHelper(connection);
         // long id = sh.getSequence("ut_process_status_id_seq");
         SqlStatement ss = statements.getSqlStatement("ut_process_status_insert");
         ss.setConnection(connection);

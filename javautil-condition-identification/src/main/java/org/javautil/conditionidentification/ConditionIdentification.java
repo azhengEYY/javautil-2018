@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import org.javautil.dblogging.DatabaseInstrumentation;
+import org.javautil.dblogging.Dblogger;
 import org.javautil.misc.Timer;
 import org.javautil.sql.Binds;
 import org.javautil.sql.SqlSplitterException;
@@ -42,7 +42,7 @@ public class ConditionIdentification {
 
 	private ArrayList<String> messages;
 	
-	private DatabaseInstrumentation dblogger; // = new DatabaseLoggerNoOperation();
+	private Dblogger dblogger; // = new DatabaseLoggerNoOperation();
 
 
 	private int verbosity;
@@ -165,11 +165,11 @@ public class ConditionIdentification {
 		return rowCount;
 	}
 
-	public DatabaseInstrumentation getDblogger() {
+	public Dblogger getDblogger() {
 		return dblogger;
 	}
 
-	public void setDblogger(DatabaseInstrumentation dblogger) {
+	public void setDblogger(Dblogger dblogger) {
 		this.dblogger = dblogger;
 	}
 

@@ -13,8 +13,13 @@ import java.util.List;
 
 import org.javautil.oracle.OracleConnectionHelper;
 import org.javautil.sql.Binds;
+import org.javautil.sql.SequenceHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class DbloggerForOracle implements DatabaseInstrumentation {
+public class DbloggerForOracle implements Dblogger {
+
+    private Logger                    logger             = LoggerFactory.getLogger(getClass());
 
     // TODO see if clear context is necessary
 
@@ -49,6 +54,8 @@ public class DbloggerForOracle implements DatabaseInstrumentation {
     private CallableStatement         setTraceStepStatement;
 
     private CallableStatement         setTracefileIdentifierStatement;
+
+    SequenceHelper                    sh;
 
     // private static Logger logger = LoggerFactory.getLogger(Dblogger.class);
 
@@ -95,7 +102,7 @@ public class DbloggerForOracle implements DatabaseInstrumentation {
             String threadName, String tracefileName) throws SQLException {
         final String sql = "       begin\n" + "         :ut_process_status_id := logger.begin_java_job (\n"
                 + "           p_process_name => :p_process_name,  -- VARCHAR2,\n"
-                + "           p_class_name   => :p_class_name,    -- varchar2,\n"
+                + "           p_classname   => :p_classname,    -- varchar2,\n"
                 + "           p_module_name  => :p_module_name,   -- varchar2,\n"
                 + "           p_status_msg   => :p_status_msg,    -- varchar2,\n"
                 + "           p_thread_name  => :p_thread_name   -- varchar2\n" + "          );\n" + "       end;\n"
@@ -106,7 +113,7 @@ public class DbloggerForOracle implements DatabaseInstrumentation {
         }
         final CallableStatement cs = beginJobStatement;
         cs.setString("p_process_name", processName);
-        cs.setString("p_class_name", className);
+        cs.setString("p_classname", className);
         cs.setString("p_module_name", moduleName);
         cs.setString("p_status_msg", statusMsg);
         cs.setString("p_thread_name", threadName);
@@ -340,6 +347,19 @@ public class DbloggerForOracle implements DatabaseInstrumentation {
     public long insertStep(String arg0, String arg1, String arg2) {
         // TODO log error
         return -1;
+    }
+
+    public long getUtProcessStatusId() {
+        long utProcessStatusId = -1;
+        try {
+            if (sh == null) {
+                sh = new SequenceHelper(connection);
+            }
+            utProcessStatusId = sh.getSequence("ut_process_status_id_seq");
+        } catch (SQLException sqe) {
+            logger.error(sqe.getMessage());
+        }
+        return utProcessStatusId;
     }
 
 }

@@ -61,13 +61,13 @@ is
 
 
   function get_my_tracefile_name return varchar is
-         trace_file_name varchar2(4096);
+         tracefile_name varchar2(4096);
    begin
-    select value into trace_file_name
+    select value into tracefile_name
     from v$diag_info
     where name = 'Default Trace File';
 
-    return trace_file_name;
+    return tracefile_name;
    end get_my_tracefile_name;
 
    function set_tracefile_identifier(p_job_nbr in number) return varchar is
@@ -156,13 +156,15 @@ is
       if p_log_level = g_snap OR p_log_level <= g_record_level
       then
           insert into ut_process_log (
-               ut_process_status_id,   log_seq_nbr, log_msg_id,    log_msg,
-               log_level,              log_msg_ts,  elapsed_time,  caller_name,
+               ut_process_log_id,
+               ut_process_status_id,   log_seq_nbr,    log_msg_id,    log_msg,
+               log_level,              log_msg_ts,     caller_name,
                line_nbr,               log_msg_clob
           )
           values (
+	       ut_process_log_id_seq.nextval,
                p_ut_process_status_id, g_last_log_seq_nbr, p_log_msg_id,   short_message,
-               p_log_level,            current_timestamp,  p_elapsed_time, p_caller_name,
+               p_log_level,            current_timestamp,   p_caller_name,
                p_line_number,          long_message
          );
       end if;
@@ -264,7 +266,7 @@ is
       INSERT into ut_process_status (
 	  process_name,         schema_name, thread_name, process_run_nbr,      
 	  status_msg,           status_id,   status_ts,   SID,
-          ut_process_status_id, trace_file_name
+          ut_process_status_id, tracefile_name
       ) VALUES (
 	  g_process_name,       g_current_schema,    'main',  g_process_status_id,  
           'init',               'A',                 SYSDATE,
@@ -278,7 +280,7 @@ is
 
   FUNCTION begin_java_job ( 
     p_process_name in varchar2,
-    p_class_name   in varchar2,
+    p_classname   in varchar2,
     p_module_name  in varchar2,
     p_status_msg   in varchar2,
     p_thread_name  in varchar2,
@@ -286,7 +288,7 @@ is
   ) RETURN number
    is
       PRAGMA AUTONOMOUS_TRANSACTION;
-      my_trace_file_name varchar2(256);
+      my_tracefile_name varchar2(256);
    begin
 
       set_trace(p_trace_level);
@@ -303,18 +305,18 @@ is
       g_process_start_tm := current_timestamp;
       dbms_output.put_line('get_my_tracefile_name about');
 
-      my_trace_file_name := set_tracefile_identifier;
+      my_tracefile_name := set_tracefile_identifier;
 
       set_action('begin_java_job ' || to_char(g_process_status_id));
 
       insert into ut_process_status (
         process_name,         schema_name, thread_name, process_run_nbr,
         status_msg,           status_id,   status_ts,   SID,
-        ut_process_status_id, class_name,  module_name, trace_file_name
+        ut_process_status_id, classname,  module_name, tracefile_name
       ) values (
         g_process_name,        g_current_schema, p_thread_name, g_process_status_id,
         p_status_msg,          'A',              systimestamp,  g_sid,
-        g_process_status_id,   p_class_name,     p_module_name, my_trace_file_name
+        g_process_status_id,   p_classname,     p_module_name, my_tracefile_name
       );
 
       g_last_log_seq_nbr := 1;
@@ -336,7 +338,7 @@ is
       elapsed_tm := g_process_end_tm - g_process_start_tm;
 
       UPDATE ut_process_status
-         SET total_elapsed = elapsed_tm,
+         SET 
              SID = NULL,
              status_msg = 'DONE',
              status_id = 'C',
@@ -365,7 +367,7 @@ is
       elapsed_tm := g_process_end_tm - g_process_start_tm;
 
       UPDATE ut_process_status
-         SET total_elapsed = elapsed_tm,
+         SET 
              SID = NULL,
              status_msg = 'ABORT',
              status_id = 'I',
@@ -608,27 +610,6 @@ is
                          );
    end LOG;
 
-   procedure snap_stats (p_snap_name in varchar2)
-   is
-      my_log_time   timestamp ( 6 )        := current_timestamp;
-      my_elapsed    INTERVAL DAY TO SECOND;
-   begin
-      create_process_log (p_ut_process_status_id      => g_process_status_id,
-                          p_log_msg_id                 => p_snap_name,
-                          p_log_msg                    => p_snap_name,
-                          p_log_level                  => g_snap,
-                          p_elapsed_time               => my_elapsed,
-                          p_caller_name                => g_caller_name,
-                          p_line_number                => g_line_number
-                         );
-
-      INSERT into ut_process_stat (
-         ut_process_status_id, log_seq_nbr,       statistic#,      VALUE
-      ) select 
-         g_process_status_id, g_last_log_seq_nbr, stat.statistic#, stat.VALUE
-      from SYS.v_$mystat stat
-      where SID = g_sid;
-   end snap_stats;
 
    procedure set_filter_level (p_level in pls_integer)
    is

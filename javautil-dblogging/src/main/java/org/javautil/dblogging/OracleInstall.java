@@ -46,17 +46,17 @@ public class OracleInstall {
         logger.info("creating tables");
         final String createTablesResource = "ddl/oracle/dblogger_install_tables.sr.sql";
 
-        new SqlRunner(this, createTablesResource).setConnection(connection).process();
+        new SqlRunner(this, createTablesResource).setConnection(connection).setContinueOnError(true).process();
 
         logger.info("creating logger_message_formatter");
         new SqlRunner(this, "ddl/oracle/logger_message_formatter.plsql.sr.sql").setConnection(connection)
-                .setPrintSql(showSql).setProceduresOnly(true).process();
+                .setPrintSql(showSql).setProceduresOnly(true).setContinueOnError(true).process();
         logger.info("about to compile specs");
         new SqlRunner(this, "ddl/oracle/dblogger_install.pks.sr.sql").setConnection(connection)
-                .setPrintSql(showSql).setProceduresOnly(true).process();
+                .setPrintSql(showSql).setProceduresOnly(true).setContinueOnError(true).process();
         logger.info("creating logger package body");
         new SqlRunner(this, "ddl/oracle/dblogger_install.pkb.sr.sql").setConnection(connection)
-                .setPrintSql(showSql).setProceduresOnly(true).process();
+                .setPrintSql(showSql).setProceduresOnly(true).setContinueOnError(true).process();
 
         // final String plSqlErrors = OracleConnectionHelper.getPLSQLErrors(connection);
         // if (plSqlErrors != null) {

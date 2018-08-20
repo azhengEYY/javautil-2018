@@ -33,16 +33,16 @@ public class OracleInstallTest {
         }
     }
 
-    NameValue getUtProcessStatus(int id) throws SQLException {
+    NameValue getUtProcessStatus(Connection connection2, long id) throws SQLException {
         final String sql = "select * from ut_process_status where ut_process_status_id = :id";
-        final Connection connection2 = dataSource.getConnection();
+      //  final Connection connection2 = dataSource.getConnection();
         final PreparedStatement statusStatement = connection2.prepareStatement(sql);
-        statusStatement.setInt(1, id);
+        statusStatement.setLong(1, id);
 
         final ResultSet rset = statusStatement.executeQuery();
         rset.next();
         final NameValue retval = ResultSetHelper.getNameValue(rset, false);
-        connection2.close();
+      //  connection2.close();
         return retval;
     }
 

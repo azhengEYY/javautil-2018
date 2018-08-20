@@ -29,7 +29,7 @@ public class ExampleLoggingTest {
 
     private static DataSource              dataSource;
     private static Connection              conn;
-    private static DatabaseInstrumentation dblogger;
+    private static Dblogger dblogger;
     private static boolean                 skipTests;
 
     private final Logger                   logger      = LoggerFactory.getLogger(getClass());
@@ -55,7 +55,7 @@ public class ExampleLoggingTest {
             return;
         }
         final Connection conn = dataSource.getConnection();
-        final DatabaseInstrumentation dblogger = new DbloggerForOracle(conn);
+        final Dblogger dblogger = new DbloggerForOracle(conn);
         dblogger.prepareConnection();
 
         dblogger.beginJob(processName, getClass().getCanonicalName(), "ExampleLogging", null,

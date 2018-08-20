@@ -7,7 +7,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Date;
 
-import org.javautil.dblogging.DatabaseInstrumentation;
+import org.javautil.dblogging.Dblogger;
 import org.javautil.io.ResourceHelper;
 import org.javautil.sql.Binds;
 import org.javautil.sql.SqlRunner;
@@ -30,9 +30,9 @@ public class Prepost {
     private final Connection        connection;
 
     private SqlStatements           prepostQueries;
-    private DatabaseInstrumentation dblogger;
+    private Dblogger dblogger;
 
-    public Prepost(Connection conn, int verbosity, DatabaseInstrumentation dblogger) throws IOException {
+    public Prepost(Connection conn, int verbosity, Dblogger dblogger) throws IOException {
         this.connection = conn;
         this.dblogger = dblogger;
         loadDml();

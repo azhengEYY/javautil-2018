@@ -35,9 +35,6 @@ public abstract class AbstractRecord implements Record {
         return returnValue;
     }
 
-    private static Boolean latch = Boolean.TRUE;
-
-    // private static long nextRecordNumber = 1;
 
     protected int          lineNumber;
     protected String       text;

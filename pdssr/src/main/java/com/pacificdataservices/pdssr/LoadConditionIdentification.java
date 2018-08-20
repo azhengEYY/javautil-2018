@@ -11,7 +11,7 @@ import java.util.Map;
 
 import org.javautil.conditionidentification.ConditionIdentification;
 import org.javautil.conditionidentification.ConditionIdentificationPersistence;
-import org.javautil.dblogging.DatabaseInstrumentation;
+import org.javautil.dblogging.Dblogger;
 import org.javautil.io.ResourceHelper;
 import org.javautil.sql.Binds;
 import org.javautil.sql.DataNotFoundException;
@@ -74,9 +74,9 @@ public class LoadConditionIdentification {
     // ut_condition_run_id "
     // + "order by ut_condition_run_id");
 
-    private DatabaseInstrumentation   dblogger;
+    private Dblogger   dblogger;
 
-    public LoadConditionIdentification(Connection conn, DatabaseInstrumentation dblogger)
+    public LoadConditionIdentification(Connection conn, Dblogger dblogger)
             throws SQLException, IOException, SqlSplitterException {
         if (conn == null) {
             throw new IllegalArgumentException("connection is null");

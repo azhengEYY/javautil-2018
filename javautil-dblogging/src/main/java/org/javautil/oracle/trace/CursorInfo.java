@@ -38,11 +38,6 @@ public class CursorInfo {
 
     private transient Tracer           tracer = new Tracer();
 
-    // public CursorInfo(Cursor cursor) {
-    // this.cursor = cursor;
-    // this.cursorNumber = cursor.getCursorNumber();
-    // }
-
     public CursorInfo(CursorOperation record) {
         if (parsing == null) {
             String message = String.format(

@@ -5,35 +5,37 @@ import java.io.IOException;
 import java.io.Writer;
 import java.sql.SQLException;
 
-public interface Dblogger  {
+public interface Dblogger {
 
-    void prepareConnection() throws SQLException;
+	void prepareConnection() throws SQLException;
 
-    int beginJob(String processName, String className, String moduleName, String statusMsg, String threadName, String tracefileName)
-            throws SQLException;
+	int beginJob(String processName, String className, String moduleName, String statusMsg, String threadName, String tracefileName)
+			throws SQLException;
 
-    void abortJob() throws SQLException;
+	void abortJob() throws SQLException;
 
-    void endJob() throws SQLException;
+	void endJob() throws SQLException;
 
-    void setAction(String actionName) throws SQLException;
+	void setAction(String actionName) throws SQLException;
 
-    void setModule(String moduleName, String actionName) throws SQLException;
+	void setModule(String moduleName, String actionName) throws SQLException;
 
-    String getTraceFileName() throws SQLException;
+	String getTraceFileName() throws SQLException;
 
-    void getMyTraceFile(File file) throws IOException, SQLException;
+	void getMyTraceFile(File file) throws IOException, SQLException;
 
-    void getMyTraceFile(Writer writer) throws SQLException, IOException;
+	void getMyTraceFile(Writer writer) throws SQLException, IOException;
 
-    void dispose() throws SQLException;
+	void dispose() throws SQLException;
 
-    String openFile(String fileName) throws SQLException;
-    
-     long insertStep(String stepName, String stepInfo, String className);
+	String openFile(String fileName) throws SQLException;
+	
+	 long insertStep(String stepName, String stepInfo, String className);
 
 
-    void finishStep() throws SQLException;
-    
-    void showConnectionInformation();
+	void finishStep() throws SQLException;
+	
+	void showConnectionInformation();
+
+    long getUtProcessStatusId();
 }

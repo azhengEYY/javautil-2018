@@ -79,7 +79,7 @@ public class SqlRunner {
 	public void processStatements(Connection connection, Binds binds, List<SqlStatement> statements)
 			throws SQLException {
 
-		logger.debug("processStatements: showSql()",printSql);
+		logger.info("processStatements: showSql?: {}, continueOnError? {}",printSql,continueOnError);
 
 		int statementNumber = 0;
 		for (final SqlStatement ss : statements) {

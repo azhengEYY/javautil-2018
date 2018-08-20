@@ -10,7 +10,7 @@ import org.javautil.sql.SqlSplitterException;
 
 public class DatabaseInstrumentationFactory {
 
-    public static DatabaseInstrumentation getDatabaseInstrumentation(Connection connection)
+    public static Dblogger getDatabaseInstrumentation(Connection connection)
             throws SqlSplitterException, Exception {
         switch (Dialect.getDialect(connection)) {
         case ORACLE:

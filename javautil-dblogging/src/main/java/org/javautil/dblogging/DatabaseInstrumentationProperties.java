@@ -91,11 +91,11 @@ public class DatabaseInstrumentationProperties {
 
     }
 
-    public DatabaseInstrumentation getDatabaseInstrumentation() throws Exception, SqlSplitterException {
+    public Dblogger getDatabaseInstrumentation() throws Exception, SqlSplitterException {
         DataSource dataSource = getDataSource();
         Connection connection = dataSource.getConnection();
 
-        DatabaseInstrumentation dblogger = new DatabaseLoggerNoOperation();
+        Dblogger dblogger = new DatabaseLoggerNoOperation();
         switch (Dialect.getDialect(connection)) {
         case ORACLE:
             dblogger = new DbloggerForOracle(connection);

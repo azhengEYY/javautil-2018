@@ -1,7 +1,6 @@
 package org.javautil.oracle.trace.record;
 
 import java.util.HashMap;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.slf4j.Logger;
@@ -16,9 +15,7 @@ public enum RecordType {
     private static final Logger                logger  = LoggerFactory.getLogger(RecordType.class.getName());
 
     private static HashMap<String, RecordType> textMap = new HashMap<String, RecordType>();
-    private static final Pattern               pattern = Pattern.compile("(^[^#]*)");
 
-    // TODO just use ValueOf
     static {
         textMap.put("*** 20", TIMESTAMP);
         textMap.put("BINDS", BIND);
@@ -42,7 +39,6 @@ public enum RecordType {
             returnValue = textMap.get(lead);
         }
 
-        // final Matcher matcher = pattern.matcher(record);
 
         // TODO complete and remove those covered above
         if (returnValue == null) {
@@ -73,11 +69,6 @@ public enum RecordType {
             } else if (record.startsWith("===")) {
                 returnValue = SEPARATOR;
             }
-            // else if (matcher.find() && matcher.groupCount() > 0) {
-            // returnValue = UNKNOWN;
-            //// final String text = matcher.group(1).trim();
-            //// returnValue = textMap.get(text);
-            // }
             else if (record.trim().length() > 0) {
                 returnValue = UNKNOWN;
             }

@@ -12,7 +12,7 @@ import java.util.Map;
 
 import org.javautil.conditionidentification.ConditionIdentification;
 import org.javautil.conditionidentification.ConditionIdentificationPersistence;
-import org.javautil.dblogging.DatabaseInstrumentation;
+import org.javautil.dblogging.Dblogger;
 import org.javautil.io.ResourceHelper;
 import org.javautil.sql.Binds;
 import org.javautil.sql.DataNotFoundException;
@@ -36,9 +36,9 @@ public class InstrumentedLoadConditionIdentification {
 
     private static final String       ruleYamlFileName = "pdssr/CdsDataloadConditions.yaml";
 
-    private DatabaseInstrumentation   dblogger;
+    private Dblogger   dblogger;
 
-    public InstrumentedLoadConditionIdentification(Connection conn, DatabaseInstrumentation dblogger)
+    public InstrumentedLoadConditionIdentification(Connection conn, Dblogger dblogger)
             throws SQLException, IOException, SqlSplitterException {
         if (conn == null) {
             throw new IllegalArgumentException("connection is null");
