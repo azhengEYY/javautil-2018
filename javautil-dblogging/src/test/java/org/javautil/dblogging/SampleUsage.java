@@ -1,5 +1,7 @@
 package org.javautil.dblogging;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -35,7 +37,7 @@ public class SampleUsage {
 
     }
 
-    public long processException() throws SQLException {
+    public long processException() throws SQLException, FileNotFoundException, IOException {
         final long id = dblogger.beginJob(processName, getClass().getCanonicalName(), "ExampleLogging", null,
                 Thread.currentThread().getName(), null);
         try {

@@ -1,5 +1,6 @@
 package org.javautil.dblogging;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -43,20 +44,17 @@ public class SplitLoggerForOracle extends DbloggerForOracle implements Dblogger 
         String appTracefileName = getTraceFileName();
         logger.debug("updating tracefile name to {}", appTracefileName);
         persistencelogger.updateTraceFileName(appTracefileName);
-        String persistenceTracefileName = persistencelogger.getTraceFileName();
         return id;
     }
 
     @Override
-    public void abortJob(Exception e) throws SQLException {
+    public void abortJob(Exception e) throws SQLException, FileNotFoundException, IOException {
         persistencelogger.abortJob(e);
-
     }
 
     @Override
     public void endJob() throws SQLException {
         persistencelogger.endJob();
-
     }
 
     @Override

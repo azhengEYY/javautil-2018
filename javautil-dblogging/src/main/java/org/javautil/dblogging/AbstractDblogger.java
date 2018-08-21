@@ -154,7 +154,7 @@ public abstract class AbstractDblogger implements Dblogger {
     }
 
     @Override
-    public void abortJob(Exception e) throws SQLException {
+    public void abortJob(Exception e) throws SQLException, FileNotFoundException, IOException {
         finishJob(statements.getSqlStatement("abort_job"));
     }
 

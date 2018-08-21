@@ -34,17 +34,6 @@ public class Parsing extends AbstractCursorEvent {
     private static transient Logger logger              = Logger.getLogger(Parsing.class.getName());
     // TODO can't this all be in one expression
     private static final Pattern    cursorNumberPattern = Pattern.compile("^PARSING IN CURSOR #(\\d*) ");
-    // TODO this should be in AbstractCursorTraceEvent
-    // private static final Pattern lenPattern = Pattern.compile(" len=(\\d*) ");
-    // private static final Pattern depPattern = Pattern.compile(" dep=(\\d*) ");
-    // private static final Pattern uidPattern = Pattern.compile(" uid=(\\d*) ");
-    // private static final Pattern octPattern = Pattern.compile(" oct=(\\d*) ");
-    // private static final Pattern lidPattern = Pattern.compile(" lid=(\\d*) ");
-    // private static final Pattern timPattern = Pattern.compile(" tim=(\\d*) ");
-    // private static final Pattern hvPattern = Pattern.compile(" hv=(\\d*) ");
-    // private static final Pattern adPattern = Pattern.compile(" ad='([^']*)");
-    // private static final Pattern sqlidPattern = Pattern.compile("
-    // sqlid='([^']*)");
 
     private final int               sqlTextLength;
     /**

@@ -32,7 +32,7 @@ public class H2ConnectionHelper {
 		logger.info("filebase: " + filebase);
 		final ArrayList<String> files = new ArrayList<>();
 
-		try (DirectoryStream<Path> dirStream = Files.newDirectoryStream(Paths.get("/scratch"), "*.dbf*"))
+		try (DirectoryStream<Path> dirStream = Files.newDirectoryStream(Paths.get("/tmp"), "*.dbf*"))
 		{
 			dirStream.forEach(path -> System.out.println(path));
 			//    files.add(path.getFileName()));

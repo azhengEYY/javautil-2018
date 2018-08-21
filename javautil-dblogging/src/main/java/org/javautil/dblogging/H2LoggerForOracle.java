@@ -1,5 +1,6 @@
 package org.javautil.dblogging;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -70,7 +71,7 @@ public class H2LoggerForOracle extends DbloggerForOracle implements Dblogger {
      * @see org.javautil.dblogging.DatabaseInstrumentation#abortJob()
      */
     @Override
-    public void abortJob(Exception e) throws SQLException {
+    public void abortJob(Exception e) throws SQLException, FileNotFoundException, IOException {
         h2logger.abortJob(e);
 
     }

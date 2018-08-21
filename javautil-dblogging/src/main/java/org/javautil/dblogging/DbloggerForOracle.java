@@ -1,6 +1,7 @@
 package org.javautil.dblogging;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
@@ -25,7 +26,6 @@ public class DbloggerForOracle extends AbstractDblogger implements Dblogger {
 
     protected Logger                    logger             = LoggerFactory.getLogger(getClass());
     
-    private String name;
 
     // TODO see if clear context is necessary
 
@@ -137,7 +137,7 @@ public class DbloggerForOracle extends AbstractDblogger implements Dblogger {
      * @see org.javautil.dblogging.DatabaseInstrumentation#abortJob()
      */
 
-    public void abortJob(Exception e) throws SQLException {
+    public void abortJob(Exception e) throws SQLException, FileNotFoundException, IOException {
 
         StringBuilder sb = new StringBuilder();
         sb.append(e.getMessage());
@@ -154,6 +154,7 @@ public class DbloggerForOracle extends AbstractDblogger implements Dblogger {
         abortJobStatement.setString("p_stacktrace",abortMessage);
         abortJobStatement.execute();
         logger.warn("job terminated with: '{}'", abortMessage);
+        updateJob(getUtProcessStatusId());
 
     }
 

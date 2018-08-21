@@ -102,8 +102,6 @@ public class InstrumentedLoadConditionIdentification {
     }
 
     public void deleteRun(long utConditionRunId) throws SQLException, IOException, SqlSplitterException {
-        Binds binds = new Binds();
-
         dblogger.setAction("deleteRun");
         ConditionIdentificationPersistence cip = new ConditionIdentificationPersistence(connection, 0);
         cip.purgeRun(utConditionRunId);

@@ -1,6 +1,7 @@
 package org.javautil.dblogging;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Writer;
 import java.sql.SQLException;
@@ -41,5 +42,5 @@ public interface Dblogger {
 
     void updateTraceFileName(String appTracefileName) throws SQLException;
 
-    void abortJob(Exception e) throws SQLException;
+    void abortJob(Exception e) throws SQLException, FileNotFoundException, IOException;
 }

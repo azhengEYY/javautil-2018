@@ -38,7 +38,6 @@ public class TraceFileReader implements Closeable {
     private final Logger                  logger              = LoggerFactory.getLogger(this.getClass().getName());
     private static EventHelper            events              = new EventHelper();
     private static final Integer          LOG_PARSED_RECORD   = Integer.valueOf(1);
-    private static final Integer          LOG_RAW_RECORD      = Integer.valueOf(2);
     private final String                  fileName;
     //
     private final ArrayList<String>       filePreamble        = new ArrayList<String>();

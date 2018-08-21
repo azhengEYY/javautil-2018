@@ -37,20 +37,10 @@ public class NamedSqlStatementTest {
 	public void testAnnotatedNameShort() throws IOException, SqlSplitterException {
 		String resourceName = "testsr/etl_persistence.named.sr.sql";
 		SqlSplitter splitter = new SqlSplitter(this,resourceName);
-		ArrayList<SqlStatement> statementList = splitter.getSqlStatementList();
-	
-//		for (SqlStatement stmt : statementList) {
-//			logger.info("SqlStatement:\n{}",stmt);
-//			assertNotNull(stmt.getName());
-//		}
-		NamedSqlStatements sqlStatements = new NamedSqlStatements(statementList);
-
 		final NamedSqlStatements named = NamedSqlStatements.getNameSqlStatementsFromSqlSplitterResource(this,"testsr/etl_persistence.named.sr.sql");
-	
 		final SqlStatement custTotInsert = named.getSqlStatement("etl_customer_tot_insert");
 		assertNotNull(custTotInsert);
 		final String custTotInsertSql = custTotInsert.getSql();
-
 		final int index = custTotInsertSql.indexOf(":ETL_FILE_ID,  :LINE_NUMBER, :CUSTOMER_COUNT");
 		assertTrue(index > -1);
 		assertEquals(9,named.size());
