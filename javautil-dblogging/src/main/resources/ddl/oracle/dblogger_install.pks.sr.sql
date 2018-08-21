@@ -88,7 +88,7 @@ CREATE OR REPLACE PACKAGE logger AS
     PROCEDURE end_job ;
     --
     --
-    PROCEDURE abort_job ;
+    PROCEDURE abort_job (p_stacktrace in varchar);
     --
     --
     --

@@ -233,4 +233,6 @@ public abstract class AbstractDblogger implements Dblogger {
     public long getUtProcessStatusId() {
         return utProcessStatusId;
     }
+
+
 }

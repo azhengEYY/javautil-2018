@@ -129,12 +129,23 @@ public class DbloggerForOracle extends AbstractDblogger implements Dblogger {
      *
      * @see org.javautil.dblogging.DatabaseInstrumentation#abortJob()
      */
-    @Override
-    public void abortJob() throws SQLException {
-        if (abortJobStatement == null) {
-            abortJobStatement = prepareCall("begin logger.abort_job(); end;");
+
+    public void abortJob(Exception e) throws SQLException {
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(e.getMessage());
+        sb.append("\n");
+        for (StackTraceElement el : e.getStackTrace()) {
+            sb.append(el.toString());
+            sb.append("\n");
         }
+        
+        if (abortJobStatement == null) {
+            abortJobStatement = prepareCall("begin logger.abort_job(:p_stacktrace); end;");
+        }
+        abortJobStatement.setString("p_stacktrace",sb.toString());
         abortJobStatement.execute();
+        logger.warn("job terminated with ======" + sb.toString());
 
     }
 

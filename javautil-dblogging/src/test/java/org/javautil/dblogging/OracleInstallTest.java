@@ -46,11 +46,11 @@ public class OracleInstallTest {
         return retval;
     }
 
-    @Test
-    public void installTest() throws Exception, SqlSplitterException {
-        DataSource ds = new ApplicationPropertiesDataSource().getDataSource();
-        OracleInstall installer = new OracleInstall(ds.getConnection(), true, false);
-        installer.process();
-    }
+//    @Test
+//    public void installTest() throws Exception, SqlSplitterException {
+//        DataSource ds = new ApplicationPropertiesDataSource().getDataSource();
+//        OracleInstall installer = new OracleInstall(ds.getConnection(), true, true);
+//        installer.process();
+//    }
 
 }

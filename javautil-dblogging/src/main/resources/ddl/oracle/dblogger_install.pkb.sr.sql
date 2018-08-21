@@ -351,7 +351,7 @@ is
    end end_job;
    
    --::<
-   procedure abort_job
+   procedure abort_job(p_stacktrace in varchar)
    --::* procedure abort_job
    --::* update ut_process_status
    --::* elapsed_time
@@ -371,7 +371,8 @@ is
              SID = NULL,
              status_msg = 'ABORT',
              status_id = 'I',
-             status_ts = SYSDATE
+             status_ts = SYSDATE,
+             abort_stacktrace = p_stacktrace
        where ut_process_status_id = g_process_status_id;
 
       close_log_file;

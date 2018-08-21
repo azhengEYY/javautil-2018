@@ -19,6 +19,7 @@ create table ut_process_status (
     tracefile_name       varchar(4000),
     tracefile_data       clob,
     tracefile_json       clob,
+    abort_stacktrace     clob,
     check ( ignore_flg in ('Y', 'N')) ,
     constraint ut_process_status_pk primary key (ut_process_status_id)
    ); 
