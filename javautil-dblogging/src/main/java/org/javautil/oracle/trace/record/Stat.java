@@ -6,9 +6,6 @@ package org.javautil.oracle.trace.record;
 
 import java.util.regex.Pattern;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * STAT #<CURSOR> id=N cnt=0 [pid=0 pos=0 obj=0 op='SORT AGGREGATE ']
  * ----------------------------------------------------------------------------

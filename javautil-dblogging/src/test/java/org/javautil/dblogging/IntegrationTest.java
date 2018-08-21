@@ -57,7 +57,10 @@ public class IntegrationTest extends OracleInstallTest {
         assertNotNull(status.getString("STATUS_TS"));
         // assertNotNull(status.getString("TOTAL_ELAPSED"));
         String tracefileName = status.getString("TRACEFILE_NAME");
+        assertNotNull(tracefileName);
         logger.info("tracefileName {}", tracefileName);
+        
+        // check st
 
     }
 
@@ -68,10 +71,10 @@ public class IntegrationTest extends OracleInstallTest {
             return;
         }
         final Connection connection = dataSource.getConnection();
-        SqlStatement objectSS = new SqlStatement(connection,
-                "select object_name,object_type from user_objects order by object_type, object_name");
-        ListOfNameValue objects = objectSS.getListOfNameValue(new Binds(), false);
-        System.out.println(objects);
+//        SqlStatement objectSS = new SqlStatement(connection,
+//                "select object_name,object_type from user_objects order by object_type, object_name");
+//        ListOfNameValue objects = objectSS.getListOfNameValue(new Binds(), false);
+//        System.out.println(objects);
         System.out.println("connection is " + connection);
         // begin sample job
         final DbloggerForOracle dblogger = new DbloggerForOracle(connection);
@@ -103,7 +106,7 @@ public class IntegrationTest extends OracleInstallTest {
         assertEquals("ABORT",status.getString("STATUS_MSG"));
         assertEquals("A", status.getString("STATUS_ID"));
         assertNotNull(status.getString("STATUS_TS"));
-        assertNotNull(status.getString("STACKTRACE_ABORT"));
+        assertNotNull(status.getString("ABORT_STACKTRACE"));
         // assertNotNull(status.getString("TOTAL_ELAPSED"));
         String tracefileName = status.getString("TRACEFILE_NAME");
         logger.info("tracefileName {}", tracefileName);

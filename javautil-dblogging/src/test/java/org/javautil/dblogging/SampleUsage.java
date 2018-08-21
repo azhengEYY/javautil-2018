@@ -1,15 +1,10 @@
 package org.javautil.dblogging;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
 import org.javautil.sql.Binds;
 import org.javautil.sql.ConnectionUtil;
-import org.javautil.sql.SqlSplitterException;
 import org.javautil.sql.SqlStatement;
 import org.javautil.util.NameValue;
 import org.slf4j.Logger;

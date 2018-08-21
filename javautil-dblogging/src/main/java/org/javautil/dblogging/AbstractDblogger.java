@@ -49,6 +49,7 @@ public abstract class AbstractDblogger implements Dblogger {
         statements = NamedSqlStatements.getNameSqlStatementsFromSqlSplitterResource(this, "ddl/h2/dblogger_dml.ss.sql");
     }
 
+    @Override
     public long beginJob(final String processName, String className, String moduleName, String statusMsg,
             String threadName, String tracefileName)
             throws SQLException {
@@ -231,6 +232,7 @@ public abstract class AbstractDblogger implements Dblogger {
 
     }
 
+    @Override
     public long getUtProcessStatusId() {
         return utProcessStatusId;
     }

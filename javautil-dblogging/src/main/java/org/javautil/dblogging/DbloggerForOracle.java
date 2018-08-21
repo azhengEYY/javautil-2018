@@ -1,7 +1,6 @@
 package org.javautil.dblogging;
 
 import java.io.File;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
@@ -17,10 +16,8 @@ import org.javautil.oracle.OracleSessionInfo;
 import org.javautil.sql.Binds;
 import org.javautil.sql.SequenceHelper;
 import org.javautil.sql.SqlSplitterException;
-import org.javautil.sql.SqlStatement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.javautil.util.NameValue;
 
 
 
@@ -153,9 +150,10 @@ public class DbloggerForOracle extends AbstractDblogger implements Dblogger {
         if (abortJobStatement == null) {
             abortJobStatement = prepareCall("begin logger.abort_job(:p_stacktrace); end;");
         }
-        abortJobStatement.setString("p_stacktrace",sb.toString());
+        String abortMessage = sb.toString();
+        abortJobStatement.setString("p_stacktrace",abortMessage);
         abortJobStatement.execute();
-        logger.warn("job terminated with ======" + sb.toString());
+        logger.warn("job terminated with: '{}'", abortMessage);
 
     }
 

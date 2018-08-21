@@ -37,7 +37,7 @@ public class DbloggerH2 extends AbstractDblogger implements Dblogger {
     public DbloggerH2(Connection connection) throws IOException, SQLException {
       super(connection);
         statements = NamedSqlStatements.getNameSqlStatementsFromSqlSplitterResource(this, "ddl/h2/dblogger_dml.ss.sql");
-    //    sequenceHelper = new SequenceHelper(connection);
+        sequenceHelper = new SequenceHelper(connection);
     }
 
     /*
@@ -49,6 +49,7 @@ public class DbloggerH2 extends AbstractDblogger implements Dblogger {
     public void prepareConnection() throws SQLException {
     }
 
+    @Override
     public long getUtProcessStatusId() {
         long utProcessStatusId = -1;
         try {

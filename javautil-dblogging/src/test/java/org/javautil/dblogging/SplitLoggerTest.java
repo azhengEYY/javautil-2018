@@ -6,7 +6,6 @@ package org.javautil.dblogging;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -19,98 +18,129 @@ import org.javautil.sql.ConnectionUtil;
 import org.javautil.sql.SqlSplitterException;
 import org.javautil.sql.SqlStatement;
 import org.javautil.util.NameValue;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/// TODO code coverage https://asktom.oracle.com/pls/asktom/f?p=100:11:0::::P11_QUESTION_ID:9531985800346169203
 public class SplitLoggerTest //extends OracleInstallTest 
 {
 
-    private final Logger logger      = LoggerFactory.getLogger(getClass());
+    private final static Logger logger      = LoggerFactory.getLogger(SplitLoggerTest.class);
     final String         processName = "Logging Example";
-
-    @Test // O add steps and make as an example
-    public void sampleUsage() throws SqlSplitterException, Exception {
-
+    private static DataSource appDataSource;
+    private static DataSource xeDataSource;
+//    private static SplitLoggerForOracle dblogger;
+ //   private static Connection appConnection;
+    
+    
+    @BeforeClass
+    public static void beforeClass() throws SqlSplitterException, Exception {
+  
+        appDataSource = new ApplicationPropertiesDataSource().getDataSource(new SplitLoggerTest(),"oracle.application.properties");
+  //      appConnection = appDataSource.getConnection();
         
-        DataSource appDataSource = new ApplicationPropertiesDataSource().getDataSource(this,"oracle.application.properties");
-        final Connection appConnection = appDataSource.getConnection();
-        
-        DataSource xeDatasource = new DbloggerPropertiesDataSource("dblogger.xe.properties").getDataSource();
-        Connection xeConnection = xeDatasource.getConnection();
+        xeDataSource = new DbloggerPropertiesDataSource("dblogger.xe.properties").getDataSource();
         
  
-        logger.info("appConnection: {}", OracleSessionInfo.getConnectionInfo(appConnection) );
+  //      logger.info("appConnection: {}", OracleSessionInfo.getConnectionInfo(appConnection) );
         //
+        
+        
+    }
+
+
+    public long sampleUsage(Dblogger dblogger, Connection appConnection) throws SqlSplitterException, Exception {
+        
+
+        dblogger.prepareConnection();
+        final String processName = "Process Name";
+        // Start the job
+        final long id = dblogger.beginJob(processName, getClass().getCanonicalName(), "ExampleLogging", null,
+                Thread.currentThread().getName(), null);
+        dblogger.setModule("SplitLoggerTest", "simple example");
+        dblogger.setAction("Some work");
+        dblogger.insertStep("Full join", "Meaningless busy work", getClass().getName());
+        ConnectionUtil.exhaustQuery(appConnection, "select * from user_tab_columns, user_tables");
+
+        dblogger.setAction("Another set of work");
+        ConnectionUtil.exhaustQuery(appConnection, "select count(*) from all_tab_columns");
+        // End the job
+        dblogger.endJob();
+
+        // check ut_status_process_fields
+      
+        return id;
+        
+    }
+    
+    @Test
+    public void testSplitLogger() throws SqlSplitterException, Exception {
+        Connection appConnection = appDataSource.getConnection();
+        Connection xeConnection = xeDataSource.getConnection();
         OracleInstall orainst = new OracleInstall(xeConnection, true, false);
         orainst.process();
         orainst = new OracleInstall(appConnection, true, false);
         orainst.process();
         //
-        Dblogger persistenceLogger = new DbloggerForOracle(xeDatasource.getConnection());
-        
-        // begin sample job
-        final SplitLoggerForOracle dblogger = new SplitLoggerForOracle(appConnection, persistenceLogger);
-        dblogger.prepareConnection();
-        final String processName = "Process Name";
+        Dblogger persistenceLogger = new DbloggerForOracle(xeDataSource.getConnection());
+        Dblogger dblogger = new SplitLoggerForOracle(appConnection, persistenceLogger);
+        long id = sampleUsage(dblogger, appConnection);
+        Connection conn = xeDataSource.getConnection();
+        testResults(conn,id);
+        appConnection.close();
+        xeConnection.close();
+        conn.close();
+    }
+    
+    @Test
+    public void testDbloggerForOracle() throws SqlSplitterException, Exception {
+        Connection appConnection = appDataSource.getConnection();
+       
+        OracleInstall orainst = new OracleInstall(appConnection, true, false);
+        orainst.process();
         //
-        final long id = dblogger.beginJob(processName, getClass().getCanonicalName(), "ExampleLogging", null,
-                Thread.currentThread().getName(), null);
-        logger.info("*****after beginJob tracefileName: {}",getTraceFileName(xeConnection,id));
-        
-        dblogger.setAction("Some work");
-        ConnectionUtil.exhaustQuery(appConnection, "select * from user_tab_columns, user_tables");
-
-        dblogger.setAction("Another set of work");
-        ConnectionUtil.exhaustQuery(appConnection, "select count(*) from all_tab_columns");
-        logger.info("*****before endJob tracefileName: {}",getTraceFileName(xeConnection,id));
-        dblogger.endJob();
-        logger.info("****after endJob tracefileName: {}", getTraceFileName(xeConnection,id));
-        // test it
-
-        // check ut_status_process_fields
-        
-        assertTraceNotXe(xeConnection,id);
-        
-//        SqlStatement ss = new SqlStatement(xeDatasource.getConnection(),"select * from ut_process_status where ut_process_status_id = :ut_process_status_id");
-//        Binds binds = new Binds();
-//        binds.put("ut_process_status_id",id);
-//        final NameValue status = ss.getNameValue(binds,false);
-//        logger.debug(status.getSortedMultilineString());
-//        assertEquals(processName, status.getString("PROCESS_NAME"));
-//        assertEquals("C", status.getString("STATUS_ID"));
-//        assertNotNull(status.getString("STATUS_TS"));
-//        String tracefileName = status.getString("TRACEFILE_NAME");
-//        int xeindex = tracefileName.indexOf("xe");
-//        assertEquals(-1, xeindex);
-//        
-//     //   assertNotNull(status.getString("TOTAL_ELAPSED"));//
-//        status.getString("TRACEFILE_NAME");
+        Dblogger dblogger = new DbloggerForOracle(appConnection);
+        long id = sampleUsage(dblogger, appConnection);
+        Connection conn = appDataSource.getConnection();
+        testResults(conn,id);
+        conn.close();
+        appConnection.close();
     }
     
-    
-    public String getTraceFileName(Connection conn, long id) throws SQLException {
-        SqlStatement ss = new SqlStatement(conn,"select * from ut_process_status where ut_process_status_id = :ut_process_status_id");
-        Binds binds = new Binds();
-        binds.put("ut_process_status_id",id);
-        final NameValue status = ss.getNameValue(binds,false);
- 
-        String tracefileName = status.getString("TRACEFILE_NAME");
-       return tracefileName;
+    @Test
+    public void testH2logger() throws SqlSplitterException, Exception {
+        DataSource h2DataSource = new H2LoggerDataSource().getPopulatedH2FromDbLoggerProperties(this, "h2.dblogger.properties"); 
+        Connection appConnection = appDataSource.getConnection();
+     
+        //
+        Dblogger dblogger = new H2LoggerForOracle(appConnection,h2DataSource);
+        long id = sampleUsage(dblogger, appConnection);
+        Connection conn = h2DataSource.getConnection();
+        testResults(conn,id);
+        conn.close();
+        appConnection.close();
     }
-    public void assertTraceNotXe(Connection conn, long id) throws SQLException {
-        SqlStatement ss = new SqlStatement(conn,"select * from ut_process_status where ut_process_status_id = :ut_process_status_id");
-        Binds binds = new Binds();
-        binds.put("ut_process_status_id",id);
-        final NameValue status = ss.getNameValue(binds,false);
-        logger.debug(status.getSortedMultilineString());
-     //   assertEquals(processName, status.getString("PROCESS_NAME"));
-        assertEquals("C", status.getString("STATUS_ID"));
-        assertNotNull(status.getString("STATUS_TS"));
-        String tracefileName = status.getString("TRACEFILE_NAME");
-        int xeindex = tracefileName.indexOf("xe");
-        assertEquals(-1, xeindex);
+    
+    public void testResults(Connection conn, long id) throws SQLException {
+    
+    SqlStatement ss = new SqlStatement(conn,"select * from ut_process_status where ut_process_status_id = :ut_process_status_id");
+    Binds binds = new Binds();
+    binds.put("ut_process_status_id",id);
+    final NameValue status = ss.getNameValue(binds,false);
+    ss.close();
+    logger.debug(status.getSortedMultilineString());
+ //   assertEquals(processName, status.getString("PROCESS_NAME"));
+    assertEquals("C", status.getString("STATUS_ID"));
+    assertNotNull(status.getString("STATUS_TS"));
+    String tracefileName = status.getString("TRACEFILE_NAME");
+    int xeindex = tracefileName.indexOf("xe");
+    assertEquals(-1, xeindex);
+    
+    // check out step
+    ss = new SqlStatement(conn,"select * from ut_process_step where ut_process_status_id = :ut_process_status_id");
+    final NameValue stepStatusNv = ss.getNameValue(binds,false);
+    logger.info("step: {}" , stepStatusNv.getSortedMultilineString());
     }
 
 //   // @Test
@@ -125,13 +155,13 @@ public class SplitLoggerTest //extends OracleInstallTest
 //        logger.info("logFileName: " + logFileName);
 //    }
 
-    NameValue getLastUtProcessStatus(Connection connection) throws SQLException {
-        final String sql = "select * from ut_process_status "
-                + "where ut_process_status_id = (select max(ut_process_status_id) from ut_process_status)";
-        final SqlStatement ss = new SqlStatement(connection, sql);
-        final NameValue retval = ss.getNameValue();
-        ss.close();
-        return retval;
-    }
+//    NameValue getLastUtProcessStatus(Connection connection) throws SQLException {
+//        final String sql = "select * from ut_process_status "
+//                + "where ut_process_status_id = (select max(ut_process_status_id) from ut_process_status)";
+//        final SqlStatement ss = new SqlStatement(connection, sql);
+//        final NameValue retval = ss.getNameValue();
+//        ss.close();
+//        return retval;
+//    }
 
 }

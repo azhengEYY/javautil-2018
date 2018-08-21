@@ -1,7 +1,6 @@
 package org.javautil.oracle.trace.record;
 
 import java.util.HashMap;
-import java.util.regex.Pattern;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

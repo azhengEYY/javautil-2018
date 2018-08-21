@@ -7,13 +7,11 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
-import org.javautil.sql.ApplicationPropertiesDataSource;
 import org.javautil.sql.Dialect;
 import org.javautil.sql.ResultSetHelper;
 import org.javautil.sql.SqlSplitterException;
 import org.javautil.util.NameValue;
 import org.junit.BeforeClass;
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
