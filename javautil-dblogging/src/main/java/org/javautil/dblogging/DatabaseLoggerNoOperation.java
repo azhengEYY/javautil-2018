@@ -18,7 +18,7 @@ public class DatabaseLoggerNoOperation implements Dblogger {
 	}
 
 	@Override
-	public void abortJob() throws SQLException {
+	public void abortJob(Exception e) throws SQLException {
 	}
 
 	@Override

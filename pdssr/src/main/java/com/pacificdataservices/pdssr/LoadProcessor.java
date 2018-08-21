@@ -87,7 +87,7 @@ public class LoadProcessor implements FilenameFilter {
                                  // autocommit
         } catch (final Exception e) {
             e.printStackTrace();
-            dblogger.abortJob(); // TODO needs stacktrace
+            dblogger.abortJob(e); // TODO needs stacktrace
             throw e;
         }
         return etlFileId;

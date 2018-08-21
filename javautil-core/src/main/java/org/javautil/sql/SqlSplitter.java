@@ -326,7 +326,6 @@ public class SqlSplitter {
 		//System.out.println("blockType " + blockType + " line " + lines.get(0));
 		final StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < (lines.size() - 1); i++) {
-			String line = lines.get(i).getText();
 			sb.append(lines.get(i).getText());
 			sb.append("\n");
 		}

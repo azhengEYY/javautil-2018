@@ -70,8 +70,8 @@ public class H2LoggerForOracle extends DbloggerForOracle implements Dblogger {
      * @see org.javautil.dblogging.DatabaseInstrumentation#abortJob()
      */
     @Override
-    public void abortJob() throws SQLException {
-        h2logger.abortJob();
+    public void abortJob(Exception e) throws SQLException {
+        h2logger.abortJob(e);
 
     }
 

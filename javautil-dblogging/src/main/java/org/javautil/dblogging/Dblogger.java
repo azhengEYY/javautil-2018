@@ -12,7 +12,7 @@ public interface Dblogger {
 	long beginJob(String processName, String className, String moduleName, String statusMsg, String threadName, String tracefileName)
 			throws SQLException;
 
-	void abortJob() throws SQLException;
+	//void abortJob() throws SQLException;
 
 	void endJob() throws SQLException;
 
@@ -40,4 +40,6 @@ public interface Dblogger {
     long getUtProcessStatusId();
 
     void updateTraceFileName(String appTracefileName) throws SQLException;
+
+    void abortJob(Exception e) throws SQLException;
 }

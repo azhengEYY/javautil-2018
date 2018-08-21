@@ -448,9 +448,8 @@ public class SqlStatement {
 	// allow mixing if so declared as in "setMixedConnections"?
 	public int executeUpdate(Connection conn, Binds binds) throws SQLException {
 		if (trace) {
-		//	System.out.println("executeUpdate tracing " + trace);
 			String message = String.format("executeUpdate sql:\n%s\nbinds:\n%s", sql,binds);
-	//		System.out.println(message);
+		System.out.println(message);
 		}
 		try {
 			checkConnectionArgument(conn);

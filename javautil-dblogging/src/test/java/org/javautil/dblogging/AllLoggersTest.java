@@ -11,7 +11,6 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
-import org.javautil.oracle.OracleSessionInfo;
 import org.javautil.sql.ApplicationPropertiesDataSource;
 import org.javautil.sql.Binds;
 import org.javautil.sql.ConnectionUtil;
@@ -23,30 +22,18 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SplitLoggerTest //extends OracleInstallTest 
+public class AllLoggersTest
 {
 
-    private final static Logger logger      = LoggerFactory.getLogger(SplitLoggerTest.class);
+    private final static Logger logger      = LoggerFactory.getLogger(AllLoggersTest.class);
     final String         processName = "Logging Example";
     private static DataSource appDataSource;
     private static DataSource xeDataSource;
-//    private static SplitLoggerForOracle dblogger;
- //   private static Connection appConnection;
-    
     
     @BeforeClass
     public static void beforeClass() throws SqlSplitterException, Exception {
-  
-        appDataSource = new ApplicationPropertiesDataSource().getDataSource(new SplitLoggerTest(),"oracle.application.properties");
-  //      appConnection = appDataSource.getConnection();
-        
+        appDataSource = new ApplicationPropertiesDataSource().getDataSource(new AllLoggersTest(),"oracle.application.properties");
         xeDataSource = new DbloggerPropertiesDataSource("dblogger.xe.properties").getDataSource();
-        
- 
-  //      logger.info("appConnection: {}", OracleSessionInfo.getConnectionInfo(appConnection) );
-        //
-        
-        
     }
 
 
@@ -68,8 +55,6 @@ public class SplitLoggerTest //extends OracleInstallTest
         // End the job
         dblogger.endJob();
 
-        // check ut_status_process_fields
-      
         return id;
         
     }
@@ -112,8 +97,6 @@ public class SplitLoggerTest //extends OracleInstallTest
     public void testH2logger() throws SqlSplitterException, Exception {
         DataSource h2DataSource = new H2LoggerDataSource().getPopulatedH2FromDbLoggerProperties(this, "h2.dblogger.properties"); 
         Connection appConnection = appDataSource.getConnection();
-     
-        //
         Dblogger dblogger = new H2LoggerForOracle(appConnection,h2DataSource);
         long id = sampleUsage(dblogger, appConnection);
         Connection conn = h2DataSource.getConnection();

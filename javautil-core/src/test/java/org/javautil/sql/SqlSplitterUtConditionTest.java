@@ -36,8 +36,7 @@ public class SqlSplitterUtConditionTest {
 	public void testUtConditionBad() throws IOException, SqlSplitterException {
 		String splitterResource = "testsr/ut_condition_tables_error_no_statement_end.sr.sql";
 	
-		final SqlSplitter sr = new SqlSplitter(this,splitterResource).setVerbosity(0);
-		final ArrayList<String> sqls = sr.getSqlTexts();
+		new SqlSplitter(this,splitterResource).setVerbosity(0);
 	}
 	
 
