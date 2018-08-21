@@ -59,6 +59,13 @@ is
        return g_process_status_id;
    end;
 
+  procedure update_tracefile_name(p_tracefile_name in varchar) is
+     pragma autonomous_transaction ;
+  begin
+	  update ut_process_status set tracefile_name = p_tracefile_name 
+	  where ut_process_status_id = g_process_status_id;
+	  commit;
+  end;
 
   function get_my_tracefile_name return varchar is
          tracefile_name varchar2(4096);
@@ -370,7 +377,7 @@ is
          SET 
              SID = NULL,
              status_msg = 'ABORT',
-             status_id = 'I',
+             status_id = 'A',
              status_ts = SYSDATE,
              abort_stacktrace = p_stacktrace
        where ut_process_status_id = g_process_status_id;

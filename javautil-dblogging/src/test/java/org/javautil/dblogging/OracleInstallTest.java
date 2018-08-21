@@ -19,18 +19,21 @@ import org.slf4j.LoggerFactory;
 
 public class OracleInstallTest {
 
-    private static ApplicationPropertiesDataSource dsSource = new ApplicationPropertiesDataSource();
+   // private static ApplicationPropertiesDataSource dsSource = new ApplicationPropertiesDataSource();
+    
     static DataSource                              dataSource;
     private static Logger                          logger   = LoggerFactory.getLogger(OracleInstallTest.class);
     static boolean                                 skipTests;
-    Connection                                     connection;
+ 
 
     @BeforeClass
     public static void beforeClass() throws Exception {
-        dataSource = dsSource.getDataSource();
+        dataSource = new DbloggerPropertiesDataSource("dblogger.xe.properties").getDataSource();
         if (!Dialect.getDialect(dataSource.getConnection()).equals(Dialect.ORACLE)) {
             skipTests = true;
         }
+        OracleInstall installer = new OracleInstall(dataSource.getConnection(), true, false);
+        installer.process();
     }
 
     NameValue getUtProcessStatus(Connection connection2, long id) throws SQLException {
@@ -46,11 +49,12 @@ public class OracleInstallTest {
         return retval;
     }
 
-//    @Test
-//    public void installTest() throws Exception, SqlSplitterException {
-//        DataSource ds = new ApplicationPropertiesDataSource().getDataSource();
-//        OracleInstall installer = new OracleInstall(ds.getConnection(), true, true);
-//        installer.process();
-//    }
+    //@Test
+    public void installTest() throws Exception, SqlSplitterException {
+        // TODO test all tables and objects, log write and oracle trace reda
+        
+        OracleInstall installer = new OracleInstall(dataSource.getConnection(), true, false);
+        installer.process();
+    }
 
 }

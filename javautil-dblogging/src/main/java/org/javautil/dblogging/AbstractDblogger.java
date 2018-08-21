@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 
 public abstract class AbstractDblogger implements Dblogger {
 
-    private Connection           connection;
+    protected final Connection           connection;
 
     protected NamedSqlStatements statements;
 
@@ -41,12 +41,15 @@ public abstract class AbstractDblogger implements Dblogger {
 
     public AbstractDblogger(Connection connection) throws SQLException, SqlSplitterException, IOException {
         super();
+        if (connection == null) {
+            throw new IllegalArgumentException("null connection");
+        }
         this.connection = connection;
         sequenceHelper = new SequenceHelper(connection);
         statements = NamedSqlStatements.getNameSqlStatementsFromSqlSplitterResource(this, "ddl/h2/dblogger_dml.ss.sql");
     }
 
-    public int beginJob(final String processName, String className, String moduleName, String statusMsg,
+    public long beginJob(final String processName, String className, String moduleName, String statusMsg,
             String threadName, String tracefileName)
             throws SQLException {
 
@@ -159,7 +162,7 @@ public abstract class AbstractDblogger implements Dblogger {
         finishJob(statements.getSqlStatement("end_job"));
     }
 
-    protected ListOfNameValue getUtProcessStatus(int id) throws SQLException {
+    protected ListOfNameValue getUtProcessStatus(long jobNbr) throws SQLException {
         String sql = "select * from ut_process_status order by ut_process_status_id";
         SqlStatement ss = new SqlStatement(connection, sql);
         return ss.getListOfNameValue(new Binds());
@@ -216,9 +219,7 @@ public abstract class AbstractDblogger implements Dblogger {
         logger.warn("updated {}", jobId);
     }
 
-    public void setConnection(Connection connection) {
-        this.connection = connection;
-    }
+
 
     public Connection getConnection() {
         return connection;

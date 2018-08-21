@@ -78,7 +78,7 @@ public class ExampleLoggingTest {
         // todo record log file
         // todo test tracing
         String traceFileName;
-        final int id = sampleUsage();
+        final long id = sampleUsage();
 
         traceFileName = dblogger.getTraceFileName();
         assertNotNull(traceFileName);
@@ -91,10 +91,10 @@ public class ExampleLoggingTest {
 
     }
 
-    int sampleUsage() throws SQLException {
+    long sampleUsage() throws SQLException {
         dblogger.prepareConnection();
 
-        final int id = dblogger.beginJob(processName, getClass().getCanonicalName(), "ExampleLogging", null,
+        final long id = dblogger.beginJob(processName, getClass().getCanonicalName(), "ExampleLogging", null,
                 Thread.currentThread().getName(), null);
         action1();
         action2();
@@ -120,11 +120,11 @@ public class ExampleLoggingTest {
         ConnectionUtil.exhaustQuery(conn, sql);
     }
 
-    NameValue getUtProcessStatus(int id) throws SQLException {
+    NameValue getUtProcessStatus(long id) throws SQLException {
         final String sql = "select * from ut_process_status where ut_process_status_id = :id";
         final Connection connection2 = dataSource.getConnection();
         final PreparedStatement statusStatement = connection2.prepareStatement(sql);
-        statusStatement.setInt(1, id);
+        statusStatement.setLong(1, id);
 
         final ResultSet rset = statusStatement.executeQuery();
         rset.next();
@@ -134,13 +134,13 @@ public class ExampleLoggingTest {
 
     }
 
-    void testBeginJob(String processName, int id) throws SQLException {
+    void testBeginJob(String processName, long id) throws SQLException {
         final NameValue row = getUtProcessStatus(id);
         assertEquals(processName, row.get("PROCESS_NAME"));
 
     }
 
-    void testEndJob(int id) throws SQLException {
+    void testEndJob(long id) throws SQLException {
         final NameValue row = getUtProcessStatus(id);
         assertNotNull(row);
         // logger.info(row.toString());

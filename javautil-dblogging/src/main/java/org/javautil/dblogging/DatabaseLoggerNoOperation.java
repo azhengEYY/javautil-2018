@@ -12,7 +12,7 @@ public class DatabaseLoggerNoOperation implements Dblogger {
 	}
 
 	@Override
-	public int beginJob(String processName, String className, String moduleName, String statusMsg, String threadName, String tracefileName)
+	public long beginJob(String processName, String className, String moduleName, String statusMsg, String threadName, String tracefileName)
 			throws SQLException {
 		return -1;
 	}
@@ -74,6 +74,12 @@ public class DatabaseLoggerNoOperation implements Dblogger {
     @Override
     public long getUtProcessStatusId() {
         return -1;
+    }
+
+    @Override
+    public void updateTraceFileName(String appTracefileName) throws SQLException {
+        // TODO Auto-generated method stub
+        
     }
 
 }

@@ -1,6 +1,12 @@
 set echo on
 rem run as sys
-create or replace view my_session_process as 
+
+alter session set container = sales_reporting_pdb;
+
+drop view my_session;
+drop public synonym my_session;
+select * from dba_objects where object_name = 'MY_SESSION';
+create or replace view my_session_vw as 
     select 
     s.SADDR, 
     s.SID, 
@@ -94,44 +100,18 @@ create or replace view my_session_process as
     s.SQL_TRACE,
     s.SQL_TRACE_WAITS,
     s.SQL_TRACE_BINDS,
-    s.SQL_TRACE_PLAN_STATS,
-    s.SESSION_EDITION_ID,
-    s.CREATOR_ADDR,
-    s.CREATOR_SERIAL#,
-    s.ECID,
-    s.SQL_TRANSLATION_PROFILE_ID,
-    s.PGA_TUNABLE_MEM,
-    s.SHARD_DDL_STATUS,
-    s.CON_ID ,
-    s.EXTERNAL_NAME,
-    s.PLSQL_DEBUGGER_CONNECTED,
-    p.PID,
-    p.SOSID,
-    p.SPID,
-    p.STID,
-    p.EXECUTION_TYPE ,
-    p.PNAME,
-    p.TRACEID,
-    p.TRACEFILE,
-    p.BACKGROUND,
-    p.LATCHWAIT,
-    p.LATCHSPIN,
-    p.PGA_USED_MEM,
-    p.PGA_ALLOC_MEM,
-    p.PGA_FREEABLE_MEM,
-    p.PGA_MAX_MEM,
-    p.NUMA_DEFAULT,
-    p.NUMA_CURR
-from    sys.v$session s,
-        sys.v$process p
-where s.audsid = userenv('sessionid') and
-s.paddr = p.addr;
+    s.SQL_TRACE_PLAN_STATS
+from    sys.v$session s
+where s.audsid = userenv('sessionid');
 
 grant select on sys.v_$process to public;
 --grant select on v$process to public;
 grant select on sys.v_$session to public;
 --grant select on v$session to public;
 
-grant select on my_session_process to public;
+grant select on my_session_vw to public;
 
-create public synonym my_session_process for sys.my_session_process;
+drop public synonym my_session;
+create public synonym my_session for my_session_vw;
+
+select * from my_session;

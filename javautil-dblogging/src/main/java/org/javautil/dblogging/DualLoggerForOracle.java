@@ -55,7 +55,7 @@ public class DualLoggerForOracle extends DbloggerForOracle implements Dblogger {
      * java.lang.String, java.lang.String, java.lang.String, java.lang.String)
      */
     @Override
-    public int beginJob(final String processName, String className, String moduleName, String statusMsg,
+    public long beginJob(final String processName, String className, String moduleName, String statusMsg,
             String threadName, String tracefileName) throws SQLException {
         long id = h2logger.getUtProcessStatusId();
         setTracefileIdentifier(id);

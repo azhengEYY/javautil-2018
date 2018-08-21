@@ -28,7 +28,7 @@ public class DbloggerH2Test {
         AbstractDblogger dblogger = new DbloggerH2(ds.getConnection());
 
         assertNotNull(dblogger);
-        int jobNbr = dblogger.beginJob("DbLoggerH2Test", getClass().getName(), null, null, null, null);
+        long jobNbr = dblogger.beginJob("DbLoggerH2Test", getClass().getName(), null, null, null, null);
         // System.out.println(dblogger.getUtProcessStatus(jobNbr));
         dblogger.insertStep("step one", null, null);
         dblogger.finishStep();
@@ -98,7 +98,7 @@ public class DbloggerH2Test {
         AbstractDblogger dblogger = new DbloggerH2(connection);
 
         assertNotNull(dblogger);
-        int jobNbr = dblogger.beginJob("DbLoggerH2Test", getClass().getName(), null, null, null, null);
+        long jobNbr = dblogger.beginJob("DbLoggerH2Test", getClass().getName(), null, null, null, null);
         // System.out.println(dblogger.getUtProcessStatus(jobNbr));
         dblogger.insertStep("step one", null, null);
         dblogger.finishStep();

@@ -1,6 +1,7 @@
 package org.javautil.dblogging;
 
 import java.io.File;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
@@ -12,15 +13,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.javautil.oracle.OracleConnectionHelper;
+import org.javautil.oracle.OracleSessionInfo;
 import org.javautil.sql.Binds;
 import org.javautil.sql.SequenceHelper;
 import org.javautil.sql.SqlSplitterException;
+import org.javautil.sql.SqlStatement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.javautil.util.NameValue;
+
+
 
 public class DbloggerForOracle extends AbstractDblogger implements Dblogger {
 
-    private Logger                    logger             = LoggerFactory.getLogger(getClass());
+    protected Logger                    logger             = LoggerFactory.getLogger(getClass());
     
     private String name;
 
@@ -60,10 +66,12 @@ public class DbloggerForOracle extends AbstractDblogger implements Dblogger {
 
     SequenceHelper                    sh;
 
+    private CallableStatement updateTracefileNameStatement;
+
     // private static Logger logger = LoggerFactory.getLogger(Dblogger.class);
 
     public DbloggerForOracle(Connection connection) throws SQLException, SqlSplitterException, IOException {
-        super(connection); 
+        super(connection);         
     }
 
     CallableStatement prepareCall(String sql) throws SQLException {
@@ -96,14 +104,16 @@ public class DbloggerForOracle extends AbstractDblogger implements Dblogger {
      * java.lang.String, java.lang.String, java.lang.String, java.lang.String)
      */
     @Override
-    public int beginJob(final String processName, String className, String moduleName, String statusMsg,
+    public long beginJob(final String processName, String className, String moduleName, String statusMsg,
             String threadName, String tracefileName) throws SQLException {
-        final String sql = "       begin\n" + "         :ut_process_status_id := logger.begin_java_job (\n"
+        final String sql = 
+                "       begin\n" + "         :ut_process_status_id := logger.begin_java_job (\n"
                 + "           p_process_name => :p_process_name,  -- VARCHAR2,\n"
                 + "           p_classname   => :p_classname,    -- varchar2,\n"
                 + "           p_module_name  => :p_module_name,   -- varchar2,\n"
                 + "           p_status_msg   => :p_status_msg,    -- varchar2,\n"
-                + "           p_thread_name  => :p_thread_name   -- varchar2\n" + "          );\n" + "       end;\n"
+                + "           p_thread_name  => :p_thread_name   -- varchar2\n" 
+                + "          );\n" + "       end;\n"
                 + "";
         if (beginJobStatement == null) {
             beginJobStatement = prepareCall(sql);
@@ -235,6 +245,8 @@ public class DbloggerForOracle extends AbstractDblogger implements Dblogger {
      */
     @Override
     public String getTraceFileName() throws SQLException {
+        logger.info("getTraceFileName: {}", OracleSessionInfo.getConnectionInfo(getConnection()));
+ 
         if (getTraceFileStatement == null) {
             getTraceFileStatement = prepareCall("begin :trace_file_name := logger.get_my_tracefile_name(); end;");
             getTraceFileStatement.registerOutParameter("trace_file_name", java.sql.Types.VARCHAR);
@@ -242,7 +254,7 @@ public class DbloggerForOracle extends AbstractDblogger implements Dblogger {
         getTraceFileStatement.execute();
 
         final String retval = getTraceFileStatement.getString("trace_file_name");
-        // getTraceFileStatement.close();
+        logger.info("tracefile: {}", retval);
         return retval;
     }
 
@@ -349,21 +361,17 @@ public class DbloggerForOracle extends AbstractDblogger implements Dblogger {
 
     }
 
-//    public long getUtProcessStatusId() {
-//        return utProcessStatusId;
-//    }
+    @Override
+    public void updateTraceFileName(String appTracefileName) throws SQLException {
+        if (updateTracefileNameStatement == null) {
+            updateTracefileNameStatement = prepareCall("begin logger.update_tracefile_name(:p_tracefile_name); end;");
+        }
+        updateTracefileNameStatement.setString(1, appTracefileName);
+        updateTracefileNameStatement.execute();
 
- //   public long getUtProcessStatusId() {
-//        long utProcessStatusId = -999;
-//        try {
-//            if (sh == null) {
-//                sh = new SequenceHelper(getConnection());
-//            }
-//            utProcessStatusId = sh.getSequence("ut_process_status_id_seq");
-//        } catch (SQLException sqe) {
-//            logger.error(sqe.getMessage());
-//        }
-//        return utProcessStatusId;
-//    }
+        
+    }
+
+
 
 }

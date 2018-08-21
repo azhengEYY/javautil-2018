@@ -131,6 +131,8 @@ CREATE OR REPLACE PACKAGE logger AS
     function open_log_file(p_file_name in varchar)  return varchar;
 
     function set_tracefile_identifier(p_job_nbr in number) return varchar;
+    
+    procedure update_tracefile_name(p_tracefile_name in varchar);
 END logger ;
 /
 --#<

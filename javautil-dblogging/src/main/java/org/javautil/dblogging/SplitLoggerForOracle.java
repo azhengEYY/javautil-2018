@@ -1,12 +1,16 @@
 package org.javautil.dblogging;
 
 import java.io.File;
+import org.javautil.oracle.OracleSessionInfo;
 import java.io.IOException;
 import java.io.Writer;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import org.javautil.sql.Binds;
 import org.javautil.sql.SqlSplitterException;
+import org.javautil.sql.SqlStatement;
+import org.javautil.util.NameValue;
 
 /**
  * Persistence is performed in a different database
@@ -22,6 +26,8 @@ public class SplitLoggerForOracle extends DbloggerForOracle implements Dblogger 
     public SplitLoggerForOracle(Connection connection, Dblogger persistenceLogger)
             throws IOException, SQLException, SqlSplitterException {
         super(connection);
+       
+        logger.info("SplitLogger constructor: {}", OracleSessionInfo.getConnectionInfo(connection));
         this.persistencelogger = persistenceLogger;
     }
 
@@ -32,9 +38,16 @@ public class SplitLoggerForOracle extends DbloggerForOracle implements Dblogger 
     }
 
     @Override
-    public int beginJob(String processName, String className, String moduleName, String statusMsg, String threadName,
+    public long beginJob(String processName, String className, String moduleName, String statusMsg, String threadName,
             String tracefileName) throws SQLException {
-        return persistencelogger.beginJob(processName, className, moduleName, statusMsg, threadName, tracefileName);
+        logger.info("beginJob: " + OracleSessionInfo.getConnectionInfo(connection));
+        logger.warn("tracefileName ignored");
+        long id =  persistencelogger.beginJob(processName, className, moduleName, statusMsg, threadName, null);
+        String appTracefileName = getTraceFileName();
+        logger.info("*******************updating tracefile name to {}",appTracefileName);
+        persistencelogger.updateTraceFileName(appTracefileName);
+       String persistenceTracefileName = persistencelogger.getTraceFileName();
+        return id;
     }
 
     @Override
@@ -73,6 +86,16 @@ public class SplitLoggerForOracle extends DbloggerForOracle implements Dblogger 
     @Override
     public long getUtProcessStatusId() {
         return persistencelogger.getUtProcessStatusId();
+    }
+    
+    public String getTraceFileName(Connection conn, long id) throws SQLException {
+        SqlStatement ss = new SqlStatement(conn,"select * from ut_process_status where ut_process_status_id = :ut_process_status_id");
+        Binds binds = new Binds();
+        binds.put("ut_process_status_id",id);
+        final NameValue status = ss.getNameValue(binds,false);
+ 
+        String tracefileName = status.getString("TRACEFILE_NAME");
+       return tracefileName;
     }
 
 }

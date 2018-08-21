@@ -9,7 +9,7 @@ public interface Dblogger {
 
 	void prepareConnection() throws SQLException;
 
-	int beginJob(String processName, String className, String moduleName, String statusMsg, String threadName, String tracefileName)
+	long beginJob(String processName, String className, String moduleName, String statusMsg, String threadName, String tracefileName)
 			throws SQLException;
 
 	void abortJob() throws SQLException;
@@ -38,4 +38,6 @@ public interface Dblogger {
 	void showConnectionInformation();
 
     long getUtProcessStatusId();
+
+    void updateTraceFileName(String appTracefileName) throws SQLException;
 }

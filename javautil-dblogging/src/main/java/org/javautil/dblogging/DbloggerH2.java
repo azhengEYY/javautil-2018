@@ -131,6 +131,12 @@ public class DbloggerH2 extends AbstractDblogger implements Dblogger {
         statements.close();
     }
 
+    @Override
+    public void updateTraceFileName(String appTracefileName) throws SQLException {
+        // TODO Auto-generated method stub
+        
+    }
+
    
 
 

@@ -26,7 +26,7 @@ public class IntegrationTest extends OracleInstallTest {
     private final Logger logger      = LoggerFactory.getLogger(getClass());
     final String         processName = "Logging Example";
 
-    // @Test TODO add steps and make as an example
+    @Test // TODO add steps and make as an example
     public void sampleUsage() throws SQLException, SqlSplitterException, IOException {
         if (skipTests) {
             logger.warn("skipping tests not oracle");
@@ -38,7 +38,7 @@ public class IntegrationTest extends OracleInstallTest {
         dblogger.prepareConnection();
         final String processName = "Process Name";
         //
-        final int id = dblogger.beginJob(processName, getClass().getCanonicalName(), "ExampleLogging", null,
+        final long id = dblogger.beginJob(processName, getClass().getCanonicalName(), "ExampleLogging", null,
                 Thread.currentThread().getName(), null);
 
         dblogger.setAction("Some work");
@@ -50,25 +50,27 @@ public class IntegrationTest extends OracleInstallTest {
         // test it
 
         // check ut_status_process_fields
-        final NameValue status = getUtProcessStatus(connection,id);
+        final NameValue status = getUtProcessStatus(connection, id);
         logger.debug(status.getSortedMultilineString());
         assertEquals(processName, status.getString("PROCESS_NAME"));
         assertEquals("C", status.getString("STATUS_ID"));
         assertNotNull(status.getString("STATUS_TS"));
-     //   assertNotNull(status.getString("TOTAL_ELAPSED"));
+        // assertNotNull(status.getString("TOTAL_ELAPSED"));
         String tracefileName = status.getString("TRACEFILE_NAME");
         logger.info("tracefileName {}", tracefileName);
-        
+
     }
-    
-    @Test public  void abort() throws SQLException, SqlSplitterException, IOException {
+
+    @Test
+    public void abort() throws SQLException, SqlSplitterException, IOException {
         if (skipTests) {
             logger.warn("skipping tests not oracle");
             return;
         }
         final Connection connection = dataSource.getConnection();
-        SqlStatement objectSS = new SqlStatement(connection, "select object_name,object_type from user_objects order by object_type, object_name");
-        ListOfNameValue objects = objectSS.getListOfNameValue(new Binds(),false);
+        SqlStatement objectSS = new SqlStatement(connection,
+                "select object_name,object_type from user_objects order by object_type, object_name");
+        ListOfNameValue objects = objectSS.getListOfNameValue(new Binds(), false);
         System.out.println(objects);
         System.out.println("connection is " + connection);
         // begin sample job
@@ -76,9 +78,9 @@ public class IntegrationTest extends OracleInstallTest {
         dblogger.prepareConnection();
         final String processName = "Process Name";
         //
-        final int id = dblogger.beginJob(processName, getClass().getCanonicalName(), "ExampleLogging", null,
+        final long id = dblogger.beginJob(processName, getClass().getCanonicalName(), "ExampleLogging", null,
                 Thread.currentThread().getName(), null);
-logger.info("started job {}" , id);
+        logger.info("started job {}", id);
         dblogger.setAction("Some work");
         ConnectionUtil.exhaustQuery(connection, "select * from user_tab_columns, user_tables");
 
@@ -91,24 +93,27 @@ logger.info("started job {}" , id);
             dblogger.abortJob(e);
             logger.error("job aborted " + e.getMessage());
         }
-      
+
         // test it
 
         // check ut_status_process_fields
-        final NameValue status = getUtProcessStatus(connection,id);
+        final NameValue status = getUtProcessStatus(connection, id);
         logger.debug(status.getSortedMultilineString());
         assertEquals(processName, status.getString("PROCESS_NAME"));
+        assertEquals("ABORT",status.getString("STATUS_MSG"));
         assertEquals("A", status.getString("STATUS_ID"));
         assertNotNull(status.getString("STATUS_TS"));
-      //  assertNotNull(status.getString("TOTAL_ELAPSED"));
+        assertNotNull(status.getString("STACKTRACE_ABORT"));
+        // assertNotNull(status.getString("TOTAL_ELAPSED"));
         String tracefileName = status.getString("TRACEFILE_NAME");
         logger.info("tracefileName {}", tracefileName);
     }
 
-    //@Test
+    
+    
+    @Test
     public void testOpenFile() throws SQLException, SqlSplitterException, IOException {
         if (skipTests) {
-            logger.info("skipping tests not oracle");
             return;
         }
         final Connection connection = dataSource.getConnection();

@@ -119,7 +119,7 @@ public class DatabaseInstrumentationProperties {
             return new DatabaseLoggerNoOperation();
         }
         AbstractDblogger dbloggerh2 = (AbstractDblogger) dblogger;
-        int jobNbr = dblogger.beginJob("DbLoggerH2Test", getClass().getName(), null, null, null, null);
+        long jobNbr = dblogger.beginJob("DbLoggerH2Test", getClass().getName(), null, null, null, null);
         ListOfNameValue jobEntry = dbloggerh2.getUtProcessStatus(jobNbr);
         dbloggerh2.insertStep("step one", null, null);
         dbloggerh2.finishStep();

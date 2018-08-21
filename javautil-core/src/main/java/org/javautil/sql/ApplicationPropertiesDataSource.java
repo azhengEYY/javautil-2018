@@ -24,6 +24,14 @@ public class ApplicationPropertiesDataSource {
 		}
 		return retval;
 	}
+	
+	public  DataSource getDataSource(Object invoker, String resourceName) throws IOException {
+	    final Properties properties = new Properties();
+	    InputStream input = ResourceHelper.getResourceAsInputStream(invoker, resourceName);
+        properties.load(input);
+        input.close();
+        return getDataSource(properties);
+	}
 
 	public static DataSource getDataSource(Properties properties) {
 		final HikariConfig config = new HikariConfig();
