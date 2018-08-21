@@ -116,9 +116,12 @@ public class SqlRunner {
 			} catch (final SQLException s) {
 				// TODO check if this is redundant with respect to SqlStatement perhaps a new
 				// exception type with original and SqlStatement
-				final String message = String.format("While processing: \nSQL:'\n%s\n'\n%s", ss.getSql(),
-						s.getMessage());
+			    final String message = String.format("While processing: \nSQL:'\n%s\n'\n%s", ss.getSql(),
+                        s.getMessage());
+			    if (showError) {
+				
 				logger.error(message);
+			    }
 				if (!continueOnError) {
 					throw new SQLException(message, s);
 				}

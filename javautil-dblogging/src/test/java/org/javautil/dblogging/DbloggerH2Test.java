@@ -25,7 +25,7 @@ public class DbloggerH2Test {
     public void testInstantiate() throws SqlSplitterException, Exception {
         DataSource ds = new H2LoggerDataSource().getPopulatedH2FromDbLoggerProperties();
         // Connection connection = ds.getConnection();
-        DbloggerH2 dblogger = new DbloggerH2(ds.getConnection());
+        AbstractDblogger dblogger = new DbloggerH2(ds.getConnection());
 
         assertNotNull(dblogger);
         int jobNbr = dblogger.beginJob("DbLoggerH2Test", getClass().getName(), null, null, null, null);
@@ -95,7 +95,7 @@ public class DbloggerH2Test {
         connection.commit();
         // System.out.println("installed objects and commited");
         // System.out.println("connection " + connection);
-        DbloggerH2 dblogger = new DbloggerH2(connection);
+        AbstractDblogger dblogger = new DbloggerH2(connection);
 
         assertNotNull(dblogger);
         int jobNbr = dblogger.beginJob("DbLoggerH2Test", getClass().getName(), null, null, null, null);

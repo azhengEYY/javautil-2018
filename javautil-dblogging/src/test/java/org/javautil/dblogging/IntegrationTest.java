@@ -6,10 +6,12 @@ package org.javautil.dblogging;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
 import org.javautil.sql.ConnectionUtil;
+import org.javautil.sql.SqlSplitterException;
 import org.javautil.sql.SqlStatement;
 import org.javautil.util.NameValue;
 import org.junit.Test;
@@ -23,7 +25,7 @@ public class IntegrationTest extends OracleInstallTest {
     final String         processName = "Logging Example";
 
     // @Test TODO add steps and make as an example
-    public void sampleUsage() throws SQLException {
+    public void sampleUsage() throws SQLException, SqlSplitterException, IOException {
         if (skipTests) {
             logger.warn("skipping tests not oracle");
             return;
@@ -56,7 +58,7 @@ public class IntegrationTest extends OracleInstallTest {
     }
 
     @Test
-    public void testOpenFile() throws SQLException {
+    public void testOpenFile() throws SQLException, SqlSplitterException, IOException {
         if (skipTests) {
             logger.info("skipping tests not oracle");
             return;

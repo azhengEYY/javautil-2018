@@ -14,7 +14,7 @@ public class OracleInstall {
 
     private boolean          drop   = false;
     private final Logger     logger = LoggerFactory.getLogger(this.getClass());
-    private final boolean    showSql;
+    private boolean    showSql = false;
 
     private boolean          dryRun;
 

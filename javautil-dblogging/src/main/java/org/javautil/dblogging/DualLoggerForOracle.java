@@ -26,10 +26,8 @@ public class DualLoggerForOracle extends DbloggerForOracle implements Dblogger {
 
     @Override
     CallableStatement prepareCall(String sql) throws SQLException {
-        if (connection == null) {
-            throw new IllegalStateException("connection is null");
-        }
-        final CallableStatement retval = connection.prepareCall(sql);
+
+        final CallableStatement retval = getConnection().prepareCall(sql);
         callableStatements.add(retval);
         return retval;
     }

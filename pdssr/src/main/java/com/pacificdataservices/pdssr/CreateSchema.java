@@ -56,6 +56,7 @@ public class CreateSchema {
     }
 
     public void installOracle() throws Exception, SqlSplitterException {
+        logger.info("CreateSchema:installOracle  showSql: {}",showSql);
         if (drop) {
             logger.info("dropping sa");
             new SqlRunner(this, "pdssr/oracle/drop_sa.sql").setConnection(connection).setContinueOnError(true)
@@ -64,12 +65,12 @@ public class CreateSchema {
             logger.info("sa dropped");
         }
         logger.info("creating condition tables");
-        new SqlRunner(this, "pdssr/oracle/ut_condition_tables.sr.sql").setConnection(connection).setPrintSql(showSql)
+        new SqlRunner(this, "pdssr/oracle/ut_condition_tables.sr.sql").setConnection(connection).setPrintSql(showSql).setShowError(false)
                 .process();
         logger.info("creating sales tables");
-        new SqlRunner(this, "pdssr/oracle/sales_reporting_ddl.sr.sql").setConnection(connection).setPrintSql(showSql)
+        new SqlRunner(this, "pdssr/oracle/sales_reporting_ddl.sr.sql").setConnection(connection).setPrintSql(showSql).setShowError(false)
                 .process();
-        logger.info("creating dblogger");
+        logger.info("creating dblogger for oracle showSql {} ",showSql);
         final OracleInstall dbloggerInstall = new OracleInstall(connection, true, showSql);
         dbloggerInstall.process();
 

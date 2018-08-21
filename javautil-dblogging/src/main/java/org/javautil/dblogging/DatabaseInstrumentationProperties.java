@@ -118,7 +118,7 @@ public class DatabaseInstrumentationProperties {
         default:
             return new DatabaseLoggerNoOperation();
         }
-        DbloggerH2 dbloggerh2 = (DbloggerH2) dblogger;
+        AbstractDblogger dbloggerh2 = (AbstractDblogger) dblogger;
         int jobNbr = dblogger.beginJob("DbLoggerH2Test", getClass().getName(), null, null, null, null);
         ListOfNameValue jobEntry = dbloggerh2.getUtProcessStatus(jobNbr);
         dbloggerh2.insertStep("step one", null, null);

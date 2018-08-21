@@ -14,12 +14,15 @@ import java.util.List;
 import org.javautil.oracle.OracleConnectionHelper;
 import org.javautil.sql.Binds;
 import org.javautil.sql.SequenceHelper;
+import org.javautil.sql.SqlSplitterException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DbloggerForOracle implements Dblogger {
+public class DbloggerForOracle extends AbstractDblogger implements Dblogger {
 
     private Logger                    logger             = LoggerFactory.getLogger(getClass());
+    
+    private String name;
 
     // TODO see if clear context is necessary
 
@@ -27,7 +30,7 @@ public class DbloggerForOracle implements Dblogger {
 
     // TODO start a loggerThread? How to communicate with it?
 
-    protected final Connection        connection;
+   // protected final Connection        connection;
 
     protected List<CallableStatement> callableStatements = new ArrayList<>();
 
@@ -59,18 +62,13 @@ public class DbloggerForOracle implements Dblogger {
 
     // private static Logger logger = LoggerFactory.getLogger(Dblogger.class);
 
-    public DbloggerForOracle(Connection connection) {
-        if (connection == null) {
-            throw new IllegalArgumentException("connection is null");
-        }
-        this.connection = connection;
+    public DbloggerForOracle(Connection connection) throws SQLException, SqlSplitterException, IOException {
+        super(connection); 
     }
 
     CallableStatement prepareCall(String sql) throws SQLException {
-        if (connection == null) {
-            throw new IllegalStateException("connection is null");
-        }
-        final CallableStatement retval = connection.prepareCall(sql);
+   
+        final CallableStatement retval = getConnection().prepareCall(sql);
         callableStatements.add(retval);
         return retval;
     }
@@ -119,7 +117,9 @@ public class DbloggerForOracle implements Dblogger {
         cs.setString("p_thread_name", threadName);
         cs.execute();
         final int retval = cs.getInt("ut_process_status_id");
-        cs.close();
+        setUtProcessStatusId(retval);
+      //  cs.close();
+        logger.info("started job {} " + retval);
         return retval;
 
     }
@@ -330,12 +330,7 @@ public class DbloggerForOracle implements Dblogger {
         callableStatements = new ArrayList<>();
     }
 
-    @Override
-    public void finishStep() throws SQLException {
-        // TODO
-        throw new UnsupportedOperationException();
-
-    }
+   
 
     @Override
     public void showConnectionInformation() {
@@ -343,23 +338,21 @@ public class DbloggerForOracle implements Dblogger {
 
     }
 
-    @Override
-    public long insertStep(String arg0, String arg1, String arg2) {
-        // TODO log error
-        return -1;
-    }
+//    public long getUtProcessStatusId() {
+//        return utProcessStatusId;
+//    }
 
-    public long getUtProcessStatusId() {
-        long utProcessStatusId = -1;
-        try {
-            if (sh == null) {
-                sh = new SequenceHelper(connection);
-            }
-            utProcessStatusId = sh.getSequence("ut_process_status_id_seq");
-        } catch (SQLException sqe) {
-            logger.error(sqe.getMessage());
-        }
-        return utProcessStatusId;
-    }
+ //   public long getUtProcessStatusId() {
+//        long utProcessStatusId = -999;
+//        try {
+//            if (sh == null) {
+//                sh = new SequenceHelper(getConnection());
+//            }
+//            utProcessStatusId = sh.getSequence("ut_process_status_id_seq");
+//        } catch (SQLException sqe) {
+//            logger.error(sqe.getMessage());
+//        }
+//        return utProcessStatusId;
+//    }
 
 }

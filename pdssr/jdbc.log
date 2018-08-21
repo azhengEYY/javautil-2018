@@ -1,4 +1,718 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
+<record>
+  <date>2018-08-20T22:47:13</date>
+  <millis>1534819633547</millis>
+  <sequence>37450</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>613707F8 SQL: --@name ut_condition_row_msg_insert       
+insert into ut_condition_row_msg (
+    ut_condition_run_step_id, table_pk, condition_msg
+) values (
+    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
+)</message>
+</record>
+<record>
+  <date>2018-08-20T22:47:13</date>
+  <millis>1534819633548</millis>
+  <sequence>37451</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>613707F8 SQL: --@name ut_condition_row_msg_insert       
+insert into ut_condition_row_msg (
+    ut_condition_run_step_id, table_pk, condition_msg
+) values (
+    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
+)</message>
+</record>
+<record>
+  <date>2018-08-20T22:47:13</date>
+  <millis>1534819633548</millis>
+  <sequence>37452</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>613707F8 SQL: --@name ut_condition_row_msg_insert       
+insert into ut_condition_row_msg (
+    ut_condition_run_step_id, table_pk, condition_msg
+) values (
+    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
+)</message>
+</record>
+<record>
+  <date>2018-08-20T22:47:13</date>
+  <millis>1534819633549</millis>
+  <sequence>37453</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>613707F8 SQL: --@name ut_condition_row_msg_insert       
+insert into ut_condition_row_msg (
+    ut_condition_run_step_id, table_pk, condition_msg
+) values (
+    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
+)</message>
+</record>
+<record>
+  <date>2018-08-20T22:47:13</date>
+  <millis>1534819633551</millis>
+  <sequence>37454</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>613707F8 SQL: --@name ut_condition_row_msg_insert       
+insert into ut_condition_row_msg (
+    ut_condition_run_step_id, table_pk, condition_msg
+) values (
+    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
+)</message>
+</record>
+<record>
+  <date>2018-08-20T22:47:13</date>
+  <millis>1534819633552</millis>
+  <sequence>37455</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>613707F8 SQL: --@name ut_condition_row_msg_insert       
+insert into ut_condition_row_msg (
+    ut_condition_run_step_id, table_pk, condition_msg
+) values (
+    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
+)</message>
+</record>
+<record>
+  <date>2018-08-20T22:47:13</date>
+  <millis>1534819633553</millis>
+  <sequence>37456</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>613707F8 SQL: --@name ut_condition_row_msg_insert       
+insert into ut_condition_row_msg (
+    ut_condition_run_step_id, table_pk, condition_msg
+) values (
+    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
+)</message>
+</record>
+<record>
+  <date>2018-08-20T22:47:13</date>
+  <millis>1534819633554</millis>
+  <sequence>37457</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>613707F8 SQL: --@name ut_condition_row_msg_insert       
+insert into ut_condition_row_msg (
+    ut_condition_run_step_id, table_pk, condition_msg
+) values (
+    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
+)</message>
+</record>
+<record>
+  <date>2018-08-20T22:47:13</date>
+  <millis>1534819633555</millis>
+  <sequence>37458</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>613707F8 SQL: --@name ut_condition_row_msg_insert       
+insert into ut_condition_row_msg (
+    ut_condition_run_step_id, table_pk, condition_msg
+) values (
+    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
+)</message>
+</record>
+<record>
+  <date>2018-08-20T22:47:13</date>
+  <millis>1534819633556</millis>
+  <sequence>37459</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>613707F8 SQL: --@name ut_condition_row_msg_insert       
+insert into ut_condition_row_msg (
+    ut_condition_run_step_id, table_pk, condition_msg
+) values (
+    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
+)</message>
+</record>
+<record>
+  <date>2018-08-20T22:47:13</date>
+  <millis>1534819633557</millis>
+  <sequence>37460</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>613707F8 SQL: --@name ut_condition_row_msg_insert       
+insert into ut_condition_row_msg (
+    ut_condition_run_step_id, table_pk, condition_msg
+) values (
+    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
+)</message>
+</record>
+<record>
+  <date>2018-08-20T22:47:13</date>
+  <millis>1534819633559</millis>
+  <sequence>37461</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>613707F8 SQL: --@name ut_condition_row_msg_insert       
+insert into ut_condition_row_msg (
+    ut_condition_run_step_id, table_pk, condition_msg
+) values (
+    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
+)</message>
+</record>
+<record>
+  <date>2018-08-20T22:47:13</date>
+  <millis>1534819633560</millis>
+  <sequence>37462</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>613707F8 SQL: --@name ut_condition_row_msg_insert       
+insert into ut_condition_row_msg (
+    ut_condition_run_step_id, table_pk, condition_msg
+) values (
+    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
+)</message>
+</record>
+<record>
+  <date>2018-08-20T22:47:13</date>
+  <millis>1534819633561</millis>
+  <sequence>37463</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>613707F8 SQL: --@name ut_condition_row_msg_insert       
+insert into ut_condition_row_msg (
+    ut_condition_run_step_id, table_pk, condition_msg
+) values (
+    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
+)</message>
+</record>
+<record>
+  <date>2018-08-20T22:47:13</date>
+  <millis>1534819633563</millis>
+  <sequence>37464</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>613707F8 SQL: --@name ut_condition_row_msg_insert       
+insert into ut_condition_row_msg (
+    ut_condition_run_step_id, table_pk, condition_msg
+) values (
+    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
+)</message>
+</record>
+<record>
+  <date>2018-08-20T22:47:13</date>
+  <millis>1534819633563</millis>
+  <sequence>37465</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>613707F8 SQL: --@name ut_condition_row_msg_insert       
+insert into ut_condition_row_msg (
+    ut_condition_run_step_id, table_pk, condition_msg
+) values (
+    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
+)</message>
+</record>
+<record>
+  <date>2018-08-20T22:47:13</date>
+  <millis>1534819633564</millis>
+  <sequence>37466</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>613707F8 SQL: --@name ut_condition_row_msg_insert       
+insert into ut_condition_row_msg (
+    ut_condition_run_step_id, table_pk, condition_msg
+) values (
+    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
+)</message>
+</record>
+<record>
+  <date>2018-08-20T22:47:13</date>
+  <millis>1534819633565</millis>
+  <sequence>37467</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>613707F8 SQL: --@name ut_condition_row_msg_insert       
+insert into ut_condition_row_msg (
+    ut_condition_run_step_id, table_pk, condition_msg
+) values (
+    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
+)</message>
+</record>
+<record>
+  <date>2018-08-20T22:47:13</date>
+  <millis>1534819633566</millis>
+  <sequence>37468</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>613707F8 SQL: --@name ut_condition_row_msg_insert       
+insert into ut_condition_row_msg (
+    ut_condition_run_step_id, table_pk, condition_msg
+) values (
+    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
+)</message>
+</record>
+<record>
+  <date>2018-08-20T22:47:13</date>
+  <millis>1534819633567</millis>
+  <sequence>37469</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>613707F8 SQL: --@name ut_condition_row_msg_insert       
+insert into ut_condition_row_msg (
+    ut_condition_run_step_id, table_pk, condition_msg
+) values (
+    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
+)</message>
+</record>
+<record>
+  <date>2018-08-20T22:47:13</date>
+  <millis>1534819633568</millis>
+  <sequence>37470</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>613707F8 SQL: --@name ut_condition_row_msg_insert       
+insert into ut_condition_row_msg (
+    ut_condition_run_step_id, table_pk, condition_msg
+) values (
+    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
+)</message>
+</record>
+<record>
+  <date>2018-08-20T22:47:13</date>
+  <millis>1534819633569</millis>
+  <sequence>37471</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>613707F8 SQL: --@name ut_condition_row_msg_insert       
+insert into ut_condition_row_msg (
+    ut_condition_run_step_id, table_pk, condition_msg
+) values (
+    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
+)</message>
+</record>
+<record>
+  <date>2018-08-20T22:47:13</date>
+  <millis>1534819633570</millis>
+  <sequence>37472</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>613707F8 SQL: --@name ut_condition_row_msg_insert       
+insert into ut_condition_row_msg (
+    ut_condition_run_step_id, table_pk, condition_msg
+) values (
+    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
+)</message>
+</record>
+<record>
+  <date>2018-08-20T22:47:13</date>
+  <millis>1534819633571</millis>
+  <sequence>37473</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>613707F8 SQL: --@name ut_condition_row_msg_insert       
+insert into ut_condition_row_msg (
+    ut_condition_run_step_id, table_pk, condition_msg
+) values (
+    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
+)</message>
+</record>
+<record>
+  <date>2018-08-20T22:47:13</date>
+  <millis>1534819633573</millis>
+  <sequence>37474</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>613707F8 SQL: --@name ut_condition_row_msg_insert       
+insert into ut_condition_row_msg (
+    ut_condition_run_step_id, table_pk, condition_msg
+) values (
+    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
+)</message>
+</record>
+<record>
+  <date>2018-08-20T22:47:13</date>
+  <millis>1534819633574</millis>
+  <sequence>37475</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>613707F8 SQL: --@name ut_condition_row_msg_insert       
+insert into ut_condition_row_msg (
+    ut_condition_run_step_id, table_pk, condition_msg
+) values (
+    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
+)</message>
+</record>
+<record>
+  <date>2018-08-20T22:47:13</date>
+  <millis>1534819633576</millis>
+  <sequence>37476</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>613707F8 SQL: --@name ut_condition_row_msg_insert       
+insert into ut_condition_row_msg (
+    ut_condition_run_step_id, table_pk, condition_msg
+) values (
+    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
+)</message>
+</record>
+<record>
+  <date>2018-08-20T22:47:13</date>
+  <millis>1534819633577</millis>
+  <sequence>37477</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>613707F8 SQL: --@name ut_condition_row_msg_insert       
+insert into ut_condition_row_msg (
+    ut_condition_run_step_id, table_pk, condition_msg
+) values (
+    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
+)</message>
+</record>
+<record>
+  <date>2018-08-20T22:47:13</date>
+  <millis>1534819633577</millis>
+  <sequence>37478</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>613707F8 SQL: --@name ut_condition_row_msg_insert       
+insert into ut_condition_row_msg (
+    ut_condition_run_step_id, table_pk, condition_msg
+) values (
+    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
+)</message>
+</record>
+<record>
+  <date>2018-08-20T22:47:13</date>
+  <millis>1534819633578</millis>
+  <sequence>37479</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>613707F8 SQL: --@name ut_condition_row_msg_insert       
+insert into ut_condition_row_msg (
+    ut_condition_run_step_id, table_pk, condition_msg
+) values (
+    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
+)</message>
+</record>
+<record>
+  <date>2018-08-20T22:47:13</date>
+  <millis>1534819633579</millis>
+  <sequence>37480</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>613707F8 SQL: --@name ut_condition_row_msg_insert       
+insert into ut_condition_row_msg (
+    ut_condition_run_step_id, table_pk, condition_msg
+) values (
+    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
+)</message>
+</record>
+<record>
+  <date>2018-08-20T22:47:13</date>
+  <millis>1534819633580</millis>
+  <sequence>37481</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>613707F8 SQL: --@name ut_condition_row_msg_insert       
+insert into ut_condition_row_msg (
+    ut_condition_run_step_id, table_pk, condition_msg
+) values (
+    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
+)</message>
+</record>
+<record>
+  <date>2018-08-20T22:47:13</date>
+  <millis>1534819633580</millis>
+  <sequence>37482</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>613707F8 SQL: --@name ut_condition_row_msg_insert       
+insert into ut_condition_row_msg (
+    ut_condition_run_step_id, table_pk, condition_msg
+) values (
+    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
+)</message>
+</record>
+<record>
+  <date>2018-08-20T22:47:13</date>
+  <millis>1534819633581</millis>
+  <sequence>37483</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>613707F8 SQL: --@name ut_condition_row_msg_insert       
+insert into ut_condition_row_msg (
+    ut_condition_run_step_id, table_pk, condition_msg
+) values (
+    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
+)</message>
+</record>
+<record>
+  <date>2018-08-20T22:47:13</date>
+  <millis>1534819633583</millis>
+  <sequence>37484</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>613707F8 SQL: --@name ut_condition_row_msg_insert       
+insert into ut_condition_row_msg (
+    ut_condition_run_step_id, table_pk, condition_msg
+) values (
+    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
+)</message>
+</record>
+<record>
+  <date>2018-08-20T22:47:13</date>
+  <millis>1534819633584</millis>
+  <sequence>37485</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>613707F8 SQL: --@name ut_condition_row_msg_insert       
+insert into ut_condition_row_msg (
+    ut_condition_run_step_id, table_pk, condition_msg
+) values (
+    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
+)</message>
+</record>
+<record>
+  <date>2018-08-20T22:47:13</date>
+  <millis>1534819633585</millis>
+  <sequence>37486</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>613707F8 SQL: --@name ut_condition_row_msg_insert       
+insert into ut_condition_row_msg (
+    ut_condition_run_step_id, table_pk, condition_msg
+) values (
+    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
+)</message>
+</record>
+<record>
+  <date>2018-08-20T22:47:13</date>
+  <millis>1534819633586</millis>
+  <sequence>37487</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>613707F8 SQL: --@name ut_condition_row_msg_insert       
+insert into ut_condition_row_msg (
+    ut_condition_run_step_id, table_pk, condition_msg
+) values (
+    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
+)</message>
+</record>
+<record>
+  <date>2018-08-20T22:47:13</date>
+  <millis>1534819633587</millis>
+  <sequence>37488</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>613707F8 SQL: --@name ut_condition_row_msg_insert       
+insert into ut_condition_row_msg (
+    ut_condition_run_step_id, table_pk, condition_msg
+) values (
+    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
+)</message>
+</record>
+<record>
+  <date>2018-08-20T22:47:13</date>
+  <millis>1534819633588</millis>
+  <sequence>37489</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>5BB16E65 SQL: --@name end_step
+update ut_process_step 
+set end_ts = :end_ts
+where ut_process_step_id = :ut_process_step_id</message>
+</record>
+<record>
+  <date>2018-08-20T22:47:13</date>
+  <millis>1534819633591</millis>
+  <sequence>37490</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>65CC8228 SQL: begin logger.set_action(p_action =&gt; :p_action_name); end;</message>
+</record>
+<record>
+  <date>2018-08-20T22:47:13</date>
+  <millis>1534819633593</millis>
+  <sequence>37491</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>B3F7B99 SQL: select UT_PROCESS_STEP_ID_SEQ.nextval from dual</message>
+</record>
+<record>
+  <date>2018-08-20T22:47:13</date>
+  <millis>1534819633594</millis>
+  <sequence>37492</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>4BB8855F SQL: --@name ut_process_step_insert
+insert into ut_process_step (
+        ut_process_step_id,   ut_process_status_id, step_name, step_info, 
+        classname,            start_ts
+) values (
+        :ut_process_step_id, :ut_process_status_id, :step_name,:step_info, 
+        :classname,           :start_ts
+)</message>
+</record>
+<record>
+  <date>2018-08-20T22:47:13</date>
+  <millis>1534819633597</millis>
+  <sequence>37493</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>13C38B41 SQL: select file_create_dt from etl_sale_tot where etl_file_id = :ETL_FILE_ID</message>
+</record>
+<record>
+  <date>2018-08-20T22:47:13</date>
+  <millis>1534819633599</millis>
+  <sequence>37494</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>5BB16E65 SQL: --@name end_step
+update ut_process_step 
+set end_ts = :end_ts
+where ut_process_step_id = :ut_process_step_id</message>
+</record>
+<record>
+  <date>2018-08-20T22:47:13</date>
+  <millis>1534819633605</millis>
+  <sequence>37495</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>7C609F4 SQL: begin logger.end_job(); end;</message>
+</record>
 </log>

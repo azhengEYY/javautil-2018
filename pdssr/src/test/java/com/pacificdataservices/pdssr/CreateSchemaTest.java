@@ -26,7 +26,7 @@ public class CreateSchemaTest {
             logger.info("conn" + conn);
         }
         logger.info("about to create schema");
-        new CreateSchema(conn, true, true).process();
+        new CreateSchema(conn, true, false).process();
         conn.commit();
 
         // conn.close();

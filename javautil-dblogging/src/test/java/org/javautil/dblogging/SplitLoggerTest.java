@@ -71,7 +71,7 @@ public class SplitLoggerTest extends OracleInstallTest {
     }
 
    // @Test
-    public void testOpenFile() throws SQLException {
+    public void testOpenFile() throws SQLException, SqlSplitterException, IOException {
         if (skipTests) {
             logger.info("skipping tests not oracle");
             return;

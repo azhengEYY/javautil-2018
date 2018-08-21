@@ -30,16 +30,13 @@ public class LoadProcessor implements FilenameFilter {
 
     private final Connection                        connection;
 
-    // DataSource ds = new
-    // H2LoggerDataSource().getPopulatedH2FromDbLoggerProperties();
-    H2LoggerForOracle                               dblogger;
+    Dblogger                              dblogger;
 
     private DataSource                              h2loggerDataSource;
 
-    public LoadProcessor(Connection connection, DataSource h2loggerDataSource) throws SqlSplitterException, Exception {
-        this.h2loggerDataSource = h2loggerDataSource;
+    public LoadProcessor(Connection connection, Dblogger dblogger) throws SqlSplitterException, Exception {
+        this.dblogger = dblogger;
         this.connection = connection;
-        this.dblogger = new H2LoggerForOracle(connection, h2loggerDataSource);
         logger.info("dblogger : " + dblogger);
         logger.info("Database Instrumentation: " + dblogger.getClass().getCanonicalName());
         initializeSubProcesses();
@@ -53,8 +50,8 @@ public class LoadProcessor implements FilenameFilter {
     }
 
     void processFiles(File[] files) throws Exception, SqlSplitterException {
-        H2LoggerDataSourceCheck checker = new H2LoggerDataSourceCheck();
-        checker.testDataSource(h2loggerDataSource);
+//        H2LoggerDataSourceCheck checker = new H2LoggerDataSourceCheck();
+//        checker.testDataSource(h2loggerDataSource);
         for (final File f : files) {
             process(f);
         }
@@ -74,8 +71,9 @@ public class LoadProcessor implements FilenameFilter {
         final String jobName = "LoadProcessor " + datafile.getAbsolutePath();
         final String traceFileName = dblogger.getTraceFileName();
 
-        dblogger.beginJob(jobName, this.getClass().getCanonicalName(), "LoadProcessor", getClass().getName(),
+        long jobNbr = dblogger.beginJob(jobName, this.getClass().getCanonicalName(), "LoadProcessor", getClass().getName(),
                 Thread.currentThread().getName(), traceFileName);
+        logger.info("starting job {} utProcessStatusId {} {}", jobNbr,  dblogger.getUtProcessStatusId());
         try {
             logger.info("tracing to" + traceFileName);
             dblogger.setAction("loadFile");

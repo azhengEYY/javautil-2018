@@ -11,7 +11,13 @@ import java.util.Arrays;
 
 import javax.sql.DataSource;
 
+import org.javautil.dblogging.Dblogger;
+import org.javautil.dblogging.DbloggerForOracle;
+import org.javautil.dblogging.DbloggerPropertiesDataSource;
 import org.javautil.dblogging.H2LoggerDataSource;
+import org.javautil.dblogging.OracleInstall;
+import org.javautil.dblogging.SplitLoggerForOracle;
+import org.javautil.sql.ApplicationPropertiesDataSource;
 import org.javautil.sql.SqlSplitterException;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -39,22 +45,35 @@ public class LoaderProcessTest extends CreateSchemaTest {
     @Override
     @Test
     public void test() throws SqlSplitterException, Exception {
-        DataSource h2loggerDataSource = new H2LoggerDataSource().getPopulatedH2FromDbLoggerProperties();
-        long oldCount = testDataSource(h2loggerDataSource);
-        logger.info("oldCount {}", oldCount);
+      //  DataSource h2loggerDataSource = new H2LoggerDataSource().getPopulatedH2FromDbLoggerProperties();
+     //   long oldCount = testDataSource(h2loggerDataSource);
+     //   logger.info("oldCount {}", oldCount);
 
-        final LoadProcessor loadProcessor = new LoadProcessor(conn, h2loggerDataSource);
+        DataSource dataSource = new ApplicationPropertiesDataSource().getDataSource();
+        Connection connection = dataSource.getConnection();
+        //
+        DataSource xeDatasource = new DbloggerPropertiesDataSource("dblogger.xe.properties").getDataSource();
+        Connection xeConnection = xeDatasource.getConnection();
+        
+        OracleInstall orainst = new OracleInstall(xeConnection, false, false);
+        orainst.process();
+        Dblogger persistenceLogger = new DbloggerForOracle(xeDatasource.getConnection());
+        
+        // begin sample job
+        final SplitLoggerForOracle dblogger = new SplitLoggerForOracle(connection, persistenceLogger);
+        
+        final LoadProcessor loadProcessor = new LoadProcessor(conn, dblogger);
         loadProcessor.processFiles(getLoadFiles(loadProcessor));
-        Connection h2connection = h2loggerDataSource.getConnection();
-        long newCount = testDataSource(h2loggerDataSource);
-        logger.info("oldCount {} newCount {}", oldCount, newCount);
-        logger.info("connection " + h2connection);
-        assertTrue(newCount > oldCount);
-        File f = new File("/tmp/dbloggerh2.mv.db");
-        assertTrue(f.exists());
-        String connInfo = h2connection.toString();
-        assertTrue(connInfo.endsWith("url=jdbc:h2:/tmp/dbloggerh2 user=SR"));
-        h2connection.close();
+//        Connection h2connection = h2loggerDataSource.getConnection();
+//        long newCount = testDataSource(h2loggerDataSource);
+//        logger.info("oldCount {} newCount {}", oldCount, newCount);
+//        logger.info("connection " + h2connection);
+//        assertTrue(newCount > oldCount);
+//        File f = new File("/tmp/dbloggerh2.mv.db");
+//        assertTrue(f.exists());
+//        String connInfo = h2connection.toString();
+//        assertTrue(connInfo.endsWith("url=jdbc:h2:/tmp/dbloggerh2 user=SR"));
+//        h2connection.close();
 
     }
 }

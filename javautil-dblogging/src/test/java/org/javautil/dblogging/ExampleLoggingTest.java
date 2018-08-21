@@ -19,6 +19,7 @@ import org.javautil.sql.ApplicationPropertiesDataSource;
 import org.javautil.sql.ConnectionUtil;
 import org.javautil.sql.Dialect;
 import org.javautil.sql.ResultSetHelper;
+import org.javautil.sql.SqlSplitterException;
 import org.javautil.util.NameValue;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -50,7 +51,7 @@ public class ExampleLoggingTest {
     }
 
     @Test
-    public void testOpenCursors() throws SQLException {
+    public void testOpenCursors() throws SQLException, SqlSplitterException, IOException {
         if (skipTests) {
             return;
         }
