@@ -5,7 +5,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -36,8 +35,7 @@ public class NamedSqlStatementTest {
 	@Test
 	public void testAnnotatedNameShort() throws IOException, SqlSplitterException {
 		String resourceName = "testsr/etl_persistence.named.sr.sql";
-		SqlSplitter splitter = new SqlSplitter(this,resourceName);
-		final NamedSqlStatements named = NamedSqlStatements.getNameSqlStatementsFromSqlSplitterResource(this,"testsr/etl_persistence.named.sr.sql");
+		final NamedSqlStatements named = NamedSqlStatements.getNameSqlStatementsFromSqlSplitterResource(this,resourceName);
 		final SqlStatement custTotInsert = named.getSqlStatement("etl_customer_tot_insert");
 		assertNotNull(custTotInsert);
 		final String custTotInsertSql = custTotInsert.getSql();

@@ -1,4 +1,4 @@
-package org.javautil.dblogging;
+package org.javautil.dblogging.misc;
 
 import java.io.File;
 import java.io.IOException;

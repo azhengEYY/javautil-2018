@@ -16,7 +16,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 /**
- * Container for CursorStats by cursor number and sqlId
+ * Container for CursorInfo by cursor number and sqlId
  * 
  * @author jjs
  *
@@ -136,14 +136,12 @@ public class CursorsStats {
     }
 
     public void handle(Stat record) {
-        String sqlId = sqlIdByCursorNumber.get(record.getCursorNumber());
         CursorInfo cursorStats = cursorStatsByNumber.get(record.getCursorNumber());
         if (cursorStats == null) {
             cursorStats = new CursorInfo(record);
             cursorStatsByNumber.put(record.getCursorNumber(), cursorStats);
         }
         cursorStats.addStat(record);
-        CursorInfo cursorStatsForSqlId = cursorStatsById.get(sqlId);
     }
 
     /**

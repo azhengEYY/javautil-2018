@@ -173,6 +173,7 @@ public class CdsDataLoader implements FilenameFilter {
         binds.put("ETL_FILE_ID", etlFileId);
         final NameValue etlfnv = etlf.getNameValue(binds, true);
         // logger.info("etlFileId: {}", etlfnv.toString());
+        // TODO check expected values
         etlf.close();
 
         return etlFileId;

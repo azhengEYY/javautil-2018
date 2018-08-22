@@ -11,8 +11,6 @@ import java.util.Arrays;
 import javax.sql.DataSource;
 
 import org.javautil.dblogging.Dblogger;
-import org.javautil.dblogging.H2LoggerDataSourceCheck;
-import org.javautil.dblogging.H2LoggerForOracle;
 import org.javautil.sql.SqlSplitterException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

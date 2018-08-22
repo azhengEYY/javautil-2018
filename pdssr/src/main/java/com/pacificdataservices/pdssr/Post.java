@@ -29,7 +29,7 @@ public class Post {
     private final Connection connection;
 
     private SqlStatements    sqlStatements;
-    private SqlStatements    postQueries;
+    private SqlStatements    postQueries;  // TODO implement posting
 
     public Post(Connection conn, int verbosity) throws SQLException, FileNotFoundException {
         this.connection = conn;

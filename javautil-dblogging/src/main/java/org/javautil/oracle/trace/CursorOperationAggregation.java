@@ -73,13 +73,14 @@ public class CursorOperationAggregation {
     }
 
     private transient Tracer tracer;
-    // private int depth;
-    // /**
-    // * Optimizer goal. In trace file as "og".
-    // * og Optimizer goal: 1=All_Rows, 2=First_Rows, 3=Rule, 4=Choose
-    // */
-    // private int optimizerGoal;
-    // private int cursorNumber;
+  
+    public CursorOperationAggregation() {
+        
+    }
+    
+   public CursorOperationAggregation(Tracer tracer) {
+        this.tracer = tracer;
+    }
 
     /**
      * Total cpu consumption for call. Represented in trace file as c=%d c CPU
@@ -197,20 +198,7 @@ public class CursorOperationAggregation {
         }
     }
 
-    // @Override
-    // public String toString() {
-    // // TODO format for consistent width
-    // final StringBuilder b = new StringBuilder();
-    // b.append("type: " + recordType + " ");
-    // b.append("count " + eventCount + " ");
-    // b.append("cpu: " + cpu + " ");
-    // b.append("elapsed: " + elapsedMicroSeconds + " ");
-    // b.append("pr: " + physicalBlocksRead + " ");
-    // b.append("pw: " + consistentReadBlocks + " ");
-    // b.append("cu: " + currentModeBlocks + " ");
-    // b.append("mis: " + libraryCacheMissCount + " ");
-    // return b.toString();
-    // }
+  
 
     public void setTracer(Tracer tracer) {
         this.tracer = tracer;

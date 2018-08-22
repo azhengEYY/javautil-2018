@@ -4,6 +4,7 @@ import java.sql.Connection;
 
 import javax.sql.DataSource;
 
+import org.javautil.dblogging.installer.OracleInstall;
 import org.javautil.sql.ApplicationPropertiesDataSource;
 import org.javautil.sql.Dialect;
 import org.javautil.sql.SqlSplitterException;

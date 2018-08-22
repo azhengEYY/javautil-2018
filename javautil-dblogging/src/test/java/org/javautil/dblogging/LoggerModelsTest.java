@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
+import org.javautil.dblogging.installer.H2LoggerDataSource;
 import org.javautil.oracle.trace.formatter.LoggerModels;
 
 public class LoggerModelsTest {
@@ -14,6 +15,6 @@ public class LoggerModelsTest {
         DataSource ds = new H2LoggerDataSource().getPopulatedH2FromDbLoggerProperties();
         LoggerModels models = new LoggerModels(ds);
         String model = models.getJobStepInfoJson(1l);
-        // System.out.println(model);
+        // TODO create a test with a known trace file
     }
 }

@@ -2,15 +2,79 @@
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222388</millis>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869334</millis>
+  <sequence>37458</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>253A48FE SQL: --@name ut_condition_row_msg_insert       
+insert into ut_condition_row_msg (
+    ut_condition_run_step_id, table_pk, condition_msg
+) values (
+    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
+)</message>
+</record>
+<record>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869335</millis>
+  <sequence>37459</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>253A48FE SQL: --@name ut_condition_row_msg_insert       
+insert into ut_condition_row_msg (
+    ut_condition_run_step_id, table_pk, condition_msg
+) values (
+    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
+)</message>
+</record>
+<record>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869338</millis>
+  <sequence>37460</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>253A48FE SQL: --@name ut_condition_row_msg_insert       
+insert into ut_condition_row_msg (
+    ut_condition_run_step_id, table_pk, condition_msg
+) values (
+    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
+)</message>
+</record>
+<record>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869340</millis>
+  <sequence>37461</sequence>
+  <logger>oracle.jdbc</logger>
+  <level>CONFIG</level>
+  <class>oracle.jdbc.driver.OracleStatement</class>
+  <method>logSQL</method>
+  <thread>1</thread>
+  <message>253A48FE SQL: --@name ut_condition_row_msg_insert       
+insert into ut_condition_row_msg (
+    ut_condition_run_step_id, table_pk, condition_msg
+) values (
+    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
+)</message>
+</record>
+<record>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869342</millis>
   <sequence>37462</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
+  <message>253A48FE SQL: --@name ut_condition_row_msg_insert       
 insert into ut_condition_row_msg (
     ut_condition_run_step_id, table_pk, condition_msg
 ) values (
@@ -18,15 +82,15 @@ insert into ut_condition_row_msg (
 )</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222389</millis>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869343</millis>
   <sequence>37463</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
+  <message>253A48FE SQL: --@name ut_condition_row_msg_insert       
 insert into ut_condition_row_msg (
     ut_condition_run_step_id, table_pk, condition_msg
 ) values (
@@ -34,15 +98,15 @@ insert into ut_condition_row_msg (
 )</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222389</millis>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869344</millis>
   <sequence>37464</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
+  <message>253A48FE SQL: --@name ut_condition_row_msg_insert       
 insert into ut_condition_row_msg (
     ut_condition_run_step_id, table_pk, condition_msg
 ) values (
@@ -50,15 +114,15 @@ insert into ut_condition_row_msg (
 )</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222390</millis>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869345</millis>
   <sequence>37465</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
+  <message>253A48FE SQL: --@name ut_condition_row_msg_insert       
 insert into ut_condition_row_msg (
     ut_condition_run_step_id, table_pk, condition_msg
 ) values (
@@ -66,15 +130,15 @@ insert into ut_condition_row_msg (
 )</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222392</millis>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869346</millis>
   <sequence>37466</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
+  <message>253A48FE SQL: --@name ut_condition_row_msg_insert       
 insert into ut_condition_row_msg (
     ut_condition_run_step_id, table_pk, condition_msg
 ) values (
@@ -82,15 +146,15 @@ insert into ut_condition_row_msg (
 )</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222393</millis>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869347</millis>
   <sequence>37467</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
+  <message>253A48FE SQL: --@name ut_condition_row_msg_insert       
 insert into ut_condition_row_msg (
     ut_condition_run_step_id, table_pk, condition_msg
 ) values (
@@ -98,15 +162,15 @@ insert into ut_condition_row_msg (
 )</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222395</millis>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869348</millis>
   <sequence>37468</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
+  <message>253A48FE SQL: --@name ut_condition_row_msg_insert       
 insert into ut_condition_row_msg (
     ut_condition_run_step_id, table_pk, condition_msg
 ) values (
@@ -114,15 +178,15 @@ insert into ut_condition_row_msg (
 )</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222396</millis>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869349</millis>
   <sequence>37469</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
+  <message>253A48FE SQL: --@name ut_condition_row_msg_insert       
 insert into ut_condition_row_msg (
     ut_condition_run_step_id, table_pk, condition_msg
 ) values (
@@ -130,15 +194,15 @@ insert into ut_condition_row_msg (
 )</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222397</millis>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869352</millis>
   <sequence>37470</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
+  <message>253A48FE SQL: --@name ut_condition_row_msg_insert       
 insert into ut_condition_row_msg (
     ut_condition_run_step_id, table_pk, condition_msg
 ) values (
@@ -146,15 +210,15 @@ insert into ut_condition_row_msg (
 )</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222397</millis>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869353</millis>
   <sequence>37471</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
+  <message>253A48FE SQL: --@name ut_condition_row_msg_insert       
 insert into ut_condition_row_msg (
     ut_condition_run_step_id, table_pk, condition_msg
 ) values (
@@ -162,15 +226,15 @@ insert into ut_condition_row_msg (
 )</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222398</millis>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869354</millis>
   <sequence>37472</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
+  <message>253A48FE SQL: --@name ut_condition_row_msg_insert       
 insert into ut_condition_row_msg (
     ut_condition_run_step_id, table_pk, condition_msg
 ) values (
@@ -178,15 +242,15 @@ insert into ut_condition_row_msg (
 )</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222399</millis>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869357</millis>
   <sequence>37473</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
+  <message>253A48FE SQL: --@name ut_condition_row_msg_insert       
 insert into ut_condition_row_msg (
     ut_condition_run_step_id, table_pk, condition_msg
 ) values (
@@ -194,15 +258,15 @@ insert into ut_condition_row_msg (
 )</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222400</millis>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869358</millis>
   <sequence>37474</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
+  <message>253A48FE SQL: --@name ut_condition_row_msg_insert       
 insert into ut_condition_row_msg (
     ut_condition_run_step_id, table_pk, condition_msg
 ) values (
@@ -210,15 +274,15 @@ insert into ut_condition_row_msg (
 )</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222401</millis>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869359</millis>
   <sequence>37475</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
+  <message>253A48FE SQL: --@name ut_condition_row_msg_insert       
 insert into ut_condition_row_msg (
     ut_condition_run_step_id, table_pk, condition_msg
 ) values (
@@ -226,15 +290,15 @@ insert into ut_condition_row_msg (
 )</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222402</millis>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869360</millis>
   <sequence>37476</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
+  <message>253A48FE SQL: --@name ut_condition_row_msg_insert       
 insert into ut_condition_row_msg (
     ut_condition_run_step_id, table_pk, condition_msg
 ) values (
@@ -242,15 +306,15 @@ insert into ut_condition_row_msg (
 )</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222403</millis>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869362</millis>
   <sequence>37477</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
+  <message>253A48FE SQL: --@name ut_condition_row_msg_insert       
 insert into ut_condition_row_msg (
     ut_condition_run_step_id, table_pk, condition_msg
 ) values (
@@ -258,15 +322,15 @@ insert into ut_condition_row_msg (
 )</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222404</millis>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869363</millis>
   <sequence>37478</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
+  <message>253A48FE SQL: --@name ut_condition_row_msg_insert       
 insert into ut_condition_row_msg (
     ut_condition_run_step_id, table_pk, condition_msg
 ) values (
@@ -274,15 +338,15 @@ insert into ut_condition_row_msg (
 )</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222405</millis>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869364</millis>
   <sequence>37479</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
+  <message>253A48FE SQL: --@name ut_condition_row_msg_insert       
 insert into ut_condition_row_msg (
     ut_condition_run_step_id, table_pk, condition_msg
 ) values (
@@ -290,15 +354,15 @@ insert into ut_condition_row_msg (
 )</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222405</millis>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869366</millis>
   <sequence>37480</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
+  <message>253A48FE SQL: --@name ut_condition_row_msg_insert       
 insert into ut_condition_row_msg (
     ut_condition_run_step_id, table_pk, condition_msg
 ) values (
@@ -306,15 +370,15 @@ insert into ut_condition_row_msg (
 )</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222406</millis>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869367</millis>
   <sequence>37481</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
+  <message>253A48FE SQL: --@name ut_condition_row_msg_insert       
 insert into ut_condition_row_msg (
     ut_condition_run_step_id, table_pk, condition_msg
 ) values (
@@ -322,15 +386,15 @@ insert into ut_condition_row_msg (
 )</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222407</millis>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869369</millis>
   <sequence>37482</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
+  <message>253A48FE SQL: --@name ut_condition_row_msg_insert       
 insert into ut_condition_row_msg (
     ut_condition_run_step_id, table_pk, condition_msg
 ) values (
@@ -338,15 +402,15 @@ insert into ut_condition_row_msg (
 )</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222408</millis>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869370</millis>
   <sequence>37483</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
+  <message>253A48FE SQL: --@name ut_condition_row_msg_insert       
 insert into ut_condition_row_msg (
     ut_condition_run_step_id, table_pk, condition_msg
 ) values (
@@ -354,15 +418,15 @@ insert into ut_condition_row_msg (
 )</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222409</millis>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869372</millis>
   <sequence>37484</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
+  <message>253A48FE SQL: --@name ut_condition_row_msg_insert       
 insert into ut_condition_row_msg (
     ut_condition_run_step_id, table_pk, condition_msg
 ) values (
@@ -370,15 +434,15 @@ insert into ut_condition_row_msg (
 )</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222410</millis>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869374</millis>
   <sequence>37485</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
+  <message>253A48FE SQL: --@name ut_condition_row_msg_insert       
 insert into ut_condition_row_msg (
     ut_condition_run_step_id, table_pk, condition_msg
 ) values (
@@ -386,15 +450,15 @@ insert into ut_condition_row_msg (
 )</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222412</millis>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869375</millis>
   <sequence>37486</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
+  <message>253A48FE SQL: --@name ut_condition_row_msg_insert       
 insert into ut_condition_row_msg (
     ut_condition_run_step_id, table_pk, condition_msg
 ) values (
@@ -402,15 +466,15 @@ insert into ut_condition_row_msg (
 )</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222413</millis>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869376</millis>
   <sequence>37487</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
+  <message>253A48FE SQL: --@name ut_condition_row_msg_insert       
 insert into ut_condition_row_msg (
     ut_condition_run_step_id, table_pk, condition_msg
 ) values (
@@ -418,15 +482,15 @@ insert into ut_condition_row_msg (
 )</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222414</millis>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869377</millis>
   <sequence>37488</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
+  <message>253A48FE SQL: --@name ut_condition_row_msg_insert       
 insert into ut_condition_row_msg (
     ut_condition_run_step_id, table_pk, condition_msg
 ) values (
@@ -434,15 +498,15 @@ insert into ut_condition_row_msg (
 )</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222415</millis>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869378</millis>
   <sequence>37489</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
+  <message>253A48FE SQL: --@name ut_condition_row_msg_insert       
 insert into ut_condition_row_msg (
     ut_condition_run_step_id, table_pk, condition_msg
 ) values (
@@ -450,15 +514,15 @@ insert into ut_condition_row_msg (
 )</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222416</millis>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869381</millis>
   <sequence>37490</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
+  <message>253A48FE SQL: --@name ut_condition_row_msg_insert       
 insert into ut_condition_row_msg (
     ut_condition_run_step_id, table_pk, condition_msg
 ) values (
@@ -466,15 +530,15 @@ insert into ut_condition_row_msg (
 )</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222416</millis>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869382</millis>
   <sequence>37491</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
+  <message>253A48FE SQL: --@name ut_condition_row_msg_insert       
 insert into ut_condition_row_msg (
     ut_condition_run_step_id, table_pk, condition_msg
 ) values (
@@ -482,15 +546,15 @@ insert into ut_condition_row_msg (
 )</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222417</millis>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869383</millis>
   <sequence>37492</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
+  <message>253A48FE SQL: --@name ut_condition_row_msg_insert       
 insert into ut_condition_row_msg (
     ut_condition_run_step_id, table_pk, condition_msg
 ) values (
@@ -498,15 +562,15 @@ insert into ut_condition_row_msg (
 )</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222418</millis>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869384</millis>
   <sequence>37493</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
+  <message>253A48FE SQL: --@name ut_condition_row_msg_insert       
 insert into ut_condition_row_msg (
     ut_condition_run_step_id, table_pk, condition_msg
 ) values (
@@ -514,15 +578,15 @@ insert into ut_condition_row_msg (
 )</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222419</millis>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869385</millis>
   <sequence>37494</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
+  <message>253A48FE SQL: --@name ut_condition_row_msg_insert       
 insert into ut_condition_row_msg (
     ut_condition_run_step_id, table_pk, condition_msg
 ) values (
@@ -530,15 +594,15 @@ insert into ut_condition_row_msg (
 )</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222420</millis>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869386</millis>
   <sequence>37495</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
+  <message>253A48FE SQL: --@name ut_condition_row_msg_insert       
 insert into ut_condition_row_msg (
     ut_condition_run_step_id, table_pk, condition_msg
 ) values (
@@ -546,15 +610,15 @@ insert into ut_condition_row_msg (
 )</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222422</millis>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869388</millis>
   <sequence>37496</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
+  <message>253A48FE SQL: --@name ut_condition_row_msg_insert       
 insert into ut_condition_row_msg (
     ut_condition_run_step_id, table_pk, condition_msg
 ) values (
@@ -562,15 +626,15 @@ insert into ut_condition_row_msg (
 )</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222423</millis>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869390</millis>
   <sequence>37497</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
+  <message>253A48FE SQL: --@name ut_condition_row_msg_insert       
 insert into ut_condition_row_msg (
     ut_condition_run_step_id, table_pk, condition_msg
 ) values (
@@ -578,15 +642,15 @@ insert into ut_condition_row_msg (
 )</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222424</millis>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869391</millis>
   <sequence>37498</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
+  <message>253A48FE SQL: --@name ut_condition_row_msg_insert       
 insert into ut_condition_row_msg (
     ut_condition_run_step_id, table_pk, condition_msg
 ) values (
@@ -594,15 +658,15 @@ insert into ut_condition_row_msg (
 )</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222425</millis>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869392</millis>
   <sequence>37499</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
+  <message>253A48FE SQL: --@name ut_condition_row_msg_insert       
 insert into ut_condition_row_msg (
     ut_condition_run_step_id, table_pk, condition_msg
 ) values (
@@ -610,15 +674,15 @@ insert into ut_condition_row_msg (
 )</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222426</millis>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869394</millis>
   <sequence>37500</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
+  <message>253A48FE SQL: --@name ut_condition_row_msg_insert       
 insert into ut_condition_row_msg (
     ut_condition_run_step_id, table_pk, condition_msg
 ) values (
@@ -626,15 +690,15 @@ insert into ut_condition_row_msg (
 )</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222427</millis>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869395</millis>
   <sequence>37501</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
+  <message>253A48FE SQL: --@name ut_condition_row_msg_insert       
 insert into ut_condition_row_msg (
     ut_condition_run_step_id, table_pk, condition_msg
 ) values (
@@ -642,15 +706,15 @@ insert into ut_condition_row_msg (
 )</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222428</millis>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869396</millis>
   <sequence>37502</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
+  <message>253A48FE SQL: --@name ut_condition_row_msg_insert       
 insert into ut_condition_row_msg (
     ut_condition_run_step_id, table_pk, condition_msg
 ) values (
@@ -658,15 +722,15 @@ insert into ut_condition_row_msg (
 )</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222429</millis>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869397</millis>
   <sequence>37503</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
+  <message>253A48FE SQL: --@name ut_condition_row_msg_insert       
 insert into ut_condition_row_msg (
     ut_condition_run_step_id, table_pk, condition_msg
 ) values (
@@ -674,15 +738,15 @@ insert into ut_condition_row_msg (
 )</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222430</millis>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869398</millis>
   <sequence>37504</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
+  <message>253A48FE SQL: --@name ut_condition_row_msg_insert       
 insert into ut_condition_row_msg (
     ut_condition_run_step_id, table_pk, condition_msg
 ) values (
@@ -690,147 +754,51 @@ insert into ut_condition_row_msg (
 )</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222431</millis>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869400</millis>
   <sequence>37505</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
-insert into ut_condition_row_msg (
-    ut_condition_run_step_id, table_pk, condition_msg
-) values (
-    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
-)</message>
+  <message>58DD2F68 SQL: --@name end_step
+update ut_process_step 
+set end_ts = :end_ts
+where ut_process_step_id = :ut_process_step_id</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222433</millis>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869402</millis>
   <sequence>37506</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
-insert into ut_condition_row_msg (
-    ut_condition_run_step_id, table_pk, condition_msg
-) values (
-    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
-)</message>
+  <message>37DF14D1 SQL: begin logger.set_action(p_action =&gt; :p_action_name); end;</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222434</millis>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869405</millis>
   <sequence>37507</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
-insert into ut_condition_row_msg (
-    ut_condition_run_step_id, table_pk, condition_msg
-) values (
-    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
-)</message>
+  <message>BC05D46 SQL: select UT_PROCESS_STEP_ID_SEQ.nextval from dual</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222434</millis>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869407</millis>
   <sequence>37508</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
-insert into ut_condition_row_msg (
-    ut_condition_run_step_id, table_pk, condition_msg
-) values (
-    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
-)</message>
-</record>
-<record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222435</millis>
-  <sequence>37509</sequence>
-  <logger>oracle.jdbc</logger>
-  <level>CONFIG</level>
-  <class>oracle.jdbc.driver.OracleStatement</class>
-  <method>logSQL</method>
-  <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
-insert into ut_condition_row_msg (
-    ut_condition_run_step_id, table_pk, condition_msg
-) values (
-    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
-)</message>
-</record>
-<record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222436</millis>
-  <sequence>37510</sequence>
-  <logger>oracle.jdbc</logger>
-  <level>CONFIG</level>
-  <class>oracle.jdbc.driver.OracleStatement</class>
-  <method>logSQL</method>
-  <thread>1</thread>
-  <message>4803B19D SQL: --@name ut_condition_row_msg_insert       
-insert into ut_condition_row_msg (
-    ut_condition_run_step_id, table_pk, condition_msg
-) values (
-    :UT_CONDITION_RUN_STEP_ID, :PRIMARY_KEY, :MSG
-)</message>
-</record>
-<record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222437</millis>
-  <sequence>37511</sequence>
-  <logger>oracle.jdbc</logger>
-  <level>CONFIG</level>
-  <class>oracle.jdbc.driver.OracleStatement</class>
-  <method>logSQL</method>
-  <thread>1</thread>
-  <message>24A0042E SQL: --@name end_step
-update ut_process_step 
-set end_ts = :end_ts
-where ut_process_step_id = :ut_process_step_id</message>
-</record>
-<record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222439</millis>
-  <sequence>37512</sequence>
-  <logger>oracle.jdbc</logger>
-  <level>CONFIG</level>
-  <class>oracle.jdbc.driver.OracleStatement</class>
-  <method>logSQL</method>
-  <thread>1</thread>
-  <message>1BB15351 SQL: begin logger.set_action(p_action =&gt; :p_action_name); end;</message>
-</record>
-<record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222441</millis>
-  <sequence>37513</sequence>
-  <logger>oracle.jdbc</logger>
-  <level>CONFIG</level>
-  <class>oracle.jdbc.driver.OracleStatement</class>
-  <method>logSQL</method>
-  <thread>1</thread>
-  <message>56D35D0A SQL: select UT_PROCESS_STEP_ID_SEQ.nextval from dual</message>
-</record>
-<record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222442</millis>
-  <sequence>37514</sequence>
-  <logger>oracle.jdbc</logger>
-  <level>CONFIG</level>
-  <class>oracle.jdbc.driver.OracleStatement</class>
-  <method>logSQL</method>
-  <thread>1</thread>
-  <message>42FB8C87 SQL: --@name ut_process_step_insert
+  <message>44F24A20 SQL: --@name ut_process_step_insert
 insert into ut_process_step (
         ut_process_step_id,   ut_process_status_id, step_name, step_info, 
         classname,            start_ts
@@ -840,39 +808,39 @@ insert into ut_process_step (
 )</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222445</millis>
-  <sequence>37515</sequence>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869410</millis>
+  <sequence>37509</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>3CB772B SQL: select file_create_dt from etl_sale_tot where etl_file_id = :ETL_FILE_ID</message>
+  <message>503307DE SQL: select file_create_dt from etl_sale_tot where etl_file_id = :ETL_FILE_ID</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222447</millis>
-  <sequence>37516</sequence>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869416</millis>
+  <sequence>37510</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>24A0042E SQL: --@name end_step
+  <message>58DD2F68 SQL: --@name end_step
 update ut_process_step 
 set end_ts = :end_ts
 where ut_process_step_id = :ut_process_step_id</message>
 </record>
 <record>
-  <date>2018-08-21T17:50:22</date>
-  <millis>1534888222456</millis>
-  <sequence>37517</sequence>
+  <date>2018-08-21T19:41:09</date>
+  <millis>1534894869423</millis>
+  <sequence>37511</sequence>
   <logger>oracle.jdbc</logger>
   <level>CONFIG</level>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>541BE4EB SQL: begin logger.end_job(); end;</message>
+  <message>7AD9F7C1 SQL: begin logger.end_job(); end;</message>
 </record>
 </log>

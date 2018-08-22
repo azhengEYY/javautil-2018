@@ -60,6 +60,5 @@ public class SqlSplitterTest {
 		assertEquals(10, sqls.size());
 		// TODO test the statements, line counts, first and last line
 	}
-	
-
+	  
 }

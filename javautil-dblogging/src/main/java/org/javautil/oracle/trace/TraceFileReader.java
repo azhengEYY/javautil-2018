@@ -344,4 +344,9 @@ public class TraceFileReader implements Closeable {
     public String getFileName() {
         return fileName;
     }
+
+    public int getLineNumber() {
+
+        return br.getLineNumber();
+    }
 }

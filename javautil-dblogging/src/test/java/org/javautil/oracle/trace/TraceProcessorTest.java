@@ -54,6 +54,7 @@ public class TraceProcessorTest {
         String expected = "insert into etl_file ( etl_file_id, RPT_ORG_ID, DATAFEED_ORG_ID) values ( :etl_file_id, :rpt_org_id, :org_id)";
         assertEquals(expected, parsing.getSqlText().trim());
         OracleTraceReport formatter = new OracleTraceReport(System.out);
+        formatter.process(false);
     }
 
     // @Test

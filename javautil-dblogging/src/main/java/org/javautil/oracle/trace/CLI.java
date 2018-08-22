@@ -1,6 +1,6 @@
 package org.javautil.oracle.trace;
 
-import org.javautil.dblogging.OracleInstall;
+import org.javautil.dblogging.installer.OracleInstall;
 import org.javautil.oracle.trace.formatter.OracleTraceReport;
 import org.javautil.sql.SqlSplitterException;
 

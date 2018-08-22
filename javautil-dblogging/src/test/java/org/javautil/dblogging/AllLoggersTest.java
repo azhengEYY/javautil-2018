@@ -11,6 +11,8 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
+import org.javautil.dblogging.installer.H2LoggerDataSource;
+import org.javautil.dblogging.installer.OracleInstall;
 import org.javautil.sql.ApplicationPropertiesDataSource;
 import org.javautil.sql.Binds;
 import org.javautil.sql.ConnectionUtil;
@@ -97,7 +99,7 @@ public class AllLoggersTest
     public void testH2logger() throws SqlSplitterException, Exception {
         DataSource h2DataSource = new H2LoggerDataSource().getPopulatedH2FromDbLoggerProperties(this, "h2.dblogger.properties"); 
         Connection appConnection = appDataSource.getConnection();
-        Dblogger dblogger = new H2LoggerForOracle(appConnection,h2DataSource);
+        Dblogger dblogger = new SplitLoggerForOracle(appConnection,h2DataSource.getConnection());
         long id = sampleUsage(dblogger, appConnection);
         Connection conn = h2DataSource.getConnection();
         testResults(conn,id);

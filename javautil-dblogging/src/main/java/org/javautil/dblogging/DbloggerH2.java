@@ -15,27 +15,22 @@ import org.slf4j.LoggerFactory;
 //  to blow up a job because of an error in the logger
 public class DbloggerH2 extends AbstractDblogger implements Dblogger {
 
- //   final Connection   connection;
+    static Logger  logger            = LoggerFactory.getLogger(DbloggerForOracle.class);
 
-   // NamedSqlStatements statements;
+    private long   jobStartMilliseconds;
 
-    static Logger      logger            = LoggerFactory.getLogger(DbloggerForOracle.class);
+    private String moduleName;
 
-    private long               jobStartMilliseconds;
+    private String actionName;
 
-    private String             moduleName;
+    SequenceHelper sequenceHelper;
 
-    private String             actionName;
+    long           utProcessStatusId = -1;
 
-    SequenceHelper             sequenceHelper;
-
-    long               utProcessStatusId = -1;
-
-    long               utProcessStepId;
-
+    long           utProcessStepId;
 
     public DbloggerH2(Connection connection) throws IOException, SQLException {
-      super(connection);
+        super(connection);
         statements = NamedSqlStatements.getNameSqlStatementsFromSqlSplitterResource(this, "ddl/h2/dblogger_dml.ss.sql");
         sequenceHelper = new SequenceHelper(connection);
     }
@@ -135,10 +130,27 @@ public class DbloggerH2 extends AbstractDblogger implements Dblogger {
     @Override
     public void updateTraceFileName(String appTracefileName) throws SQLException {
         // TODO Auto-generated method stub
-        
+
     }
 
-   
+    public String getModuleName() {
+        return moduleName;
+    }
 
+    public void setModuleName(String moduleName) {
+        this.moduleName = moduleName;
+    }
+
+    public String getActionName() {
+        return actionName;
+    }
+
+    public void setActionName(String actionName) {
+        this.actionName = actionName;
+    }
+
+    public long getUtProcessStepId() {
+        return utProcessStepId;
+    }
 
 }

@@ -17,7 +17,6 @@ import com.google.gson.GsonBuilder;
 public class CursorInfo {
     private transient Logger           logger = LoggerFactory.getLogger(getClass());
 
-    // private transient Cursor cursor;
     /**
      * This number is unique for every parse of a SQL Statement, as opposed to sqlId
      * which remains the same for a given SQL text.
@@ -72,16 +71,11 @@ public class CursorInfo {
     }
 
     public void aggregate(Collection<CursorInfo> cursors) {
-        parseAggregation = new CursorOperationAggregation();
-        fetchAggregation = new CursorOperationAggregation();
-        execAggregation = new CursorOperationAggregation();
-        unmapAggregation = new CursorOperationAggregation();
-        closeAggregation = new CursorOperationAggregation();
-        parseAggregation.setTracer(tracer);
-        fetchAggregation.setTracer(tracer);
-        execAggregation.setTracer(tracer);
-        closeAggregation.setTracer(tracer);
-        parseAggregation.setTracer(tracer);
+        parseAggregation = new CursorOperationAggregation(tracer);
+        fetchAggregation = new CursorOperationAggregation(tracer);
+        execAggregation = new CursorOperationAggregation(tracer);
+        unmapAggregation = new CursorOperationAggregation(tracer);
+        closeAggregation = new CursorOperationAggregation(tracer);
 
         for (CursorInfo ci : cursors) {
             parseAggregation.aggregate(ci.getParseAggregation());

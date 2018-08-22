@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.Writer;
 import java.sql.SQLException;
 
-public class DatabaseLoggerNoOperation implements Dblogger {
+public class DbloggerNoOperation implements Dblogger {
 
 	@Override
 	public void prepareConnection() throws SQLException {

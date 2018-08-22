@@ -1,14 +1,21 @@
 package org.javautil.sql;
 
 public class SqlSplitterException extends RuntimeException {
-	private SqlSplitterLine line;
-	private String message;
+    private SqlSplitterLine line;
 
-	SqlSplitterException(SqlSplitterLine line,String message) {
-		this.line = line;
-		this.message = message;
-	}
-	
-	
+    private String          message;
+
+    SqlSplitterException(SqlSplitterLine line, String message) {
+        this.line = line;
+        this.message = message;
+    }
+
+    public SqlSplitterLine getLine() {
+        return line;
+    }
+
+    public String getMessage() {
+        return message;
+    }
 
 }

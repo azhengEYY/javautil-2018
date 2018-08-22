@@ -1,4 +1,4 @@
-package org.javautil.dblogging;
+package org.javautil.dblogging.installer;
 
 import java.sql.Connection;
 import java.sql.SQLException;

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 import org.javautil.oracle.OracleSessionInfo;
 import org.javautil.sql.Binds;
+import org.javautil.sql.Dialect;
 import org.javautil.sql.SqlSplitterException;
 import org.javautil.sql.SqlStatement;
 import org.javautil.util.NameValue;
@@ -20,6 +21,25 @@ import org.javautil.util.NameValue;
 public class SplitLoggerForOracle extends DbloggerForOracle implements Dblogger {
 
     private Dblogger persistencelogger;
+    
+    public SplitLoggerForOracle(Connection connection, Connection loggerPersistenceConnection)
+            throws IOException, SQLException, SqlSplitterException {
+        super(connection);
+        Dialect persistenceDialect = Dialect.getDialect(loggerPersistenceConnection);
+        switch(persistenceDialect) {
+        case ORACLE:
+            this.persistencelogger = new DbloggerForOracle(loggerPersistenceConnection);
+            break;
+        case H2:
+            this.persistencelogger = new DbloggerH2(loggerPersistenceConnection);
+            break;
+        default:
+            throw new IllegalArgumentException("Unsupported logger Dialect: " +  persistenceDialect);
+        }
+        logger.debug("SplitLogger constructor: {}", OracleSessionInfo.getConnectionInfo(connection));
+
+    }
+   
 
     public SplitLoggerForOracle(Connection connection, Dblogger persistenceLogger)
             throws IOException, SQLException, SqlSplitterException {

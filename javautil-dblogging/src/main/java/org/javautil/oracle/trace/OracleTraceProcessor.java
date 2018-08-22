@@ -83,6 +83,7 @@ public class OracleTraceProcessor {
                 logger.warn("unhandled: {}", record);
             }
         }
+        recordCount = reader.getLineNumber();
         reader.close();
     }
 
@@ -92,5 +93,9 @@ public class OracleTraceProcessor {
 
     public void setTracer(Tracer tracer) {
         this.tracer = tracer;
+    }
+
+    public int getRecordCount() {
+        return recordCount;
     }
 }

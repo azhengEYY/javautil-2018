@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
+import org.javautil.dblogging.installer.OracleInstall;
 import org.javautil.sql.Dialect;
 import org.javautil.sql.ResultSetHelper;
 import org.javautil.sql.SqlSplitterException;
