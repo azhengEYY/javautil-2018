@@ -1,6 +1,5 @@
 
 CREATE OR REPLACE PACKAGE logger AS
---
     G_SEVERE       CONSTANT PLS_INTEGER := 1 ;
     G_WARNING      CONSTANT PLS_INTEGER := 2 ;
     G_INFO         CONSTANT PLS_INTEGER := 4 ;
@@ -12,11 +11,10 @@ CREATE OR REPLACE PACKAGE logger AS
     G_FINEST       CONSTANT PLS_INTEGER := 9 ;
     G_NONE         CONSTANT PLS_INTEGER := 10 ;
 
---
     procedure begin_job (p_process_name in varchar2);
     function get_my_tracefile return clob;
 
-  FUNCTION begin_java_job ( p_process_name in varchar2,
+    FUNCTION begin_java_job ( p_process_name in varchar2,
                              p_classname   in varchar2,
                              p_module_name  in varchar2,
                              p_status_msg   in varchar2,
@@ -25,94 +23,19 @@ CREATE OR REPLACE PACKAGE logger AS
    return number;
 
     
-    --
-    --
-    -- various log convenience methods
-    PROCEDURE severe (
-        p_unit          IN VARCHAR2,
-        p_line          IN PLS_INTEGER,
-        p_log_msg       IN VARCHAR2 DEFAULT '',
-        p_record_stack  IN BOOLEAN DEFAULT FALSE ) ;
-    --
-    --
-    PROCEDURE warning (
-        p_unit          IN        VARCHAR2,
-        p_line          IN        PLS_INTEGER,
-        p_log_msg       IN        VARCHAR2 DEFAULT '',
-        p_record_stack  IN        BOOLEAN DEFAULT FALSE ) ;
-    --
-    --
-    PROCEDURE info (
-        p_unit          IN        VARCHAR2,
-        p_line          IN        PLS_INTEGER,
-        p_log_msg       IN        VARCHAR2 DEFAULT '',
-        p_record_stack  IN        BOOLEAN DEFAULT FALSE ) ;
-    --
-    --
-    PROCEDURE entering (
-        p_unit         IN VARCHAR2,
-        p_line         IN PLS_INTEGER,
-        p_log_msg      IN VARCHAR2 DEFAULT '',
-        p_record_stack IN BOOLEAN DEFAULT FALSE,
-        p_set_action   IN BOOLEAN DEFAULT TRUE ) ;
-    --
-    --
-    PROCEDURE exiting (
-        p_unit         IN        VARCHAR2,
-        p_line         IN        PLS_INTEGER,
-        p_log_msg      IN        VARCHAR2 DEFAULT '',
-        p_record_stack IN        BOOLEAN DEFAULT FALSE ) ;
-    --
-    --
-    PROCEDURE fine (
-        p_unit         IN        VARCHAR2,
-        p_line         IN        PLS_INTEGER,
-        p_log_msg      IN        VARCHAR2 DEFAULT '',
-        p_record_stack IN        BOOLEAN DEFAULT FALSE ) ;
-    --
-    --
-    PROCEDURE finer (
-        p_unit         IN        VARCHAR2,
-        p_line         IN        PLS_INTEGER,
-        p_log_msg      IN        VARCHAR2 DEFAULT '',
-        p_record_stack IN        BOOLEAN DEFAULT FALSE ) ;
-    --
-    --
-    PROCEDURE finest (
-        p_unit         IN        VARCHAR2,
-        p_line         IN        PLS_INTEGER,
-        p_log_msg      IN        VARCHAR2 DEFAULT '',
-        p_record_stack IN        BOOLEAN DEFAULT FALSE ) ;
-    --
-    --
     PROCEDURE end_job ;
-    --
-    --
+   
     PROCEDURE abort_job (p_stacktrace in varchar);
-    --
-    --
-    --
+    
     PROCEDURE set_action (
         p_action IN        VARCHAR2) ;
-    --
-    --
+   
     PROCEDURE set_module (
         p_module_name IN        VARCHAR,
         p_action_name in   varchar) ;
-    --
-    --
-    PROCEDURE set_dbms_output_level(
-        p_level  IN        PLS_INTEGER ) ;
-    --
-    --
-    PROCEDURE set_filter_level (  
-        p_level  IN PLS_INTEGER ) ;
-    --
-    --
-    PROCEDURE set_record_level (
-        p_level  IN        PLS_INTEGER ) ;
-    --
-    --
+
+
+    
     function get_directory_path return varchar;
 
     function get_tracefile(p_file_name in varchar) return clob;
@@ -127,8 +50,6 @@ CREATE OR REPLACE PACKAGE logger AS
     procedure prepare_connection;
 
     procedure trace_step(p_step_name in varchar);
-
-    function open_log_file(p_file_name in varchar)  return varchar;
 
     function set_tracefile_identifier(p_job_nbr in number) return varchar;
     

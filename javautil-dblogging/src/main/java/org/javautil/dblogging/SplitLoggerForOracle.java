@@ -62,7 +62,7 @@ public class SplitLoggerForOracle extends DbloggerForOracle implements Dblogger 
         logger.warn("tracefileName ignored");
         long id = persistencelogger.beginJob(processName, className, moduleName, statusMsg, threadName, null);
         String appTracefileName = getTraceFileName();
-        logger.debug("updating tracefile name to {}", appTracefileName);
+        logger.info("********updating tracefile name to {}", appTracefileName);
         persistencelogger.updateTraceFileName(appTracefileName);
         return id;
     }

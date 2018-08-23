@@ -71,6 +71,10 @@ public abstract class AbstractDblogger implements Dblogger {
         ss.executeUpdate(binds);
         connection.commit();
         logger.warn("started job {} ", utProcessStatusId);
+        
+//        String appTracefileName = getTraceFileName();
+//        logger.debug("*************updating tracefile name to {}", appTracefileName);
+//        updateTraceFileName(appTracefileName);
         return (int) utProcessStatusId;
     }
 
@@ -193,8 +197,14 @@ public abstract class AbstractDblogger implements Dblogger {
         Binds binds = new Binds();
         binds.put("ut_process_status_id", jobId);
         NameValue upsRow = upsStatement.getNameValue(binds, true);
+        logger.warn("upsRow {}", upsRow);
+        
+      
         //
         String traceFileName = upsRow.getString("tracefile_name");
+        if (traceFileName == null) {
+            throw new IllegalStateException("traceFileName is null");
+        }
         Clob clob = connection.createClob();
         String tracefileData = FileUtil.getAsString(traceFileName);
         clob.setString(1, tracefileData);
@@ -220,8 +230,6 @@ public abstract class AbstractDblogger implements Dblogger {
         logger.warn("updated {}", jobId);
     }
 
-
-
     public Connection getConnection() {
         return connection;
     }
@@ -229,7 +237,6 @@ public abstract class AbstractDblogger implements Dblogger {
     @Override
     public void showConnectionInformation() {
         System.out.println(connection);
-
     }
 
     @Override
@@ -237,5 +244,22 @@ public abstract class AbstractDblogger implements Dblogger {
         return utProcessStatusId;
     }
 
+    public void updateTraceFileName(String appTracefileName) throws SQLException {
+        logger.info("*** updating trace to {}",appTracefileName);
+        SqlStatement ss = new SqlStatement(connection,
+                "update ut_process_status set tracefile_name = :tracefile_name "
+                + "where ut_process_status_id = :ut_process_status_id");
+        Binds binds  = new Binds();
+        binds.put("tracefile_name",appTracefileName);
+        binds.put("ut_process_status_id", utProcessStatusId);
+        int rowCount = ss.executeUpdate(binds);
+        connection.commit();
+        if (rowCount != 1) {
+            logger.error("Unable to update ut_process_status for {}", utProcessStatusId);
+        } else {
+            logger.info("updated ut_process_status {}", appTracefileName);
+        }
+                        
+    }
 
 }

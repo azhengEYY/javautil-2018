@@ -86,7 +86,7 @@ public class DbloggerH2 extends AbstractDblogger implements Dblogger {
      */
     @Override
     public String getTraceFileName() throws SQLException {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     /*
@@ -127,11 +127,6 @@ public class DbloggerH2 extends AbstractDblogger implements Dblogger {
         statements.close();
     }
 
-    @Override
-    public void updateTraceFileName(String appTracefileName) throws SQLException {
-        // TODO Auto-generated method stub
-
-    }
 
     public String getModuleName() {
         return moduleName;

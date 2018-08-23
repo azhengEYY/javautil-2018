@@ -61,7 +61,7 @@ public class AllLoggersTest
         
     }
     
-    @Test
+    //@Test
     public void testSplitLogger() throws SqlSplitterException, Exception {
         Connection appConnection = appDataSource.getConnection();
         Connection xeConnection = xeDataSource.getConnection();
@@ -80,7 +80,7 @@ public class AllLoggersTest
         conn.close();
     }
     
-    @Test
+   // @Test
     public void testDbloggerForOracle() throws SqlSplitterException, Exception {
         Connection appConnection = appDataSource.getConnection();
        

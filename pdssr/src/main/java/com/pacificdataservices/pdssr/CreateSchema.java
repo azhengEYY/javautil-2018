@@ -3,9 +3,9 @@ package com.pacificdataservices.pdssr;
 import java.sql.Connection;
 import java.sql.Statement;
 
-import org.javautil.dblogging.CreateDbloggerDatabaseObjects;
-import org.javautil.dblogging.H2Install;
-import org.javautil.dblogging.OracleInstall;
+import org.javautil.dblogging.installer.CreateDbloggerDatabaseObjects;
+import org.javautil.dblogging.installer.H2Install;
+import org.javautil.dblogging.installer.OracleInstall;
 import org.javautil.sql.Dialect;
 import org.javautil.sql.SqlRunner;
 import org.javautil.sql.SqlSplitterException;
