@@ -167,14 +167,14 @@ public class CdsDataLoader implements FilenameFilter {
         // logger.info("onv: " + onv);
         sh.executeUpdate(fileBinds);
 
-        final SqlStatement etlf = new SqlStatement(connection,
-                "select * from etl_file where etl_file_id = :etl_file_id");
-
-        binds.put("ETL_FILE_ID", etlFileId);
-        final NameValue etlfnv = etlf.getNameValue(binds, true);
-        // logger.info("etlFileId: {}", etlfnv.toString());
-        // TODO check expected values
-        etlf.close();
+//        final SqlStatement etlf = new SqlStatement(connection,
+//                "select * from etl_file where etl_file_id = :etl_file_id");
+//
+//        binds.put("ETL_FILE_ID", etlFileId);
+//        //final NameValue etlfnv = etlf.getNameValue(binds, true);
+//        // logger.info("etlFileId: {}", etlfnv.toString());
+//        // TODO check expected values
+//        etlf.close();
 
         return etlFileId;
 

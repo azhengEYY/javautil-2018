@@ -39,8 +39,9 @@ public class H2LoggerDataSource {
         System.out.println(properties.toString());
         return getPopulatedH2(properties);
     }
-    
-    public DataSource getPopulatedH2FromDbLoggerProperties(Object invoker, String resourceName) throws IOException, SQLException {
+
+    public DataSource getPopulatedH2FromDbLoggerProperties(Object invoker, String resourceName)
+            throws IOException, SQLException {
 
         InputStream dbloggerPropertiesStream = ResourceHelper.getResourceAsInputStream(invoker, resourceName);
         Properties properties = new Properties();
@@ -72,31 +73,4 @@ public class H2LoggerDataSource {
 
     }
 
-    // TODO normalize don't need a new one,
-    private DataSource getPopulatedH2() throws SQLException {
-        logger.info("creating logger h2");
-        final HikariConfig config = new HikariConfig();
-        config.setJdbcUrl("jdbc:h2:/tmp/dbloggerh2p;AUTO_SERVER=TRUE");
-        config.setUsername("sr");
-        config.setPassword("tutorial");
-        config.setAutoCommit(true);
-
-        DataSource dataSource = new HikariDataSource(config);
-        Connection connection = dataSource.getConnection();
-
-        connection.commit();
-        connection.close();
-        // DataSource dataSource = getDataSourceDblogger2();
-        connection = dataSource.getConnection();
-        connection.commit();
-        H2Install installer = new H2Install(connection).setNoFail(false).setDrop(true).setShowSql(true);
-        try {
-            installer.process();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        connection.close();
-        return dataSource;
-
-    }
 }

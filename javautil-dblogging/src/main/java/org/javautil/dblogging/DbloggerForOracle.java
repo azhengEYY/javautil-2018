@@ -20,12 +20,9 @@ import org.javautil.sql.SqlSplitterException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
-
 public class DbloggerForOracle extends AbstractDblogger implements Dblogger {
 
-    protected Logger                    logger             = LoggerFactory.getLogger(getClass());
-    
+    protected Logger                  logger             = LoggerFactory.getLogger(getClass());
 
     // TODO see if clear context is necessary
 
@@ -33,7 +30,7 @@ public class DbloggerForOracle extends AbstractDblogger implements Dblogger {
 
     // TODO start a loggerThread? How to communicate with it?
 
-   // protected final Connection        connection;
+    // protected final Connection connection;
 
     protected List<CallableStatement> callableStatements = new ArrayList<>();
 
@@ -63,16 +60,16 @@ public class DbloggerForOracle extends AbstractDblogger implements Dblogger {
 
     SequenceHelper                    sh;
 
-    private CallableStatement updateTracefileNameStatement;
+    private CallableStatement         updateTracefileNameStatement;
 
     // private static Logger logger = LoggerFactory.getLogger(Dblogger.class);
 
     public DbloggerForOracle(Connection connection) throws SQLException, SqlSplitterException, IOException {
-        super(connection);         
+        super(connection);
     }
 
     CallableStatement prepareCall(String sql) throws SQLException {
-   
+
         final CallableStatement retval = getConnection().prepareCall(sql);
         callableStatements.add(retval);
         return retval;
@@ -103,13 +100,12 @@ public class DbloggerForOracle extends AbstractDblogger implements Dblogger {
     @Override
     public long beginJob(final String processName, String className, String moduleName, String statusMsg,
             String threadName, String tracefileName) throws SQLException {
-        final String sql = 
-                "       begin\n" + "         :ut_process_status_id := logger.begin_java_job (\n"
+        final String sql = "       begin\n" + "         :ut_process_status_id := logger.begin_java_job (\n"
                 + "           p_process_name => :p_process_name,  -- VARCHAR2,\n"
                 + "           p_classname   => :p_classname,    -- varchar2,\n"
                 + "           p_module_name  => :p_module_name,   -- varchar2,\n"
                 + "           p_status_msg   => :p_status_msg,    -- varchar2,\n"
-                + "           p_thread_name  => :p_thread_name   -- varchar2\n" 
+                + "           p_thread_name  => :p_thread_name   -- varchar2\n"
                 + "          );\n" + "       end;\n"
                 + "";
         if (beginJobStatement == null) {
@@ -125,7 +121,7 @@ public class DbloggerForOracle extends AbstractDblogger implements Dblogger {
         cs.execute();
         final int retval = cs.getInt("ut_process_status_id");
         setUtProcessStatusId(retval);
-      //  cs.close();
+        // cs.close();
         logger.info("started job {} " + retval);
         return retval;
 
@@ -146,12 +142,12 @@ public class DbloggerForOracle extends AbstractDblogger implements Dblogger {
             sb.append(el.toString());
             sb.append("\n");
         }
-        
+
         if (abortJobStatement == null) {
             abortJobStatement = prepareCall("begin logger.abort_job(:p_stacktrace); end;");
         }
         String abortMessage = sb.toString();
-        abortJobStatement.setString("p_stacktrace",abortMessage);
+        abortJobStatement.setString("p_stacktrace", abortMessage);
         abortJobStatement.execute();
         logger.warn("job terminated with: '{}'", abortMessage);
         updateJob(getUtProcessStatusId());
@@ -245,7 +241,7 @@ public class DbloggerForOracle extends AbstractDblogger implements Dblogger {
     @Override
     public String getTraceFileName() throws SQLException {
         logger.info("getTraceFileName: {}", OracleSessionInfo.getConnectionInfo(getConnection()));
- 
+
         if (getTraceFileStatement == null) {
             getTraceFileStatement = prepareCall("begin :trace_file_name := logger.get_my_tracefile_name(); end;");
             getTraceFileStatement.registerOutParameter("trace_file_name", java.sql.Types.VARCHAR);
@@ -352,8 +348,6 @@ public class DbloggerForOracle extends AbstractDblogger implements Dblogger {
         callableStatements = new ArrayList<>();
     }
 
-   
-
     @Override
     public void showConnectionInformation() {
         // TODO Auto-generated method stub
@@ -368,9 +362,6 @@ public class DbloggerForOracle extends AbstractDblogger implements Dblogger {
         updateTracefileNameStatement.setString(1, appTracefileName);
         updateTracefileNameStatement.execute();
 
-        
     }
-
-
 
 }

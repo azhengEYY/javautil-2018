@@ -3,9 +3,11 @@
  */
 package org.javautil.oracle.trace.record;
 
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * PARSING IN CURSOR #<CURSOR> len=X dep=X uid=X oct=X lid=X tim=X hv=X ad='X'
@@ -31,7 +33,7 @@ import java.util.regex.Pattern;
  * <statement> The actual SQL statement being parsed.
  */
 public class Parsing extends AbstractCursorEvent {
-    private static transient Logger logger              = Logger.getLogger(Parsing.class.getName());
+    private static transient Logger logger              = LoggerFactory.getLogger(Parsing.class);
     // TODO can't this all be in one expression
     private static final Pattern    cursorNumberPattern = Pattern.compile("^PARSING IN CURSOR #(\\d*) ");
 
@@ -106,6 +108,7 @@ public class Parsing extends AbstractCursorEvent {
         sqlTextHashValue = Long.parseLong(hvMatcher.group(1));
         sgaAddress = adMatcher.group(1);
         super.setSqlid(sqlidMatcher.group(1));
+        logger.debug(this.toString());
     }
 
     public void addLine(final String line) {

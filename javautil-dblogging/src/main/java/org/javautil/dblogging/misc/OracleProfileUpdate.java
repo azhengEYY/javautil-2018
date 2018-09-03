@@ -32,8 +32,9 @@ public class OracleProfileUpdate {
     }
 
     public int runTkprof(File inFile, String outFileName) throws ExecuteException, IOException {
-        String tkprof= "/common/orainst/bin/tkprof";
-     //   String tkprof = "/common/oracle/product/12.2.0/dbhome_1/bin/tkprof"; // TODO must be configurable
+        String tkprof = "/common/orainst/bin/tkprof";
+        // String tkprof = "/common/oracle/product/12.2.0/dbhome_1/bin/tkprof"; // TODO
+        // must be configurable
         String command = String.format("%s %s %s", tkprof, inFile.getAbsoluteFile(), outFileName);
         CommandLine commandLine = CommandLine.parse(command);
         DefaultExecutor executor = new DefaultExecutor();

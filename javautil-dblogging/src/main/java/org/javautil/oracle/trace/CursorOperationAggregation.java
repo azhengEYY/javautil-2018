@@ -73,12 +73,12 @@ public class CursorOperationAggregation {
     }
 
     private transient Tracer tracer;
-  
+
     public CursorOperationAggregation() {
-        
+
     }
-    
-   public CursorOperationAggregation(Tracer tracer) {
+
+    public CursorOperationAggregation(Tracer tracer) {
         this.tracer = tracer;
     }
 
@@ -197,8 +197,6 @@ public class CursorOperationAggregation {
             minimumTime = time;
         }
     }
-
-  
 
     public void setTracer(Tracer tracer) {
         this.tracer = tracer;

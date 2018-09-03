@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
+// TODO consolidate with Binds
 public class NameValue extends LinkedHashMap<String, Object> {
     /**
      *

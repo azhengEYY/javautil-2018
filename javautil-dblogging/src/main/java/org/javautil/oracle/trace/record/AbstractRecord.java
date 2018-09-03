@@ -35,9 +35,8 @@ public abstract class AbstractRecord implements Record {
         return returnValue;
     }
 
-
-    protected int          lineNumber;
-    protected String       text;
+    protected int    lineNumber;
+    protected String text;
 
     // private long recordNumber;
 

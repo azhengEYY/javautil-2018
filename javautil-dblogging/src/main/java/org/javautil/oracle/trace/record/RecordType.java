@@ -38,7 +38,6 @@ public enum RecordType {
             returnValue = textMap.get(lead);
         }
 
-
         // TODO complete and remove those covered above
         if (returnValue == null) {
             if (record.startsWith("XCTEND")) {
@@ -67,8 +66,7 @@ public enum RecordType {
                 }
             } else if (record.startsWith("===")) {
                 returnValue = SEPARATOR;
-            }
-            else if (record.trim().length() > 0) {
+            } else if (record.trim().length() > 0) {
                 returnValue = UNKNOWN;
             }
             if (returnValue == null) {

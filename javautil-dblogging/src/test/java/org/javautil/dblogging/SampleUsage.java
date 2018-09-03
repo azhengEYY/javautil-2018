@@ -16,7 +16,6 @@ public class SampleUsage {
 
     private Dblogger   dblogger;
     private Connection connection;
-    private Logger     logger = LoggerFactory.getLogger(getClass());
     private String     processName;
 
     public SampleUsage(Connection connection, Dblogger dblogger, String processName) {

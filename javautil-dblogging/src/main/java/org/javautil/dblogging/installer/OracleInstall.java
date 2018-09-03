@@ -12,9 +12,9 @@ public class OracleInstall {
 
     private final Connection connection;
 
-    private boolean          drop   = false;
-    private final Logger     logger = LoggerFactory.getLogger(this.getClass());
-    private boolean    showSql = false;
+    private boolean          drop    = false;
+    private final Logger     logger  = LoggerFactory.getLogger(this.getClass());
+    private boolean          showSql = false;
 
     private boolean          dryRun;
 

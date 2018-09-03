@@ -8,6 +8,7 @@ import org.javautil.oracle.trace.record.CursorOperation;
 import org.javautil.oracle.trace.record.Parse;
 import org.javautil.oracle.trace.record.Parsing;
 import org.javautil.oracle.trace.record.Stat;
+import org.javautil.sql.Binds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -198,4 +199,6 @@ public class CursorInfo {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         return gson.toJson(this);
     }
+    
+   
 }

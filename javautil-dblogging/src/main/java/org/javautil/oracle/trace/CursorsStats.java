@@ -23,11 +23,11 @@ import com.google.gson.GsonBuilder;
  */
 public class CursorsStats {
     @SuppressWarnings("unused")
-    private transient Logger                    logger                    = LoggerFactory.getLogger(getClass());
+    private transient Logger                    logger              = LoggerFactory.getLogger(getClass());
     /**
      * Each parse produces a cursorNumber which may not be unique in a trace file.
      */
-    private transient HashMap<Long, CursorInfo> cursorStatsByNumber       = new HashMap<>();
+    private transient HashMap<Long, CursorInfo> cursorStatsByNumber = new HashMap<>();
     /**
      * The sqlId will be the same for all cursors that use the same sql
      * Therefore there will be at least as many cursorStatsByNumber, one for
@@ -35,9 +35,9 @@ public class CursorsStats {
      * 
      * By keeping in a LinkedHashMap we can present in the order of occurrence.
      */
-    private LinkedHashMap<String, CursorInfo>   cursorStatsById           = new LinkedHashMap<>();
+    private LinkedHashMap<String, CursorInfo>   cursorStatsById     = new LinkedHashMap<>();
 
-    private transient HashMap<Long, String>     sqlIdByCursorNumber       = new HashMap<>();
+    private transient HashMap<Long, String>     sqlIdByCursorNumber = new HashMap<>();
 
     private transient Tracer                    tracer;
 

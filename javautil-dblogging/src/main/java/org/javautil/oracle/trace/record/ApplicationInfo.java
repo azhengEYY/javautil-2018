@@ -1,5 +1,4 @@
 
-
 package org.javautil.oracle.trace.record;
 
 /**

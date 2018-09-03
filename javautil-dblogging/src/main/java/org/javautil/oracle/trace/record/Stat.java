@@ -28,40 +28,41 @@ import java.util.regex.Pattern;
  * op='INDEX FAST FULL SCAN FC_FCST_NDX_02 (cr=2366 pr=0 pw=0 time=1129914 us)'
  */
 public class Stat extends AbstractCursorEvent {
-  //  private static Logger  logger              = LoggerFactory.getLogger(Stat.class.getName());
-    private static Pattern cursorNumberPattern = Pattern.compile("^STAT #(\\d*) ");
-    protected static final Pattern idPattern                = Pattern.compile("id=(\\d*)");
+    // private static Logger logger = LoggerFactory.getLogger(Stat.class.getName());
+    private static Pattern         cursorNumberPattern  = Pattern.compile("^STAT #(\\d*) ");
+    protected static final Pattern idPattern            = Pattern.compile("id=(\\d*)");
 
-    protected static final Pattern cntPattern               = Pattern.compile("cnt=(\\d*)");
-    protected static final Pattern parentIdPattern         = Pattern.compile("pid=(\\d*)");
-    protected static final Pattern posPattern               = Pattern.compile("pos=(\\d*).*");
-    protected static final Pattern objPattern               = Pattern.compile("obj=(\\d*)");
-    protected static final Pattern operationPattern         = Pattern.compile("op='(.*) \\(");
-    protected static final Pattern currentReadPattern       = Pattern.compile("\\(cr=(\\d*)");
-    protected static final Pattern physicalReadPattern      = Pattern.compile("pr=(\\d*)");
-    protected static final Pattern physicalWritePattern     = Pattern.compile("pw=(\\d*)");
-    protected static final Pattern timePattern              = Pattern.compile("time='(\\d*)");
+    protected static final Pattern cntPattern           = Pattern.compile("cnt=(\\d*)");
+    protected static final Pattern parentIdPattern      = Pattern.compile("pid=(\\d*)");
+    protected static final Pattern posPattern           = Pattern.compile("pos=(\\d*).*");
+    protected static final Pattern objPattern           = Pattern.compile("obj=(\\d*)");
+    protected static final Pattern operationPattern     = Pattern.compile("op='(.*) \\(");
+    protected static final Pattern currentReadPattern   = Pattern.compile("\\(cr=(\\d*)");
+    protected static final Pattern physicalReadPattern  = Pattern.compile("pr=(\\d*)");
+    protected static final Pattern physicalWritePattern = Pattern.compile("pw=(\\d*)");
+    protected static final Pattern timePattern          = Pattern.compile("time='(\\d*)");
 
     /**
      * Index starting with 1.
      */
-    private final int      id;
-    private final int      cnt;
+    private final int              id;
+    private final int              cnt;
     /**
      * Id of the parent Stat Record
      */
-    private final int      parentId;
-    private final int      position;
-    private final int      objectNumber;
-    private final String   operation;
-    private final int      consistentReads;
-    private final int      physicalReads;
-    private final int      physicalWrites;
-    private final int      time;
+    private final int              parentId;
+    private final int              position;
+    private final int              objectNumber;
+    private final String           operation;
+    private final int              consistentReads;
+    private final int              physicalReads;
+    private final int              physicalWrites;
+    private final int              time;
     /**
      * How deep this is. If you follow the linked list
      */
-    private int            depth;
+    private int                    depth;
+    private int sequenceNbr;
 
     public Stat(final String stmt, final int lineNumber) {
         super(lineNumber, stmt);
@@ -160,6 +161,11 @@ public class Stat extends AbstractCursorEvent {
      */
     public int getParentId() {
         return parentId;
+    }
+
+    public void setSequenceNbr(int sequenceNbr) {
+       this.sequenceNbr = sequenceNbr;
+        
     }
 
 }

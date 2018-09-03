@@ -62,6 +62,13 @@ public class NamedSqlStatements extends SqlStatements implements Iterable<SqlSta
 		setStatements(ss.getStatements());
 	}
 	
+	public static NamedSqlStatements fromSqlSplitter(Connection conn, File srFileName) throws FileNotFoundException {
+	    SqlSplitter sr = new SqlSplitter(srFileName);
+	    NamedSqlStatements retval = new NamedSqlStatements(conn);
+	    retval.setStatements(sr.getSqlStatementList());
+	    return retval;
+	}
+	
 	@Override
 	public void setStatements(List<SqlStatement> statements) {
 		super.setStatements(statements);

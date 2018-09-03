@@ -21,7 +21,7 @@ public abstract class AbstractCursorEvent extends AbstractRecord implements Curs
     protected static final Pattern idPattern                = Pattern.compile("id=(\\d*)");
 
     protected static final Pattern cntPattern               = Pattern.compile("cnt=(\\d*)");
-    protected static final Pattern parentIdPattern         = Pattern.compile("pid=(\\d*)");
+    protected static final Pattern parentIdPattern          = Pattern.compile("pid=(\\d*)");
     protected static final Pattern posPattern               = Pattern.compile("pos=(\\d*).*");
     protected static final Pattern objPattern               = Pattern.compile("obj=(\\d*)");
     protected static final Pattern operationPattern         = Pattern.compile("op='(.*) \\(");
@@ -30,7 +30,7 @@ public abstract class AbstractCursorEvent extends AbstractRecord implements Curs
     protected static final Pattern physicalWritePattern     = Pattern.compile("pw=(\\d*)");
     protected static final Pattern timePattern              = Pattern.compile("time='(\\d*)");
 
-    //private static Gson            gson                     = new GsonBuilder().setPrettyPrinting().create();
+    // private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
     private Long                   cursorNumber;
 
     private String                 sqlid;
@@ -72,7 +72,7 @@ public abstract class AbstractCursorEvent extends AbstractRecord implements Curs
 
     @Override
     public String toString() {
-        Gson            gson                     = new GsonBuilder().setPrettyPrinting().create();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         return gson.toJson(this);
     }
 
