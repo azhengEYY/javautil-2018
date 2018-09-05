@@ -2,6 +2,7 @@ package org.javautil.oracle.trace;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.javautil.io.Tracer;
 import org.javautil.oracle.trace.record.CursorOperation;
@@ -16,7 +17,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 public class CursorInfo {
-    private transient Logger           logger = LoggerFactory.getLogger(getClass());
+    private static transient Logger    logger = LoggerFactory.getLogger(CursorInfo.class);
 
     /**
      * This number is unique for every parse of a SQL Statement, as opposed to sqlId
@@ -199,6 +200,49 @@ public class CursorInfo {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         return gson.toJson(this);
     }
-    
-   
+
+    public static void setStatDepths(List<Stat> stats) {
+        logger.info("============");
+        int statNbr = 0;
+        int seqNbr = 1;
+        int depth = 0;
+        for (Stat stat : stats) {
+            stat.setSequenceNbr(seqNbr++);
+            if (statNbr == 0) {
+                stat.setDepth(0);
+            } else {
+                Stat parent = stats.get(stat.getParentId());
+                int parentDepth = parent.getDepth();
+                
+                depth = parent.getDepth() + 1;
+                logger.info("parent depth : {} depth {)",parentDepth, depth);
+                stat.setDepth(depth);
+            }
+            statNbr++;
+            logger.info("set depth to {} attempted {} {}", stat.getDepth(), depth, stat);
+        }
+    }
+
+    // TODO this is copy paste from OracleTraceReport
+    public String formatExplainPlan() {
+        StringBuilder sb = new StringBuilder();
+
+        if (getStats() != null) {
+            setStatDepths(getStats());
+
+            for (Stat stat : getStats()) {
+                int indent = stat.getDepth() + 1;
+                String formatString = "%-" + indent + "s%s\n";
+                logger.info("formatExplainPlan: indent {} operation: '{}'s", indent, stat.getOperation());
+                logger.info("formatString " + formatString);
+                String line = String.format(formatString, "", stat.getOperation());
+                logger.info("formatted: {}",line);
+                sb.append(line);
+                logger.info("\n" + sb.toString());
+            }
+        }
+        logger.info("returning:\n{}",sb.toString());
+        return sb.toString();
+    }
+
 }

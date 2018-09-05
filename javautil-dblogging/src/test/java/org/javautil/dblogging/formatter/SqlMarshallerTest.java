@@ -2,6 +2,7 @@ package org.javautil.dblogging.formatter;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -10,34 +11,50 @@ import org.javautil.oracle.trace.CursorsStats;
 import org.javautil.oracle.trace.OracleTraceProcessor;
 import org.javautil.oracle.trace.formatter.SqlMarshaller;
 import org.javautil.sql.Binds;
+import org.javautil.sql.H2FileDatabase;
 import org.javautil.sql.H2InMemory;
 import org.javautil.sql.SqlRunner;
 import org.javautil.sql.SqlSplitterException;
 import org.javautil.sql.SqlStatement;
+import org.javautil.text.SimpleDateFormatFactory;
 import org.javautil.util.ListOfNameValue;
 import org.javautil.util.NameValue;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 
 public class SqlMarshallerTest {
     
+    private static final Logger logger = LoggerFactory.getLogger(SqlMarshallerTest.class);
     private boolean initted = false;
-    private Connection connection;
+    private static Connection connection;
+    private static String dbFileName;
     
-    @Before
-    public void before () throws ClassNotFoundException, SQLException, SqlSplitterException, IOException {
-        if (initted) {
-            return;
-        }
-        connection = H2InMemory.getConnection();
-        SqlRunner sr =  new SqlRunner(this,"cursor_stat.sql");
+    @BeforeClass
+    public static void beforeClass () throws ClassNotFoundException, SQLException, SqlSplitterException, IOException {
+
+        
+        String timestamp = SimpleDateFormatFactory.getTimestamp();
+        File f = new File("/tmp/" + timestamp);
+        dbFileName = f.getAbsolutePath();
+        connection = H2FileDatabase.getConnection(f, "", "");
+        
+        SqlRunner sr =  new SqlRunner(new SqlMarshallerTest(),"cursor_stat.sql");
         sr.setConnection(connection);
         sr.setPrintSql(true);
         sr.process();
-        
-        initted = true;
+       
+
+    }
+    
+    @AfterClass
+    public static void afterClass() {
+        logger.info("created " + dbFileName);
     }
     
     @Test
@@ -46,7 +63,7 @@ public class SqlMarshallerTest {
         otp.process();
         CursorsStats cursors = otp.getCursors();
         SqlMarshaller dillon = new SqlMarshaller(connection);
-        long runId = dillon.persist(cursors);
+        long runId = dillon.saveAll(cursors);
         connection.commit();
         SqlStatement ssRun = new SqlStatement(connection,"select * from cursor_info_run");
        
@@ -60,7 +77,7 @@ public class SqlMarshallerTest {
         System.out.println("text:\n" + textNv );
         assertTrue(textNv.size() > 0);
         assertNotNull(runNv != null);
-        
+        // TODO read the tables and check row counts and values for sample records
         
     }
 

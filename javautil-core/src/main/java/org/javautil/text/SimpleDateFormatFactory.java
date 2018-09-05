@@ -1,8 +1,11 @@
 package org.javautil.text;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class SimpleDateFormatFactory {
+    
+    public static final SimpleDateFormat timestampFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH-mm-ss.SSS");;
 	/**
 	 * Example "2018-07-31"
 	 *
@@ -20,6 +23,11 @@ public class SimpleDateFormatFactory {
 	 */
 	public static SimpleDateFormat getDateTimeForFileName() {
 		return new SimpleDateFormat("yyyy-MM-dd'T'HH-mm-ss.SSS");
+	}
+	
+	public static String getTimestamp() {
+	   return timestampFormat.format(new Date());
+
 	}
 
 	//	yyyy-MM-dd HH:mm:ss	2012-01-31 23:59:59

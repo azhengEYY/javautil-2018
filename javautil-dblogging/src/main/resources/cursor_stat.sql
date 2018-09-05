@@ -9,8 +9,18 @@ drop table cursor_stat;
 create sequence cursor_info_run_id_seq;
 create sequence cursor_info_id_seq;
 create sequence cursor_text_id_seq;
+create sequence cursor_plan_id_seq;
 
- 
+ create table cursor_plan (
+    cursor_plan_id     number(9) not null,
+    explain_plan_hash  varchar(64) not null,
+    explain_plan       clob not null
+);
+
+alter table cursor_plan 
+add constraint cursor_plan_pk
+primary key (cursor_plan_id);
+
 create table cursor_info_run(
     cursor_info_run_id    number(9) not null,
     cursor_info_run_descr clob
@@ -54,7 +64,8 @@ create table cursor_info (
 	fetch_consistent_blocks number(9),
 	fetch_current_blocks    number(9),
 	fetch_lib_miss          number(9),
-	fetch_row_count         number(9)
+	fetch_row_count         number(9),
+	cursor_plan_id          number(9)
 );
 
 
@@ -67,14 +78,20 @@ add constraint cursor_info_text_fk
 foreign key (cursor_text_id)
 references cursor_text;
 
+alter table cursor_info
+add constraint cursor_info_plan_fk
+foreign key (cursor_plan_id)
+references cursor_plan;
+
 alter table cursor_info add constraint 
 cursor_info_run_fk foreign key (cursor_info_run_id)
 references cursor_info_run;
 
 create or replace view  cursor_info_vw as 
 select 
-	cursor_info_id,
-    cursor_text_id,
+	cursor_info.cursor_info_id,
+    cursor_info.cursor_text_id,
+    cursor_text.sql_text,
     parse_cpu_micros,
     parse_elapsed_micros,
     parse_blocks_read,
@@ -102,8 +119,13 @@ select
     parse_consistent_blocks + exec_consistent_blocks + fetch_consistent_blocks consistent_blocks ,
     parse_current_blocks + exec_current_blocks + fetch_current_blocks current_blocks ,
     parse_lib_miss + exec_lib_miss + fetch_lib_miss lib_miss ,
-    parse_row_count + exec_row_count + fetch_row_count row_count 
-from cursor_info;
+    parse_row_count + exec_row_count + fetch_row_count row_count,
+    explain_plan
+from cursor_info,
+     cursor_text,
+     cursor_plan
+ where cursor_info.cursor_text_id = cursor_text.cursor_text_id and
+       cursor_info.cursor_plan_id = cursor_plan.cursor_plan_id;
     
 
 create table cursor_stat (
@@ -116,6 +138,8 @@ create table cursor_stat (
     physical_writes  number(9),
     elapsed_millis   number(12)
 );
+
+
 
 alter table cursor_stat add 
 constraint cursor_stat_pk 

@@ -6,6 +6,9 @@ package org.javautil.oracle.trace.record;
 
 import java.util.regex.Pattern;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * STAT #<CURSOR> id=N cnt=0 [pid=0 pos=0 obj=0 op='SORT AGGREGATE ']
  * ----------------------------------------------------------------------------
@@ -29,6 +32,7 @@ import java.util.regex.Pattern;
  */
 public class Stat extends AbstractCursorEvent {
     // private static Logger logger = LoggerFactory.getLogger(Stat.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(Stat.class);
     private static Pattern         cursorNumberPattern  = Pattern.compile("^STAT #(\\d*) ");
     protected static final Pattern idPattern            = Pattern.compile("id=(\\d*)");
 
@@ -40,7 +44,10 @@ public class Stat extends AbstractCursorEvent {
     protected static final Pattern currentReadPattern   = Pattern.compile("\\(cr=(\\d*)");
     protected static final Pattern physicalReadPattern  = Pattern.compile("pr=(\\d*)");
     protected static final Pattern physicalWritePattern = Pattern.compile("pw=(\\d*)");
-    protected static final Pattern timePattern          = Pattern.compile("time='(\\d*)");
+    protected static final Pattern timePattern          = Pattern.compile("time=(\\d*)");
+    protected static final Pattern costPattern          = Pattern.compile("cost=(\\d*)");
+    protected static final Pattern sizePattern          = Pattern.compile("size=(\\d*)");
+    protected static final Pattern cardinalityPattern    = Pattern.compile("card=(\\d*)");
 
     /**
      * Index starting with 1.
@@ -58,6 +65,9 @@ public class Stat extends AbstractCursorEvent {
     private final int              physicalReads;
     private final int              physicalWrites;
     private final int              time;
+    private final int              cost;
+    private final int              size;
+    private final int              cardinality;
     /**
      * How deep this is. If you follow the linked list
      */
@@ -71,11 +81,22 @@ public class Stat extends AbstractCursorEvent {
         parentId = getInt(stmt, parentIdPattern);
         position = getInt(stmt, posPattern);
         objectNumber = getInt(stmt, objPattern);
-        operation = getString(stmt, operationPattern);
+        String operationText = getString(stmt,operationPattern);
+        logger.info("operationText " + operationText);
+        operation = operationText.trim();
         consistentReads = getInt(stmt, currentReadPattern);
         physicalReads = getInt(stmt, physicalReadPattern);
         physicalWrites = getInt(stmt, physicalWritePattern);
-        time = getInt(stmt, timePattern);
+        
+  
+        int statTime = getInt(stmt,timePattern);
+        logger.info("stattime is " + statTime);
+        time = statTime;
+        cost = getInt(stmt,costPattern);
+        size = getInt(stmt,sizePattern);
+        cardinality = getInt(stmt,cardinalityPattern);
+        
+        
         final Long cursorNumber = getLong(stmt, cursorNumberPattern);
         setCursorNumber(cursorNumber);
     }
@@ -166,6 +187,18 @@ public class Stat extends AbstractCursorEvent {
     public void setSequenceNbr(int sequenceNbr) {
        this.sequenceNbr = sequenceNbr;
         
+    }
+
+    public int getCost() {
+        return cost;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public int getCardinality() {
+        return cardinality;
     }
 
 }
