@@ -79,10 +79,10 @@ public class SqlMarshaller {
 
     public void saveCursor(CursorInfo cursor) throws SQLException {
 
-        long planId = cursorPlanInsert(cursor);
-        long cursorTextId = cursorTextInsert(cursor);
+        String planHash = cursorPlanInsert(cursor);
+        String sqlTextHash = cursorTextInsert(cursor);
         
-        Binds cursorBinds = cursorInfoInsert(cursor, cursorTextId, planId);
+        Binds cursorBinds = cursorInfoInsert(cursor, planHash, sqlTextHash);
        long cursorId = cursorBinds.getLong("cursor_info_id");
 
         int sequenceNbr = 1;
@@ -94,8 +94,8 @@ public class SqlMarshaller {
     }
     
     
-    public long cursorTextInsert(CursorInfo cursor) throws SQLException {
-        long cursorTextId = -1;
+    public String cursorTextInsert(CursorInfo cursor) throws SQLException {
+     
         String sqlText = cursor.getParsing().getSqlText();
         String sqlHash = ShaHasher.hashAsBase64(sqlText);
         SqlStatement byHashSs = statements.getSqlStatement("cursor_text_by_hash");
@@ -103,11 +103,7 @@ public class SqlMarshaller {
         Binds binds = new Binds();
         binds.put("sql_text_hash", sqlHash);
         ListOfNameValue nv = byHashSs.getListOfNameValue(binds,true);
-        if (nv.size() == 1) {
-            cursorTextId =  nv.get(0).getLong("cursor_plan_id");
-        } else {
-            cursorTextId = sequenceHelper.getSequence("cursor_text_id_seq");
-            binds.put("cursor_text_id", cursorTextId);
+        if (nv.size() == 0) {
             binds.put("sql_text_hash", sqlHash);
             binds.put("sql_text", sqlText);
             logger.info("sql_text_hash =====: {}", sqlHash);
@@ -116,11 +112,11 @@ public class SqlMarshaller {
             cursorTextInsert.executeUpdate(binds);
         }
         logger.info("cursor_text:\n{}",binds);
-        return cursorTextId;
+        return sqlHash;
     }
     
-    public long cursorPlanInsert(CursorInfo cursor) throws SQLException {
-        long cursorPlanId = -1;
+    public String cursorPlanInsert(CursorInfo cursor) throws SQLException {
+  
         String planText = cursor.formatExplainPlan();
         String planHash = ShaHasher.hashAsBase64(planText);
         SqlStatement byHashSs = statements.getSqlStatement("cursor_plan_by_hash");
@@ -128,11 +124,9 @@ public class SqlMarshaller {
         Binds binds = new Binds();
         binds.put("explain_plan_hash", planHash);
         ListOfNameValue nv = byHashSs.getListOfNameValue(binds,true);
-        if (nv.size() == 1) {
-            cursorPlanId =  nv.get(0).getLong("cursor_plan_id");
-        } else {
-            cursorPlanId = sequenceHelper.getSequence("cursor_plan_id_seq");
-            binds.put("cursor_plan_id", cursorPlanId);
+        if (nv.size() == 0) {
+//            cursorPlanId = sequenceHelper.getSequence("cursor_plan_id_seq");
+//            binds.put("cursor_plan_id", cursorPlanId);
             binds.put("explain_plan_hash", planHash);
             binds.put("explain_plan", planText);
             logger.info("explain_plan:\n{}",planText);
@@ -141,14 +135,14 @@ public class SqlMarshaller {
             cursorPlanInsert.executeUpdate(binds);
         }
         logger.info("cursor_plan:\n{}" ,binds);
-        return cursorPlanId;
+        return planHash;
     }
 
 
 
 
 
-    public Binds cursorInfoInsert(CursorInfo cursor, Long cursorTextId, Long planId) throws SQLException {
+    public Binds cursorInfoInsert(CursorInfo cursor, String explainPlanHash, String sqlTextHash) throws SQLException {
 
         CursorOperationAggregation parse = cursor.getParseAggregation();
         CursorOperationAggregation fetch = cursor.getFetchAggregation();
@@ -158,10 +152,11 @@ public class SqlMarshaller {
 
         Binds binds = new Binds();
         Long cursorInfoId = sequenceHelper.getSequence("cursor_info_id_seq");
-        binds.put("cursor_plan_id", planId);
+        binds.put("explain_plan_hash",explainPlanHash);
+      //  binds.put("cursor_plan_id", explainPlanHash);
         binds.put("cursor_info_id", cursorInfoId);
         // binds.put("cursor_stat_id", cursorStatId);
-        binds.put("cursor_text_id", cursorTextId);
+        binds.put("sql_text_hash", sqlTextHash);
         binds.put("parse_cpu_micros", parse.getCpu());
         binds.put("parse_elapsed_micros", parse.getElapsedMicroSeconds());
         binds.put("parse_blocks_read", parse.getPhysicalBlocksRead());
@@ -184,8 +179,9 @@ public class SqlMarshaller {
         binds.put("fetch_current_blocks", hasFetch ? fetch.getCurrentModeBlocks() : null);
         // binds.put("fetch_lib_miss",fetch.getLibMiss() );
         binds.put("fetch_row_count", hasFetch ? fetch.getRowCount() : null);
-        cursorInfoInsert.executeUpdate(binds);
         logger.info("cursor_info:\n{}",binds);
+        cursorInfoInsert.executeUpdate(binds);
+      
         return binds;
     }
 

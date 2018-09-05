@@ -38,7 +38,6 @@ public class SqlMarshallerTest {
     @BeforeClass
     public static void beforeClass () throws ClassNotFoundException, SQLException, SqlSplitterException, IOException {
 
-        
         String timestamp = SimpleDateFormatFactory.getTimestamp();
         File f = new File("/tmp/" + timestamp);
         dbFileName = f.getAbsolutePath();
@@ -48,8 +47,6 @@ public class SqlMarshallerTest {
         sr.setConnection(connection);
         sr.setPrintSql(true);
         sr.process();
-       
-
     }
     
     @AfterClass
@@ -68,7 +65,7 @@ public class SqlMarshallerTest {
         SqlStatement ssRun = new SqlStatement(connection,"select * from cursor_info_run");
        
         SqlStatement ssCursors = new SqlStatement(connection,"select * from cursor_stat");
-        SqlStatement ssText = new SqlStatement(connection,"select * from cursor_text");
+        SqlStatement ssText = new SqlStatement(connection,"select * from cursor_sql_text");
         NameValue runNv = ssRun.getNameValue();
         ListOfNameValue cursorsNv = ssCursors.getListOfNameValue(new Binds(),true);
         System.out.println("cursorsNv" + cursorsNv);

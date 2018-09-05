@@ -8,18 +8,16 @@ drop table cursor_stat;
 
 create sequence cursor_info_run_id_seq;
 create sequence cursor_info_id_seq;
-create sequence cursor_text_id_seq;
-create sequence cursor_plan_id_seq;
 
- create table cursor_plan (
-    cursor_plan_id     number(9) not null,
-    explain_plan_hash  varchar(64) not null,
+
+ create table cursor_explain_plan (
+    explain_plan_hash  varchar(44) not null,
     explain_plan       clob not null
 );
 
-alter table cursor_plan 
-add constraint cursor_plan_pk
-primary key (cursor_plan_id);
+alter table cursor_explain_plan 
+add constraint cursor_explain_plan_pk
+primary key (explain_plan_hash);
 
 create table cursor_info_run(
     cursor_info_run_id    number(9) not null,
@@ -30,20 +28,19 @@ alter table cursor_info_run
 add constraint cursor_info_run_id 
 primary key (cursor_info_run_id);
 
-create table cursor_text (
-	cursor_text_id number(9) not null,
-	sql_text_hash varchar (64),
-	sql_text      clob
+create table cursor_sql_text (
+	sql_text_hash varchar (44) not null,
+	sql_text      clob         not null
 );
 
-alter table cursor_text 
+alter table cursor_sql_text 
 add constraint cursor_text_pk
-primary key (cursor_text_id);
+primary key (sql_text_hash);
 
 create table cursor_info (
 	cursor_info_id          number(9) not null,
     cursor_info_run_id      number(9),
-	cursor_text_id          number(9),
+	sql_text_hash           varchar(44),
     parse_cpu_micros        number(9),
 	parse_elapsed_micros    number(9),
 	parse_blocks_read       number(9),
@@ -65,7 +62,7 @@ create table cursor_info (
 	fetch_current_blocks    number(9),
 	fetch_lib_miss          number(9),
 	fetch_row_count         number(9),
-	cursor_plan_id          number(9)
+	explain_plan_hash       varchar(44)
 );
 
 
@@ -75,13 +72,13 @@ primary key (cursor_info_id);
 
 alter table cursor_info
 add constraint cursor_info_text_fk
-foreign key (cursor_text_id)
-references cursor_text;
+foreign key (sql_text_hash)
+references cursor_sql_text;
 
 alter table cursor_info
 add constraint cursor_info_plan_fk
-foreign key (cursor_plan_id)
-references cursor_plan;
+foreign key (explain_plan_hash)
+references cursor_explain_plan;
 
 alter table cursor_info add constraint 
 cursor_info_run_fk foreign key (cursor_info_run_id)
@@ -90,8 +87,7 @@ references cursor_info_run;
 create or replace view  cursor_info_vw as 
 select 
 	cursor_info.cursor_info_id,
-    cursor_info.cursor_text_id,
-    cursor_text.sql_text,
+    cursor_sql_text.sql_text,
     parse_cpu_micros,
     parse_elapsed_micros,
     parse_blocks_read,
@@ -122,10 +118,10 @@ select
     parse_row_count + exec_row_count + fetch_row_count row_count,
     explain_plan
 from cursor_info,
-     cursor_text,
-     cursor_plan
- where cursor_info.cursor_text_id = cursor_text.cursor_text_id and
-       cursor_info.cursor_plan_id = cursor_plan.cursor_plan_id;
+     cursor_sql_text,
+     cursor_explain_plan
+ where cursor_info.sql_text_hash = cursor_sql_text.sql_text_hash and
+       cursor_info.explain_plan_hash = cursor_explain_plan.explain_plan_hash;
     
 
 create table cursor_stat (
