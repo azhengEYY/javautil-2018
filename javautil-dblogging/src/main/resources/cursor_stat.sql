@@ -88,6 +88,7 @@ create or replace view  cursor_info_vw as
 select 
 	cursor_info.cursor_info_id,
     cursor_sql_text.sql_text,
+    explain_plan,
     parse_cpu_micros,
     parse_elapsed_micros,
     parse_blocks_read,
@@ -115,8 +116,7 @@ select
     parse_consistent_blocks + exec_consistent_blocks + fetch_consistent_blocks consistent_blocks ,
     parse_current_blocks + exec_current_blocks + fetch_current_blocks current_blocks ,
     parse_lib_miss + exec_lib_miss + fetch_lib_miss lib_miss ,
-    parse_row_count + exec_row_count + fetch_row_count row_count,
-    explain_plan
+    parse_row_count + exec_row_count + fetch_row_count row_count
 from cursor_info,
      cursor_sql_text,
      cursor_explain_plan
