@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
@@ -12,7 +14,7 @@ import java.util.Map;
 import org.javautil.sql.Binds;
 
 class CdsFileReader {
-    private final String                           filename;
+    private String                           filename;
 
     private Map<String, List<Map<String, Object>>> record_types;
     static final String                            NUMERIC    = "NUMERIC";
@@ -24,9 +26,7 @@ class CdsFileReader {
     static final String                            DIGITS     = "DIGITS";
     private Map<String, List<Map<String, Object>>> recordDefs;
     private BufferedReader                         reader;
-    // TODO load from resource
-    // final String fileName =
-    // "src/main/resources/com/pacificdataservices/pdssr/cds_reporting_metadata.yaml";
+
     FixedRecordUtil                                fru        = new FixedRecordUtil();
 
     private String                                 inputLine;
@@ -35,6 +35,16 @@ class CdsFileReader {
 
     private int                                    lineNumber = 0;
     // private final Logger logger = LoggerFactory.getLogger(getClass());
+    
+    CdsFileReader(InputStream is) {
+        try {
+            InputStreamReader isr = new InputStreamReader(is);
+            reader = new BufferedReader(isr);
+            loadRecordDefinitions();
+        } catch (final FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     CdsFileReader(String filename) {
         this.filename = filename;

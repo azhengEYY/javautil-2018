@@ -57,7 +57,8 @@ public class OracleInstall {
         logger.info("creating logger package body");
         new SqlRunner(this, "ddl/oracle/dblogger_install.pkb.sr.sql").setConnection(connection)
                 .setPrintSql(showSql).setProceduresOnly(true).setContinueOnError(true).process();
-
+        new SqlRunner(this, "cursor_stat.sql").setConnection(connection)
+        .setPrintSql(showSql).setProceduresOnly(true).setContinueOnError(true).process();
         // final String plSqlErrors = OracleConnectionHelper.getPLSQLErrors(connection);
         // if (plSqlErrors != null) {
         // logger.error("\n" + plSqlErrors);

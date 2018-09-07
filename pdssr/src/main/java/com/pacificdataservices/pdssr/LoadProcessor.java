@@ -1,8 +1,10 @@
 package com.pacificdataservices.pdssr;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -15,7 +17,7 @@ import org.javautil.sql.SqlSplitterException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class LoadProcessor implements FilenameFilter {
+public class LoadProcessor implements FilenameFilter, Runnable {
     private CdsDataLoader                           loader;
 
     private InstrumentedLoadConditionIdentification loadConditions;
@@ -31,12 +33,15 @@ public class LoadProcessor implements FilenameFilter {
     Dblogger                              dblogger;
 
     private DataSource                              h2loggerDataSource;
+    
+    private LoadFileInputStreamSource loadSource;
 
-    public LoadProcessor(Connection connection, Dblogger dblogger) throws SqlSplitterException, Exception {
+    public LoadProcessor(Connection connection, Dblogger dblogger, LoadFileInputStreamSource loadSource) throws SqlSplitterException, Exception {
         this.dblogger = dblogger;
         this.connection = connection;
         logger.info("dblogger : " + dblogger);
         logger.info("Database Instrumentation: " + dblogger.getClass().getCanonicalName());
+        this.loadSource = loadSource;
         initializeSubProcesses();
     }
 
@@ -47,35 +52,39 @@ public class LoadProcessor implements FilenameFilter {
         post = new Post(connection, 5);
     }
 
-    void processFiles(File[] files) throws Exception, SqlSplitterException {
-//        H2LoggerDataSourceCheck checker = new H2LoggerDataSourceCheck();
-//        checker.testDataSource(h2loggerDataSource);
-        for (final File f : files) {
-            process(f);
-        }
-    }
+//    void processFiles(File[] files) throws Exception, SqlSplitterException {
+////        H2LoggerDataSourceCheck checker = new H2LoggerDataSourceCheck();
+////        checker.testDataSource(h2loggerDataSource);
+//        for (final File f : files) {
+//            process(f);
+//        }
+//    }
 
-    public File[] getFiles() {
-        final String loadFileDir = "src/test/resources/dataloads";
-        final File loadDirFile = new File(loadFileDir);
-        final File[] files = loadDirFile.listFiles(this);
-        Arrays.sort(files);
-        return files;
-    }
+//    public File[] getFiles() {
+//        final String loadFileDir = "src/test/resources/dataloads";
+//        final File loadDirFile = new File(loadFileDir);
+//        final File[] files = loadDirFile.listFiles(this);
+//        Arrays.sort(files);
+//        return files;
+//    }
 
-    public long process(File datafile) throws Exception, SqlSplitterException {
+    public long process(InputStream datafile, String dataFileDescr) throws Exception, SqlSplitterException {
+        logger.info("process: {}",dataFileDescr);
         long etlFileId;
 
-        final String jobName = "LoadProcessor " + datafile.getAbsolutePath();
+        final String jobName = "=====LoadProcessor " + dataFileDescr;
+        logger.info("about to getTraceFileName");
         final String traceFileName = dblogger.getTraceFileName();
-
+        logger.info("====== tracing to {}",traceFileName);
+        logger.info("about to beginJob");
         long jobNbr = dblogger.beginJob(jobName, this.getClass().getCanonicalName(), "LoadProcessor", getClass().getName(),
                 Thread.currentThread().getName(), traceFileName);
         logger.info("starting job {} utProcessStatusId {} {}", jobNbr,  dblogger.getUtProcessStatusId());
         try {
             logger.info("tracing to" + traceFileName);
             dblogger.setAction("loadFile");
-            etlFileId = loadFile(datafile, dblogger);
+            logger.info("about to load file: {}",dataFileDescr);
+            etlFileId = loadFile(datafile, dataFileDescr, dblogger);
             dblogger.setAction("runConditions");
             runConditions(etlFileId);
             dblogger.setAction("prepost");
@@ -91,9 +100,9 @@ public class LoadProcessor implements FilenameFilter {
         return etlFileId;
     }
 
-    public long loadFile(File loadFile, Dblogger dblogger)
+    public long loadFile(InputStream loadFile, String inputDescr, Dblogger dblogger)
             throws SQLException, ParseException, IOException {
-        return loader.process(loadFile.getAbsolutePath(), "EXOTICTX", false);
+        return loader.process(loadFile, inputDescr, "EXOTICTX", false);
     }
 
     public void runConditions(long etlFileId) throws SQLException, IOException, SqlSplitterException {
@@ -107,5 +116,39 @@ public class LoadProcessor implements FilenameFilter {
     @Override
     public boolean accept(File dir, String fileName) {
         return fileName.endsWith(".cds");
+    }
+
+    @Override
+    public void run() {
+        logger.info("starting ");
+        InputStream is;
+        int count = 0;
+        try {
+            while (( is = loadSource.next()) != null) {
+                count++;
+                File f = loadSource.getFile(is);
+                logger.info("about to process {}",f.getAbsolutePath());
+                process(is,f.getAbsolutePath());
+            }
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (SqlSplitterException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        logger.info("processed {}",count);
+        
+    }
+
+    public LoadFileInputStreamSource getLoadSource() {
+        return loadSource;
+    }
+
+    public void setLoadSource(LoadFileInputStreamSource loadSource) {
+        this.loadSource = loadSource;
     }
 }

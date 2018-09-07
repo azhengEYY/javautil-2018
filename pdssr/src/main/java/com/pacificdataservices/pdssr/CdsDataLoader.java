@@ -73,7 +73,7 @@ public class CdsDataLoader implements FilenameFilter {
 
     /**
      *
-     * @param filename
+     * @param dataStream
      * @param conn
      * @param distributor_cd
      * @param validate
@@ -82,15 +82,15 @@ public class CdsDataLoader implements FilenameFilter {
      * @throws IOException
      * @throws SQLException
      */
-    public long process(String filename, String distributorCd, boolean validate)
+    public long process(InputStream dataStream, String dataStreamDescr, String distributorCd, boolean validate)
             throws ParseException, IOException, SQLException {
-        logger.info("ut_process_status_id {}",dblogger.getUtProcessStatusId());
-        dblogger.insertStep("CdsDataLoader", filename, getClass().getName());
+        logger.info("CDSDataLoader:process ut_process_status_id {}",dblogger.getUtProcessStatusId());
+        dblogger.insertStep("CdsDataLoader", dataStreamDescr, getClass().getName());
         dblogger.setModule("CdsDataLoader", null);
         dblogger.setAction("initial insert");
         long etlFileId;
         try {
-            etlFileId = loadFile(filename, distributorCd, validate);
+            etlFileId = loadFile(dataStream, dataStreamDescr, distributorCd, validate);
             dblogger.finishStep();
             connection.commit();
 
@@ -101,14 +101,15 @@ public class CdsDataLoader implements FilenameFilter {
         return etlFileId;
     }
 
-    long loadFile(String filename, String distributorCd, boolean validate)
+    long loadFile(InputStream dataStream , String datastreamDescr, String distributorCd, boolean validate)
             throws SQLException, ParseException, IOException {
         Binds binds = new Binds();
         binds.put("ORG_CD", distributorCd);
 
-        final CdsFileReader reader = new CdsFileReader(filename);
+        final CdsFileReader reader = new CdsFileReader(dataStream);
         final Long fileId = initialInsert(binds);
         binds.put("ETL_FILE_ID", fileId);
+        logger.info("Processing================== " + datastreamDescr);
         logger.info("fileId " + fileId);
         // TODO ETL_FILE should exist
 
@@ -138,6 +139,7 @@ public class CdsDataLoader implements FilenameFilter {
         reader.getLineNumber();
 
         reader.close();
+        dataStream.close();
         return fileId;
     }
 
