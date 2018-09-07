@@ -140,7 +140,7 @@ is
       if (NOT UTL_FILE.is_open (g_file_handle))
       then
          if g_process_status_id is null then
-            g_process_status_id := job_logus_id_seq.nextval;
+            g_process_status_id := job_log_id_seq.nextval;
          end if;
      if p_file_name is null then
             my_file_name := 'job_' || to_char(g_process_status_id);
@@ -155,7 +155,7 @@ is
    function get_g_process_status_id return number is
    begin
        if g_process_status_id  is  null then
-           g_process_status_id := job_logus_id_seq.nextval;
+           g_process_status_id := job_log_id_seq.nextval;
        end if;
        return g_process_status_id;
    end;
@@ -163,15 +163,15 @@ is
   procedure update_tracefile_name(p_tracefile_name in varchar) is
      pragma autonomous_transaction ;
   begin
-	  update job_logus set tracefile_name = p_tracefile_name 
-	  where job_logus_id = g_process_status_id;
+	  update job_log set tracefile_name = p_tracefile_name 
+	  where job_log_id = g_process_status_id;
 	  commit;
   end;
 
 
   --::<
   procedure create_process_log (
-      p_job_logus_id   in   pls_integer,
+      p_job_log_id   in   pls_integer,
       p_log_msg_id              in   varchar2,
       p_log_msg                 in   varchar2,
       p_log_level               in   pls_integer,
@@ -181,7 +181,7 @@ is
       p_call_stack              in   varchar2 DEFAULT NULL
    )
    --::* g_last_log_seq_nbr
-   --::* p_job_logus_id
+   --::* p_job_log_id
    --::* p_log_msg_id
    --::* to_char (current_timestamp, 'YYYY-MM-DD HH24:MI:SSXFF')
    --::* my_msg
@@ -226,7 +226,7 @@ is
 
           my_message := logger_message_formatter  (
               log_seq_nbr            =>   g_last_log_seq_nbr,
-              job_logus_id   =>   p_job_logus_id,
+              job_log_id   =>   p_job_log_id,
               log_msg_id             =>   p_log_msg_id,
               log_msg                =>   p_log_msg,
               log_level              =>   p_log_level,
@@ -242,13 +242,13 @@ is
       then
           insert into job_msg (
                job_msg_id,
-               job_logus_id,   log_seq_nbr,    log_msg_id,    log_msg,
+               job_log_id,   log_seq_nbr,    log_msg_id,    log_msg,
                log_level,              log_msg_ts,     caller_name,
                line_nbr,               log_msg_clob
           )
           values (
 	       job_msg_id_seq.nextval,
-               p_job_logus_id, g_last_log_seq_nbr, p_log_msg_id,   short_message,
+               p_job_log_id, g_last_log_seq_nbr, p_log_msg_id,   short_message,
                p_log_level,            current_timestamp,   p_caller_name,
                p_line_number,          long_message
          );
@@ -303,7 +303,7 @@ is
 
       dbms_output.put_line('about to create process log');
 
-      create_process_log (p_job_logus_id  => g_process_status_id,
+      create_process_log (p_job_log_id  => g_process_status_id,
                           p_log_msg_id            => NULL,
                           p_log_msg               => p_log_msg,
                           p_log_level             => my_log_level,
@@ -534,7 +534,7 @@ is
       if my_log_level < 1 then my_log_level := 1; end if;
       if my_log_level > 9 then my_log_level := 9; end if;
 
-      create_process_log (p_job_logus_id   => g_process_status_id,
+      create_process_log (p_job_log_id   => g_process_status_id,
                           p_log_msg_id              => p_msg_id,
                           p_log_msg                 => p_log_msg,
                           p_log_level               => my_log_level,

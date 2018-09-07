@@ -4,7 +4,7 @@ set echo on
 
  create or replace function  logger_message_formatter  (
       log_seq_nbr             in pls_integer,
-      job_logus_id    in   pls_integer,
+      job_log_id    in   pls_integer,
       log_msg_id              in   varchar2,
       log_msg                 in   varchar2,
       log_level               in   pls_integer,
@@ -21,7 +21,7 @@ set echo on
          my_log_entry :=
                 log_seq_nbr            || ','  || 
                 log_level              || ',"' || 
-                job_logus_id   || ',"' || 
+                job_log_id   || ',"' || 
                 log_msg_id             || '",' || 
                 line_number            || ',' || 
                 to_char (current_timestamp, 'YYYY-MM-DD HH24:MI:SSXFF') || ',"' || 

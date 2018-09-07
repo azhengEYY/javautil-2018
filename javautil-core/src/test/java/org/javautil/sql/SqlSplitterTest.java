@@ -52,7 +52,7 @@ public class SqlSplitterTest {
 		// TODO test the statements, line counts, first and last line
 	}
 	
-	@Test
+	//@Test
 	public void testNamed() throws IOException, SqlSplitterException {
 		final SqlSplitter sr = new SqlSplitter(this, "condition_identification/UtConditionPersistenceDml.sr.sql").setVerbosity(0);
 		// sr.formatLines();

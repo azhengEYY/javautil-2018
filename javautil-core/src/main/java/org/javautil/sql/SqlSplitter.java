@@ -402,6 +402,8 @@ public class SqlSplitter {
 	public ArrayList<SqlStatement> getSqlStatementList() throws SqlSplitterException {
 		final ArrayList<SqlStatement> statements = new ArrayList<>();
 
+		ArrayList<String> sqlTexts = getSqlTexts();
+		logger.info("getSqlStatementList " + "getSqlTexts returned " + sqlTexts.size() );
 		for (final String sqlText : getSqlTexts()) {
 			final String sqlTextLines[] = sqlText.split("\n");
 			String name = null;
@@ -418,6 +420,7 @@ public class SqlSplitter {
 			ss.setName(name);
 			statements.add(ss);
 		}
+		logger.info("getSqlStatementList: size() " + statements.size());
 		return statements;
 	}
 

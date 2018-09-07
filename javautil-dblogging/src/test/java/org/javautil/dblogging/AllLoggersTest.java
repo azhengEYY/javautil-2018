@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import javax.sql.DataSource;
 
 import org.javautil.dblogging.installer.H2LoggerDataSource;
-import org.javautil.dblogging.installer.OracleInstall;
+import org.javautil.dblogging.installer.DbloggerOracleInstall;
 import org.javautil.sql.ApplicationPropertiesDataSource;
 import org.javautil.sql.Binds;
 import org.javautil.sql.ConnectionUtil;
@@ -65,9 +65,9 @@ public class AllLoggersTest
     public void testSplitLogger() throws SqlSplitterException, Exception {
         Connection appConnection = appDataSource.getConnection();
         Connection xeConnection = xeDataSource.getConnection();
-        OracleInstall orainst = new OracleInstall(xeConnection, true, false);
+        DbloggerOracleInstall orainst = new DbloggerOracleInstall(xeConnection, true, false);
         orainst.process();
-        orainst = new OracleInstall(appConnection, true, false);
+        orainst = new DbloggerOracleInstall(appConnection, true, false);
         orainst.process();
         //
         Dblogger persistenceLogger = new DbloggerForOracle(xeDataSource.getConnection());
@@ -84,7 +84,7 @@ public class AllLoggersTest
     public void testDbloggerForOracle() throws SqlSplitterException, Exception {
         Connection appConnection = appDataSource.getConnection();
        
-        OracleInstall orainst = new OracleInstall(appConnection, true, false);
+        DbloggerOracleInstall orainst = new DbloggerOracleInstall(appConnection, true, false);
         orainst.process();
         //
         Dblogger dblogger = new DbloggerForOracle(appConnection);

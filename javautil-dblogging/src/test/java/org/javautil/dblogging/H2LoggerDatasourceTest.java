@@ -68,7 +68,7 @@ public class H2LoggerDatasourceTest {
 
         Connection conn2 = h2loggerDataSource.getConnection();
         Statement h2stmt = conn2.createStatement();
-        // blows up here with Table UT_PROCESS_STAT not found
+        // blows up here with Table job_stat not found
         h2stmt.executeUpdate("insert into job_log (job_log_id) values (-2)");
         conn2.commit();
 

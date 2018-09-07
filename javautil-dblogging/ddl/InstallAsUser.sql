@@ -6,6 +6,6 @@ connect &&user/&&userpassword
 @02-create_sequences.sql
 @job_log.sql
 @job_msg.sql
-@ut_process_stat.sql
+@job_stat.sql
 @logger.pks
 @logger.pkb

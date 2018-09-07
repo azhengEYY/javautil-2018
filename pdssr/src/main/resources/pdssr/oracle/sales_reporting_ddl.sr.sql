@@ -40,16 +40,6 @@ create sequence product_suspect_dtl_id_seq
 ;--
 create sequence product_suspect_hdr_id_seq
 ;--
-create sequence ut_condition_id_seq
-;--
-create sequence ut_condition_row_msg_id_seq
-;--
-create sequence ut_condition_run_id_seq
-;--
-create sequence ut_condition_run_parm_id_seq
-;--
-create sequence ut_condition_run_step_id_seq
-;--
 create sequence validated_address_id_seq
 ;--
 create table org (

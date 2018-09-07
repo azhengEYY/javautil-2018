@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
-import org.javautil.dblogging.installer.OracleInstall;
+import org.javautil.dblogging.installer.DbloggerOracleInstall;
 import org.javautil.sql.Dialect;
 import org.javautil.sql.ResultSetHelper;
 import org.javautil.sql.SqlSplitterException;
@@ -31,7 +31,7 @@ public class OracleInstallTest {
         if (!Dialect.getDialect(dataSource.getConnection()).equals(Dialect.ORACLE)) {
             skipTests = true;
         }
-        OracleInstall installer = new OracleInstall(dataSource.getConnection(), true, false);
+        DbloggerOracleInstall installer = new DbloggerOracleInstall(dataSource.getConnection(), true, false);
         installer.process();
     }
 
@@ -52,7 +52,7 @@ public class OracleInstallTest {
     public void installTest() throws Exception, SqlSplitterException {
         // TODO test all tables and objects, log write and oracle trace reda
         
-        OracleInstall installer = new OracleInstall(dataSource.getConnection(), true, false);
+        DbloggerOracleInstall installer = new DbloggerOracleInstall(dataSource.getConnection(), true, false);
         installer.process();
     }
 

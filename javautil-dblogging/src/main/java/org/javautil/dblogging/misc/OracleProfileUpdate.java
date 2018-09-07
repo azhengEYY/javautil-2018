@@ -58,10 +58,10 @@ public class OracleProfileUpdate {
     // }
 
     public void updateJobs() throws SQLException, FileNotFoundException, IOException {
-        String noTraceSql = "select ut_process_stat_id from ut_process_stat where tracefile_data is null";
+        String noTraceSql = "select job_stat_id from job_stat where tracefile_data is null";
         SqlStatement ss = new SqlStatement(connection, noTraceSql);
         for (NameValue nv : ss.getListOfNameValue(new Binds())) {
-            updateJob(nv.getLong("ut_process_stat_id"));
+            updateJob(nv.getLong("job_stat_id"));
         }
     }
 

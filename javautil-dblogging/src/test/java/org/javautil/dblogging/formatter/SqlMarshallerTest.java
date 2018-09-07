@@ -56,7 +56,7 @@ public class SqlMarshallerTest {
     
     @Test
     public void test() throws IOException, SqlSplitterException, SQLException {
-        OracleTraceProcessor otp = new OracleTraceProcessor("src/test/resources/oratrace/dev12c_ora_10581_job_6.trc");
+        OracleTraceProcessor otp = new OracleTraceProcessor("src/test/resources/oratrace/dev18b_ora_813.trc");
         otp.process();
         CursorsStats cursors = otp.getCursors();
         SqlMarshaller dillon = new SqlMarshaller(connection);

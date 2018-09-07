@@ -1,8 +1,10 @@
-drop sequence job_logus_id_seq;
+drop sequence job_log_id_seq;
 drop sequence job_step_id_seq;
-drop TABLE job_logUS cascade constraints;
-drop TABLE job_msg cascade constraints;
-drop TABLE job_log cascade constraints; 
+drop sequence job_log_id_seq;
+drop sequence JOB_MSG_ID_SEQ;
+drop view cursor_info_vw;
+drop table job_log cascade constraints;
+drop table job_msg cascade constraints;
 drop table job_step cascade constraints;
 drop package logger;
 

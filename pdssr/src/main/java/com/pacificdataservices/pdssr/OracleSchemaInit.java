@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
-import org.javautil.dblogging.installer.OracleInstall;
+import org.javautil.dblogging.installer.DbloggerOracleInstall;
 import org.javautil.sql.ApplicationPropertiesDataSource;
 import org.javautil.sql.Binds;
 import org.javautil.sql.SqlSplitterException;
@@ -26,7 +26,7 @@ public class OracleSchemaInit {
     public static void beforeClass() throws Exception, SqlSplitterException {
         dataSource = new ApplicationPropertiesDataSource().getDataSource();
         final Connection connection = dataSource.getConnection();
-        final OracleInstall installer = new OracleInstall(connection, true, false);
+        final DbloggerOracleInstall installer = new DbloggerOracleInstall(connection, true, false);
         logger.info("about to process install");
         installer.process();
         connection.close();

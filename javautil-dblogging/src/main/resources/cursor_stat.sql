@@ -6,8 +6,8 @@ drop table cursor_info_run;
 drop table cursor_stat;
 --#>
 
-create sequence cursor_info_run_id_seq;
-create sequence cursor_info_id_seq;
+
+
 
 /* Explain Plan */
 create table cursor_explain_plan (
@@ -31,18 +31,19 @@ add constraint cursor_text_pk
 primary key (sql_text_hash);
 
 /* Run */
-
+create sequence cursor_info_run_id_seq;
 create table cursor_info_run(
     cursor_info_run_id    number(9) not null,
     cursor_info_run_descr clob
 );
+
 
 alter table cursor_info_run 
 add constraint cursor_info_run_id 
 primary key (cursor_info_run_id);
 
 
-
+create sequence cursor_info_id_seq;
 create table cursor_info (
 	cursor_info_id          number(9) not null,
     cursor_info_run_id      number(9),

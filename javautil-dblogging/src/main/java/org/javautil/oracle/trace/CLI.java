@@ -1,6 +1,6 @@
 package org.javautil.oracle.trace;
 
-import org.javautil.dblogging.installer.OracleInstall;
+import org.javautil.dblogging.installer.DbloggerOracleInstall;
 import org.javautil.oracle.trace.formatter.OracleTraceReport;
 import org.javautil.sql.SqlSplitterException;
 
@@ -11,7 +11,7 @@ public class CLI {
             OracleTraceReport.main(args);
         }
         if ("generateOracleScripts".equals(args[0])) {
-            OracleInstall.main(args);
+            DbloggerOracleInstall.main(args);
         }
     }
 

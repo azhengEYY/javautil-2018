@@ -16,7 +16,7 @@ declare
                 ' The quick brown fox jumped over the lazy dog. ' ;
  
 begin
-        -- jobs should begin with logger.begin_job this inserts a record into ut_process_stat
+        -- jobs should begin with logger.begin_job this inserts a record into job_stat
     logger.begin_job('sample_job_02');
     logger.info($$PLSQL_UNIT,$$PLSQL_LINE,'begin loop');
         -- all messages should go to log file
@@ -35,7 +35,7 @@ exception when others
 then
         -- a severe condition is not necessarily fatal
     logger.severe($$PLSQL_UINIT,$$PLSQL_LINE,sqlerrm);
-    -- updates ut_process_stat to indicate the the job aborted
+    -- updates job_stat to indicate the the job aborted
     logger.abort_job;
 raise;
 end;

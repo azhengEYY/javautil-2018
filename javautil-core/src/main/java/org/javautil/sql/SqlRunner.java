@@ -32,14 +32,18 @@ public class SqlRunner {
 	private boolean trace = false;
 	private InputStream splitterInputStream;
 	private boolean showError = true;
+	
+	private boolean listStatementsBeforeExecute = false;
 	// TODO test that cursors are used once and closed;
 	public SqlRunner() {
 
 	}
 
 	public SqlRunner(Object instantiator, String resourceName) throws IOException, SqlSplitterException {
+	    
 		splitterInputStream = ResourceHelper.getResourceAsInputStream(instantiator, resourceName);
 		splitter = new SqlSplitter(splitterInputStream);
+		
 	}
 
 	public SqlRunner(File inputFile) throws IOException, SqlSplitterException {
@@ -138,9 +142,23 @@ public class SqlRunner {
 
 	public void process(Binds binds) throws SQLException {
 		if (statements == null && splitter != null) {
+		
 			statements = splitter.getSqlStatements();
 		}
-		processStatements(connection, binds, statements.getStatements());
+	
+		List<SqlStatement> listOfStatements = statements.getStatements();
+
+		  if (listStatementsBeforeExecute || trace) {
+		      logger.info("--   ========= statementsToBeExecuted: " + listOfStatements.size());
+		      int i = 1;
+		       for (SqlStatement ss : listOfStatements) {
+		           String message = String.format("#%d:\n%s", i, ss.getSql());
+		           System.out.println(message);
+		           i++;
+		       }
+	        }
+		
+		processStatements(connection, binds, listOfStatements);
 	}
 
 	public SqlRunner setConnection(Connection connection) {
@@ -207,4 +225,17 @@ public class SqlRunner {
 		this.showError = showError;
 		return this;
 	}
+
+    public boolean isListStatementsBeforeExecute() {
+        return listStatementsBeforeExecute;
+    }
+
+    public SqlRunner setListStatementsBeforeExecute(boolean listStatementsBeforeExecute) {
+        this.listStatementsBeforeExecute = listStatementsBeforeExecute;
+        return this;
+    }
+    
+    public SqlSplitter getSplitter() {
+        return splitter;
+    }
 }

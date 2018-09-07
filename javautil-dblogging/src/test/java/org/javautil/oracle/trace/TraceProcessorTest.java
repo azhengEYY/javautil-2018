@@ -80,7 +80,7 @@ public class TraceProcessorTest {
 
     @Test
     public void test3() throws IOException {
-        String base = "9663";
+        String base = "dev18b_ora_813";
         String inputFileName = "src/test/resources/oratrace/" + base + ".trc";
 
         FileOutputStream fos = new FileOutputStream("target/test-classes/oratrace/" + base + ".juf");

@@ -44,17 +44,17 @@ alter table job_msg
 add constraint upl_ups_fk 
 foreign key (job_log_id) 
 references job_log(job_log_id);
-  CREATE TABLE UT_PROCESS_STAT 
+  CREATE TABLE job_stat 
   (    
 	job_log_ID 	NUMBER(9,0) NOT NULL ENABLE,
         LOG_SEQ_NBR 		NUMBER(9,0) NOT NULL ENABLE,
         SID 			NUMBER,
         STATISTIC# 		NUMBER,
         VALUE 			NUMBER,
-         CONSTRAINT UT_PROCESS_STAT_PK PRIMARY KEY (job_log_ID, LOG_SEQ_NBR, STATISTIC#)
+         CONSTRAINT job_stat_PK PRIMARY KEY (job_log_ID, LOG_SEQ_NBR, STATISTIC#)
    ) organization index;
 
-alter table ut_process_stat
+alter table job_stat
 add constraint up_process_stat_fk 
               foreign key(job_log_id, log_seq_nbr)
 references job_msg(job_log_id, log_seq_nbr);

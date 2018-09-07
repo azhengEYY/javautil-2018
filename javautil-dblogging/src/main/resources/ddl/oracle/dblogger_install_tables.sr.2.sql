@@ -1,8 +1,8 @@
-create sequence job_logus_id_seq;
+create sequence job_log_id_seq;
 create sequence job_msg_id_seq;
 
-create table job_logus (    
-    job_logus_id number(9),
+create table job_log (    
+    job_log_id number(9),
     schema_name          varchar(30),
     process_name         varchar(128),
     thread_name          varchar(128),
@@ -21,13 +21,13 @@ create table job_logus (
     tracefile_json       clob,
     abort_stacktrace     clob,
     check ( ignore_flg in ('Y', 'N')) ,
-    constraint job_logus_pk primary key (job_logus_id)
+    constraint job_log_pk primary key (job_log_id)
    ); 
 
 
   create table job_msg
    (    job_msg_id 	  number(9),
-        job_logus_id 	  number(9),
+        job_log_id 	  number(9),
         log_msg_id 		  varchar2(8),
         log_msg 		  varchar2(256),
         log_msg_clob 		  clob,
@@ -38,14 +38,14 @@ create table job_logus (
         line_nbr 		  number(5,0),
         call_stack 		  clob,
         log_level 		  number(2,0),
-         constraint job_msg_pk primary key (job_logus_id, log_seq_nbr)
+         constraint job_msg_pk primary key (job_log_id, log_seq_nbr)
   ); 
 
 create sequence job_step_id_seq;
 
  create table job_step (    
         job_step_id      number(9),
-        job_logus_id 	number(9),
+        job_log_id 	number(9),
 	step_name               varchar(64),
 	classname               varchar(256),
 	step_info               varchar(2000),
@@ -55,18 +55,18 @@ create sequence job_step_id_seq;
         step_info_json          clob,
          constraint job_step_pk primary key (job_step_id),
          constraint step_status_fk
-	    foreign key (job_logus_id) references job_logus
+	    foreign key (job_log_id) references job_log
   );
 
 alter table job_msg 
 add constraint upl_ups_fk 
-foreign key (job_logus_id) 
-references job_logus(job_logus_id);
+foreign key (job_log_id) 
+references job_log(job_log_id);
 
 create or replace view job_step_vw as
 select
         job_step_id,
-        job_logus_id,
+        job_log_id,
 	step_name,
 	classname ,
 	step_info,
@@ -75,9 +75,9 @@ select
         end_ts - start_ts elapsed_millis
 from job_step;
 
-create or replace view job_logus_vw as 
+create or replace view job_log_vw as 
 select  
-   job_logus_id, 
+   job_log_id, 
    schema_name,         
    process_name,        
    thread_name,         
@@ -93,4 +93,4 @@ select
    classname,             
    tracefile_name,                 
    end_ts - status_ts elapsed_millis 
-from job_logus;
+from job_log;

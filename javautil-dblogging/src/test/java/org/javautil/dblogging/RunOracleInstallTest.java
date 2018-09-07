@@ -4,7 +4,7 @@ import java.sql.Connection;
 
 import javax.sql.DataSource;
 
-import org.javautil.dblogging.installer.OracleInstall;
+import org.javautil.dblogging.installer.DbloggerOracleInstall;
 import org.javautil.sql.ApplicationPropertiesDataSource;
 import org.javautil.sql.Dialect;
 import org.javautil.sql.SqlSplitterException;
@@ -31,7 +31,7 @@ public class RunOracleInstallTest {
 
     @Test
     public void installTest() throws Exception, SqlSplitterException {
-        OracleInstall installer = new OracleInstall(dataSource.getConnection(), true, false);
+        DbloggerOracleInstall installer = new DbloggerOracleInstall(dataSource.getConnection(), true, false);
         installer.process();
     }
 

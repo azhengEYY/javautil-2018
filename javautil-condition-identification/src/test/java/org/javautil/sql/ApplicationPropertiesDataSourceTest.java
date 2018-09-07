@@ -17,16 +17,17 @@ public class ApplicationPropertiesDataSourceTest {
 
 	static boolean befored = false;
 
-	protected static DataSource dataSource;
+	protected static DataSource h2DataSource;
+	protected static DataSource oracleDataSource;
 	static Logger logger = LoggerFactory.getLogger(ApplicationPropertiesDataSourceTest.class);
 
 	@BeforeClass
 	public static  void beforeClass() throws IOException, SQLException {
 
-		final ApplicationPropertiesDataSource apds = new ApplicationPropertiesDataSource();
-		apds.getApplicationProperties();
-		dataSource = apds.getDataSource();
-		final Connection conn = dataSource.getConnection();
+		h2DataSource = new ApplicationPropertiesDataSource().getDataSource(new ApplicationPropertiesDataSourceTest(),"h2.properties");
+	     oracleDataSource = new ApplicationPropertiesDataSource().getDataSource(new ApplicationPropertiesDataSourceTest(),"oracle.properties");
+
+		final Connection conn = h2DataSource.getConnection();
 		assertNotNull(conn);
 		if (Dialect.getDialect(conn).equals(Dialect.H2)) {
 			Statement nuke = conn.createStatement();

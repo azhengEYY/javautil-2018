@@ -706,7 +706,7 @@ is
                          );
 
 --
-      INSERT into ut_process_stat (	
+      INSERT into job_stat (	
 	     job_log_id, log_seq_nbr,       statistic#,      VALUE
       )
       select g_process_status_id, g_last_log_seq_nbr, stat.statistic#, stat.VALUE

@@ -66,7 +66,7 @@ public class ThreadedLoaderProcessor implements Runnable {
     }
 
     public void run() {
-
+        // TODO check to see if any of them had errors
    
         final ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
         final ExecutorCompletionService<String> completionService = new ExecutorCompletionService<>(executorService);

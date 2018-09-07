@@ -7,8 +7,9 @@ import java.sql.Connection;
 
 import javax.sql.DataSource;
 
+import org.javautil.conditionidentification.CreateConditionIdentificationDatabaseObjects;
 import org.javautil.dblogging.DbloggerPropertiesDataSource;
-import org.javautil.dblogging.installer.OracleInstall;
+import org.javautil.dblogging.installer.DbloggerOracleInstall;
 import org.javautil.misc.Timer;
 import org.javautil.sql.ApplicationPropertiesDataSource;
 import org.javautil.sql.SqlSplitterException;
@@ -24,16 +25,25 @@ public class ThreadedLoaderProcessorTest extends CreateSchemaTest {
     public void test() throws SqlSplitterException, Exception {
 
         DataSource dataSource = new ApplicationPropertiesDataSource().getDataSource();
+        Connection applicationConnection = dataSource.getConnection();
         DataSource xeDatasource = new DbloggerPropertiesDataSource("dblogger.xe.properties").getDataSource();
         Connection xeConnection = xeDatasource.getConnection();
         
-        OracleInstall orainst = new OracleInstall(xeConnection, false, false);
-        orainst.process();
+        DbloggerOracleInstall oralog = new DbloggerOracleInstall(xeConnection,true,true);
+        oralog.drop();
+        oralog.process();
+        
+        CreateConditionIdentificationDatabaseObjects condiobj = new CreateConditionIdentificationDatabaseObjects(applicationConnection);
+        condiobj.setShowSql(true);
+        condiobj.drop();
+        condiobj.process();
+    
         Timer timer = new Timer();
         final ThreadedLoaderProcessor loadProcessor = new ThreadedLoaderProcessor(dataSource, xeDatasource,8);
         loadProcessor.run();
         logger.info("elapsed " + timer.getElapsedMillis());
-        // 1 is 349,266
+        // TODO check the number of tables in etl_File
+//        // 1 is 349,266
         // 8 is 102,056
     }
 }

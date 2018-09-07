@@ -66,7 +66,7 @@ public class Stat extends AbstractCursorEvent {
     private final int              physicalWrites;
     private final int              time;
     private final int              cost;
-    private final int              size;
+    private final long             size;
     private final int              cardinality;
     /**
      * How deep this is. If you follow the linked list
@@ -93,7 +93,7 @@ public class Stat extends AbstractCursorEvent {
         logger.info("stattime is " + statTime);
         time = statTime;
         cost = getInt(stmt,costPattern);
-        size = getInt(stmt,sizePattern);
+        size = getLong(stmt,sizePattern);
         cardinality = getInt(stmt,cardinalityPattern);
         
         
@@ -193,7 +193,7 @@ public class Stat extends AbstractCursorEvent {
         return cost;
     }
 
-    public int getSize() {
+    public long getSize() {
         return size;
     }
 

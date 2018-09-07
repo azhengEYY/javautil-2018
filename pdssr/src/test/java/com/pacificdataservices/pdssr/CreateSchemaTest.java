@@ -26,18 +26,18 @@ public class CreateSchemaTest {
             logger.info("conn" + conn);
         }
         logger.info("about to create schema");
-        new CreateSchema(conn, true, false).process();
+        new CreatePdssrSchema(conn, true, false).process();
         conn.commit();
 
         // conn.close();
     }
 
-    @Test
+   // @Test
     public void test() throws Exception, SqlSplitterException {
         final DataSource datasource = new ApplicationPropertiesDataSource().getDataSource();
         final Connection conn = datasource.getConnection();
         final Timer t = new Timer("createSchema");
-        final CreateSchema cs = new CreateSchema(conn, true, false);
+        final CreatePdssrSchema cs = new CreatePdssrSchema(conn, true, false);
         cs.process();
         conn.commit();
         t.logElapsed();
