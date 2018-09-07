@@ -14,10 +14,10 @@ create or replace package body test_dblogging as
     end initialize;
 
     procedure begin_job is
-        my_ut_process_status_id number;
+        my_job_log_id number;
     begin
         dbms_output.put_line('begin job');
-        my_ut_process_status_id := logger.begin_java_job(
+        my_job_log_id := logger.begin_java_job(
  		P_PROCESS_NAME => 'Daemon or website',
  		P_CLASS_NAME   => 'getClass().getCanonicalName()',
  		P_MODULE_NAME  => 'test_dblogging',

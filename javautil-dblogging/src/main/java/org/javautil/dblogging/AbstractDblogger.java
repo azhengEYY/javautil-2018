@@ -54,11 +54,11 @@ public abstract class AbstractDblogger implements Dblogger {
             String threadName, String tracefileName)
             throws SQLException {
 
-        setUtProcessStatusId(sequenceHelper.getSequence("ut_process_status_id_seq"));
-        SqlStatement ss = statements.getSqlStatement("ut_process_status_insert");
+        setUtProcessStatusId(sequenceHelper.getSequence("job_log_id_seq"));
+        SqlStatement ss = statements.getSqlStatement("job_log_insert");
         ss.setConnection(connection);
         Binds binds = new Binds();
-        binds.put("ut_process_status_id", utProcessStatusId);
+        binds.put("job_log_id", utProcessStatusId);
         binds.put("process_name", processName);
         binds.put("classname", className);
         binds.put("module_name", moduleName);
@@ -91,10 +91,10 @@ public abstract class AbstractDblogger implements Dblogger {
             if (sequenceHelper == null) {
                 throw new IllegalStateException("sequencehelper is null");
             }
-            this.utProcessStepId = sequenceHelper.getSequence("ut_process_step_id_seq");
+            this.utProcessStepId = sequenceHelper.getSequence("job_step_id_seq");
             Binds binds = new Binds();
-            binds.put("ut_process_step_id", utProcessStepId);
-            binds.put("ut_process_status_id", utProcessStatusId);
+            binds.put("job_step_id", utProcessStepId);
+            binds.put("job_log_id", utProcessStatusId);
             binds.put("step_name", stepName);
             binds.put("step_info", stepInfo);
             binds.put("classname", className);
@@ -102,7 +102,7 @@ public abstract class AbstractDblogger implements Dblogger {
             if (statements == null) {
                 throw new IllegalStateException("statements is null");
             }
-            SqlStatement ss = statements.get("ut_process_step_insert");
+            SqlStatement ss = statements.get("job_step_insert");
             ss.setConnection(connection);
             ss.executeUpdate(binds);
             connection.commit();
@@ -118,7 +118,7 @@ public abstract class AbstractDblogger implements Dblogger {
     @Override
     public void finishStep() throws SQLException {
         Binds binds = new Binds();
-        binds.put("ut_process_step_id", utProcessStepId);
+        binds.put("job_step_id", utProcessStepId);
         binds.put("end_ts", new java.sql.Timestamp(System.currentTimeMillis()));
         SqlStatement ss = statements.get("end_step");
         ss.setConnection(connection);
@@ -136,12 +136,12 @@ public abstract class AbstractDblogger implements Dblogger {
         logger.warn("finishing {} ", utProcessStatusId);
         ss.setConnection(connection);
         Binds binds = new Binds();
-        binds.put("ut_process_status_id", utProcessStatusId);
+        binds.put("job_log_id", utProcessStatusId);
         binds.put("end_ts", new java.sql.Timestamp(System.currentTimeMillis()));
         int rowcount = ss.executeUpdate(binds);
         // connection.commit(); // TODO is this a hack?
         if (rowcount != 1) {
-            logger.warn("ut_process_status not updated for {}", utProcessStatusId);
+            logger.warn("job_log not updated for {}", utProcessStatusId);
         } else {
             logger.warn("finishJob: {}", utProcessStatusId);
         }
@@ -168,14 +168,14 @@ public abstract class AbstractDblogger implements Dblogger {
     }
 
     protected ListOfNameValue getUtProcessStatus(long jobNbr) throws SQLException {
-        String sql = "select * from ut_process_status order by ut_process_status_id";
+        String sql = "select * from job_log order by job_log_id";
         SqlStatement ss = new SqlStatement(connection, sql);
         return ss.getListOfNameValue(new Binds());
 
     }
 
     public void showUtProcessStep() throws SQLException {
-        String sql = "select * from ut_process_step order by ut_process_step_id";
+        String sql = "select * from job_step order by job_step_id";
         SqlStatement ss = new SqlStatement(connection, sql);
         for (NameValue nv : ss.getListOfNameValue(new Binds())) {
             System.out.println(nv);
@@ -184,18 +184,18 @@ public abstract class AbstractDblogger implements Dblogger {
     }
 
     public void updateJob(long jobId) throws SQLException, FileNotFoundException, IOException {
-        String ups = "select tracefile_name from ut_process_status "
-                + "where ut_process_status_id = :ut_process_status_id";
+        String ups = "select tracefile_name from job_log "
+                + "where job_log_id = :job_log_id";
 
-        String upd = "update ut_process_status "
+        String upd = "update job_log "
                 + "set tracefile_data =  ?, "
                 + "    tracefile_json =  ? "
-                + "where ut_process_status_id = ?";
+                + "where job_log_id = ?";
 
         logger.warn("updating job {}", jobId);
         SqlStatement upsStatement = new SqlStatement(connection, ups);
         Binds binds = new Binds();
-        binds.put("ut_process_status_id", jobId);
+        binds.put("job_log_id", jobId);
         NameValue upsRow = upsStatement.getNameValue(binds, true);
         logger.warn("upsRow {}", upsRow);
 
@@ -224,7 +224,7 @@ public abstract class AbstractDblogger implements Dblogger {
 
         binds.put("tracefile_data", clob);
         if (count != 1) {
-            throw new IllegalArgumentException("unable to update ut_process_status_id " + jobId);
+            throw new IllegalArgumentException("unable to update job_log_id " + jobId);
         }
         logger.warn("updated {}", jobId);
     }
@@ -246,17 +246,17 @@ public abstract class AbstractDblogger implements Dblogger {
     public void updateTraceFileName(String appTracefileName) throws SQLException {
         logger.info("*** updating trace to {}", appTracefileName);
         SqlStatement ss = new SqlStatement(connection,
-                "update ut_process_status set tracefile_name = :tracefile_name "
-                        + "where ut_process_status_id = :ut_process_status_id");
+                "update job_log set tracefile_name = :tracefile_name "
+                        + "where job_log_id = :job_log_id");
         Binds binds = new Binds();
         binds.put("tracefile_name", appTracefileName);
-        binds.put("ut_process_status_id", utProcessStatusId);
+        binds.put("job_log_id", utProcessStatusId);
         int rowCount = ss.executeUpdate(binds);
         connection.commit();
         if (rowCount != 1) {
-            logger.error("Unable to update ut_process_status for {}", utProcessStatusId);
+            logger.error("Unable to update job_log for {}", utProcessStatusId);
         } else {
-            logger.info("updated ut_process_status {}", appTracefileName);
+            logger.info("updated job_log {}", appTracefileName);
         }
 
     }

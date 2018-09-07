@@ -19,11 +19,11 @@ alter user sr quota unlimited on sales_reporting;
 --
 create role dblogging;
 grant execute on sys.dbms_monitor to dblogging;
-create directory ut_process_log_dir as  '/scratch/dblogging';
+create directory job_msg_dir as  '/scratch/dblogging';
 grant select on sys.v_$mystat to dblogging;
-grant read, write on directory ut_process_log_dir to dblogging;
-grant read, write on directory ut_process_log_dir to sr;
---create public synonym ut_process_log_dir for ut_process_log_dir;
+grant read, write on directory job_msg_dir to dblogging;
+grant read, write on directory job_msg_dir to sr;
+--create public synonym job_msg_dir for job_msg_dir;
 /* sr should be declare */
 grant  dblogging to sr; 
 grant select on sys.v_$mystat to sr with grant option;

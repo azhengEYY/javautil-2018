@@ -79,7 +79,7 @@ Rows (1st) Rows (avg) Rows (max)  Row Source Operation
 ********************************************************************************
 
 begin
-         :ut_process_status_id := logger.begin_java_job (
+         :job_log_id := logger.begin_java_job (
            p_process_name => :p_process_name,  -- VARCHAR2,
            p_class_name   => :p_class_name,    -- varchar2,
            p_module_name  => :p_module_name,   -- varchar2,
@@ -192,7 +192,7 @@ Rows (1st) Rows (avg) Rows (max)  Row Source Operation
 
 SQL ID: 5hvzcnaq2tgq3 Plan Hash: 3869038191
 
-SELECT UT_PROCESS_STATUS_ID_SEQ.NEXTVAL 
+SELECT job_log_ID_SEQ.NEXTVAL 
 FROM
  DUAL
 
@@ -212,16 +212,16 @@ Number of plan statistics captured: 1
 
 Rows (1st) Rows (avg) Rows (max)  Row Source Operation
 ---------- ---------- ----------  ---------------------------------------------------
-         1          1          1  SEQUENCE  UT_PROCESS_STATUS_ID_SEQ (cr=0 pr=0 pw=0 time=35 us starts=1)
+         1          1          1  SEQUENCE  job_log_ID_SEQ (cr=0 pr=0 pw=0 time=35 us starts=1)
          1          1          1   FAST DUAL  (cr=0 pr=0 pw=0 time=1 us starts=1 cost=2 size=0 card=1)
 
 ********************************************************************************
 
 SQL ID: 19wyhnpr8g9k9 Plan Hash: 0
 
-INSERT INTO UT_PROCESS_STATUS ( PROCESS_NAME, SCHEMA_NAME, THREAD_NAME, 
+INSERT INTO job_log ( PROCESS_NAME, SCHEMA_NAME, THREAD_NAME, 
   PROCESS_RUN_NBR, STATUS_MSG, STATUS_ID, STATUS_TS, SID, SERIAL#, 
-  UT_PROCESS_STATUS_ID, CLASS_NAME, MODULE_NAME, TRACE_FILE_NAME ) 
+  job_log_ID, CLASS_NAME, MODULE_NAME, TRACE_FILE_NAME ) 
 VALUES
  ( :B10 , :B9 , :B8 , :B4 , :B7 , 'A', SYSTIMESTAMP, :B6 , :B5 , :B4 , :B3 , 
   :B2 , :B1 )
@@ -243,7 +243,7 @@ Number of plan statistics captured: 1
 
 Rows (1st) Rows (avg) Rows (max)  Row Source Operation
 ---------- ---------- ----------  ---------------------------------------------------
-         0          0          0  LOAD TABLE CONVENTIONAL  UT_PROCESS_STATUS (cr=1 pr=0 pw=0 time=206 us starts=1)
+         0          0          0  LOAD TABLE CONVENTIONAL  job_log (cr=1 pr=0 pw=0 time=206 us starts=1)
 
 ********************************************************************************
 

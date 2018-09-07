@@ -1,5 +1,5 @@
 declare
-  g_file_handle utl_file.file_type := UTL_FILE.fopen ('UT_PROCESS_LOG_DIR', 'test_file', 'A');
+  g_file_handle utl_file.file_type := UTL_FILE.fopen ('job_msg_DIR', 'test_file', 'A');
 begin
   null;
 end;

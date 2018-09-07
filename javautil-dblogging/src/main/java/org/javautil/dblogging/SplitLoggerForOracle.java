@@ -101,9 +101,9 @@ public class SplitLoggerForOracle extends DbloggerForOracle implements Dblogger 
 
     public String getTraceFileName(Connection conn, long id) throws SQLException {
         SqlStatement ss = new SqlStatement(conn,
-                "select * from ut_process_status where ut_process_status_id = :ut_process_status_id");
+                "select * from job_log where job_log_id = :job_log_id");
         Binds binds = new Binds();
-        binds.put("ut_process_status_id", id);
+        binds.put("job_log_id", id);
         final NameValue status = ss.getNameValue(binds, false);
 
         String tracefileName = status.getString("TRACEFILE_NAME");

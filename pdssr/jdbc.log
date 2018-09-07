@@ -763,9 +763,9 @@ insert into ut_condition_row_msg (
   <method>logSQL</method>
   <thread>1</thread>
   <message>58DD2F68 SQL: --@name end_step
-update ut_process_step 
+update job_step 
 set end_ts = :end_ts
-where ut_process_step_id = :ut_process_step_id</message>
+where job_step_id = :job_step_id</message>
 </record>
 <record>
   <date>2018-08-21T19:41:09</date>
@@ -787,7 +787,7 @@ where ut_process_step_id = :ut_process_step_id</message>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>BC05D46 SQL: select UT_PROCESS_STEP_ID_SEQ.nextval from dual</message>
+  <message>BC05D46 SQL: select job_step_ID_SEQ.nextval from dual</message>
 </record>
 <record>
   <date>2018-08-21T19:41:09</date>
@@ -798,12 +798,12 @@ where ut_process_step_id = :ut_process_step_id</message>
   <class>oracle.jdbc.driver.OracleStatement</class>
   <method>logSQL</method>
   <thread>1</thread>
-  <message>44F24A20 SQL: --@name ut_process_step_insert
-insert into ut_process_step (
-        ut_process_step_id,   ut_process_status_id, step_name, step_info, 
+  <message>44F24A20 SQL: --@name job_step_insert
+insert into job_step (
+        job_step_id,   job_log_id, step_name, step_info, 
         classname,            start_ts
 ) values (
-        :ut_process_step_id, :ut_process_status_id, :step_name,:step_info, 
+        :job_step_id, :job_log_id, :step_name,:step_info, 
         :classname,           :start_ts
 )</message>
 </record>
@@ -828,9 +828,9 @@ insert into ut_process_step (
   <method>logSQL</method>
   <thread>1</thread>
   <message>58DD2F68 SQL: --@name end_step
-update ut_process_step 
+update job_step 
 set end_ts = :end_ts
-where ut_process_step_id = :ut_process_step_id</message>
+where job_step_id = :job_step_id</message>
 </record>
 <record>
   <date>2018-08-21T19:41:09</date>

@@ -20,12 +20,12 @@ begin
     logger.info($$PLSQL_UNIT,$$PLSQL_LINE,'begin loop');
         -- all messages should go to log file
     logger.set_filter_level(9);
-        -- this message will go to the log file and into ut_process_log
+        -- this message will go to the log file and into job_msg
          logger.info($$PLSQL_UNIT,$$PLSQL_LINE,long_msg); 
 
     for i in 1..10  
     loop
-            -- this message will go to the log file but not into ut_process_log as the default logging level for
+            -- this message will go to the log file but not into job_msg as the default logging level for
                 -- the database is 5 and logger.fine is 7
         logger.fine($$PLSQL_UNIT,$$PLSQL_LINE,'i is ' || to_char(i));
     end loop; 

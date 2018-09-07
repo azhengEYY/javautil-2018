@@ -66,16 +66,16 @@ public class OracleProfileUpdate {
     }
 
     public void updateJob(long jobId) throws SQLException, FileNotFoundException, IOException {
-        String ups = "select tracefile_name from ut_process_status "
-                + "where ut_process_status_id = :ut_process_status_id";
+        String ups = "select tracefile_name from job_log "
+                + "where job_log_id = :job_log_id";
 
-        String upd = "update ut_process_status "
+        String upd = "update job_log "
                 + "set tracefile_data =  ? "
-                + "where ut_process_status_id = ?";
+                + "where job_log_id = ?";
 
         SqlStatement upsStatement = new SqlStatement(connection, ups);
         Binds binds = new Binds();
-        binds.put("ut_process_status_id", jobId);
+        binds.put("job_log_id", jobId);
         NameValue upsRow = upsStatement.getNameValue(binds, true);
         String traceFileName = upsRow.getString("tracefile_name");
         Clob clob = connection.createClob();
@@ -89,14 +89,14 @@ public class OracleProfileUpdate {
         int count = updateTraceFile.executeUpdate();
         binds.put("tracefile_data", clob);
         if (count != 1) {
-            throw new IllegalArgumentException("unable to update ut_process_status_id " + jobId);
+            throw new IllegalArgumentException("unable to update job_log_id " + jobId);
         }
         logger.warn("updated {}", jobId);
     }
 
     public void tkprofJob(long jobId) throws SQLException, IOException {
-        String getTraceData = "select tracefile_data from ut_process_status "
-                + "where ut_process_status_id = ?";
+        String getTraceData = "select tracefile_data from job_log "
+                + "where job_log_id = ?";
         logger.warn("tkprof job #" + jobId);
         PreparedStatement traceDataStatement = connection.prepareStatement(getTraceData);
         traceDataStatement.setLong(1, jobId);

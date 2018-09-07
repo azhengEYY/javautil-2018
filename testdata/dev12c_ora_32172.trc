@@ -1108,7 +1108,7 @@ XCTEND rlbk=0, rd_only=1, tim=8413252109
 =====================
 PARSING IN CURSOR #139790820998984 len=387 dep=0 uid=108 oct=47 lid=108 tim=8413338043 hv=1503935765 ad='7c8528e8' sqlid='8crx2sdcu8g8p'
 begin
-         :ut_process_status_id := logger.begin_java_job (
+         :job_log_id := logger.begin_java_job (
            p_process_name => :p_process_name,  -- VARCHAR2,
            p_class_name   => :p_class_name,    -- varchar2,
            p_module_name  => :p_module_name,   -- varchar2,
@@ -1155,17 +1155,17 @@ STAT #139790821462416 id=1 cnt=1 pid=0 pos=1 obj=0 op='FIXED TABLE FULL X$DIAG_I
 CLOSE #139790821462416:c=0,e=63,dep=1,type=3,tim=8413342345
 =====================
 PARSING IN CURSOR #139790821465832 len=49 dep=1 uid=108 oct=3 lid=108 tim=8413342420 hv=2888613571 ad='60fe4c98' sqlid='5hvzcnaq2tgq3'
-SELECT UT_PROCESS_STATUS_ID_SEQ.NEXTVAL FROM DUAL
+SELECT job_log_ID_SEQ.NEXTVAL FROM DUAL
 END OF STMT
 PARSE #139790821465832:c=0,e=40,p=0,cr=0,cu=0,mis=0,r=0,dep=1,og=1,plh=3869038191,tim=8413342420
 EXEC #139790821465832:c=0,e=36,p=0,cr=0,cu=0,mis=0,r=0,dep=1,og=1,plh=3869038191,tim=8413342509
 FETCH #139790821465832:c=0,e=17,p=0,cr=0,cu=0,mis=0,r=1,dep=1,og=1,plh=3869038191,tim=8413342557
-STAT #139790821465832 id=1 cnt=1 pid=0 pos=1 obj=74433 op='SEQUENCE  UT_PROCESS_STATUS_ID_SEQ (cr=0 pr=0 pw=0 str=1 time=35 us)'
+STAT #139790821465832 id=1 cnt=1 pid=0 pos=1 obj=74433 op='SEQUENCE  job_log_ID_SEQ (cr=0 pr=0 pw=0 str=1 time=35 us)'
 STAT #139790821465832 id=2 cnt=1 pid=1 pos=1 obj=0 op='FAST DUAL  (cr=0 pr=0 pw=0 str=1 time=1 us cost=2 size=0 card=1)'
 CLOSE #139790821465832:c=0,e=1,dep=1,type=3,tim=8413342669
 =====================
 PARSING IN CURSOR #139790821091000 len=296 dep=1 uid=108 oct=2 lid=108 tim=8413342959 hv=1854383689 ad='61e1f190' sqlid='19wyhnpr8g9k9'
-INSERT INTO UT_PROCESS_STATUS ( PROCESS_NAME, SCHEMA_NAME, THREAD_NAME, PROCESS_RUN_NBR, STATUS_MSG, STATUS_ID, STATUS_TS, SID, SERIAL#, UT_PROCESS_STATUS_ID, CLASS_NAME, MODULE_NAME, TRACE_FILE_NAME ) VALUES ( :B10 , :B9 , :B8 , :B4 , :B7 , 'A', SYSTIMESTAMP, :B6 , :B5 , :B4 , :B3 , :B2 , :B1 )
+INSERT INTO job_log ( PROCESS_NAME, SCHEMA_NAME, THREAD_NAME, PROCESS_RUN_NBR, STATUS_MSG, STATUS_ID, STATUS_TS, SID, SERIAL#, job_log_ID, CLASS_NAME, MODULE_NAME, TRACE_FILE_NAME ) VALUES ( :B10 , :B9 , :B8 , :B4 , :B7 , 'A', SYSTIMESTAMP, :B6 , :B5 , :B4 , :B3 , :B2 , :B1 )
 END OF STMT
 PARSE #139790821091000:c=0,e=255,p=0,cr=0,cu=0,mis=1,r=0,dep=1,og=1,plh=0,tim=8413342958
 EXEC #139790821562960:c=0,e=24,p=0,cr=0,cu=0,mis=0,r=0,dep=2,og=4,plh=4006480256,tim=8413343188
@@ -1409,7 +1409,7 @@ STAT #139790820808880 id=1 cnt=0 pid=0 pos=1 obj=685 op='TABLE ACCESS BY INDEX R
 STAT #139790820808880 id=2 cnt=0 pid=1 pos=1 obj=686 op='INDEX UNIQUE SCAN I_OPT_DIRECTIVE_OWN# (cr=1 pr=0 pw=0 str=1 time=17 us cost=0 size=0 card=1)'
 CLOSE #139790820808880:c=990,e=1,dep=2,type=3,tim=8413358999
 EXEC #139790821091000:c=15584,e=16728,p=0,cr=154,cu=7,mis=1,r=1,dep=1,og=1,plh=0,tim=8413359780
-STAT #139790821091000 id=1 cnt=0 pid=0 pos=1 obj=0 op='LOAD TABLE CONVENTIONAL  UT_PROCESS_STATUS (cr=1 pr=0 pw=0 str=1 time=206 us)'
+STAT #139790821091000 id=1 cnt=0 pid=0 pos=1 obj=0 op='LOAD TABLE CONVENTIONAL  job_log (cr=1 pr=0 pw=0 str=1 time=206 us)'
 CLOSE #139790821091000:c=0,e=2,dep=1,type=3,tim=8413359970
 =====================
 PARSING IN CURSOR #139790821924704 len=6 dep=1 uid=108 oct=44 lid=108 tim=8413360054 hv=255718823 ad='0' sqlid='8ggw94h7mvxd7'

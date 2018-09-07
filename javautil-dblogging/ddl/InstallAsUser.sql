@@ -1,11 +1,11 @@
 --connect &&sys_uid_pwd_service_name  as sysdba 
-create directory ut_process_log as '&&ut_process_log_directory';
+create directory job_msg as '&&job_msg_directory';
 @01-create-user.sql
-grant read, write on directory ut_process_log to &&username;
+grant read, write on directory job_msg to &&username;
 connect &&user/&&userpassword
 @02-create_sequences.sql
-@ut_process_status.sql
-@ut_process_log.sql
+@job_log.sql
+@job_msg.sql
 @ut_process_stat.sql
 @logger.pks
 @logger.pkb

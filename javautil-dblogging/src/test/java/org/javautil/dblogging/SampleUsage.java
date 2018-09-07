@@ -61,8 +61,8 @@ public class SampleUsage {
     }
 
     NameValue getUtProcessStatus(Connection connection, long id) throws SQLException {
-        final String sql = "select * from ut_process_status "
-                + "where ut_process_status_id = :ut_process_stat_id";
+        final String sql = "select * from job_log "
+                + "where job_log_id = :ut_process_stat_id";
         final SqlStatement ss = new SqlStatement(connection, sql);
         Binds binds = new Binds();
         binds.put("ut_process_stat_id", id);

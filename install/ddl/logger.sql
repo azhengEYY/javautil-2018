@@ -144,7 +144,7 @@ CREATE OR REPLACE PACKAGE BODY logger
 is
 --
 -- 
-   g_ut_process_log_dir    varchar2 (32) := 'UT_PROCESS_LOG_DIR';
+   g_job_msg_dir    varchar2 (32) := 'job_msg_DIR';
    g_filter_level          pls_integer := G_INFO ;
    g_record_level          pls_integer := G_INFO ;
    g_file_handle           UTL_FILE.file_type;
@@ -170,18 +170,18 @@ is
    g_who_called_me_level   BINARY_integer     := 6;
 
    procedure open_log_file (parm_file_name in varchar2)
-   --% opens a log file with the specified file name in the directory g_ut_process_log_dir
+   --% opens a log file with the specified file name in the directory g_job_msg_dir
    is
    begin
       if (NOT UTL_FILE.is_open (g_file_handle))
       then
-         dbms_output.put_line ('g_ut_process_log_dir ' || g_ut_process_log_dir);
+         dbms_output.put_line ('g_job_msg_dir ' || g_job_msg_dir);
          dbms_output.put_line ('opening log file ' || parm_file_name);
          dbms_output.put_line ('directory_path: ' || get_directory_path);
 	 --show_directories;
-         g_file_handle := UTL_FILE.fopen ('UT_PROCESS_LOG_DIR', 'test2.log', 'A');
+         g_file_handle := UTL_FILE.fopen ('job_msg_DIR', 'test2.log', 'A');
          dbms_output.put_line('file opened');
-         --g_file_handle := UTL_FILE.fopen (g_ut_process_log_dir, parm_file_name, 'A');
+         --g_file_handle := UTL_FILE.fopen (g_job_msg_dir, parm_file_name, 'A');
       end if;
    end open_log_file;
 
@@ -200,7 +200,7 @@ is
    end get_trace_file_name;
 
   procedure create_process_log (
-      parm_ut_process_status_id   in   pls_integer,
+      parm_job_log_id   in   pls_integer,
       parm_log_msg_id              in   varchar2,
       parm_log_msg                 in   varchar2,
       parm_log_level               in   pls_integer,
@@ -211,12 +211,12 @@ is
       parm_call_stack              in   varchar2 DEFAULT NULL
    )
    --% procedure create_process_log 
-   --% a log file is created in the ut_process_log oracle directory with the name 
+   --% a log file is created in the job_msg oracle directory with the name 
    --% g_process_name || '_' || to_char (current_timestamp, 'YYYY-MM-DD_HH24MisSXFF');
    --% \section{log file format}
    --% \begin{itemize}
    --%    \item g_last_log_seq_nbr 
-   --%	  \item	parm_ut_process_status_id 
+   --%	  \item	parm_job_log_id 
    --%    \item	parm_log_msg_id 
    --%	  \item	to_char (current_timestamp, 'YYYY-MM-DD HH24:MI:SSXFF') 
    --%    \item my_msg 
@@ -266,7 +266,7 @@ is
 
          my_message :=
                 g_last_log_seq_nbr || ',' || 
-		parm_ut_process_status_id || ',"' || 
+		parm_job_log_id || ',"' || 
 		parm_log_msg_id || '",' || 
 		to_char (current_timestamp, 'YYYY-MM-DD HH24:MI:SSXFF') || ',"' || 
                  my_msg || '",' ||
@@ -280,15 +280,15 @@ is
 
       if parm_log_level = g_snap OR parm_log_level <= g_record_level
       then
-         INSERT into ut_process_log (	
-		ut_process_status_id,  	log_seq_nbr, 
+         INSERT into job_msg (	
+		job_log_id,  	log_seq_nbr, 
 		log_msg_id, 			log_msg, 		
 		log_level,   			log_msg_ts, 
 		elapsed_time, 			caller_name, 
 		line_nbr,                       log_msg_clob
          )
          VALUES (
-		parm_ut_process_status_id, 	g_last_log_seq_nbr,
+		parm_job_log_id, 	g_last_log_seq_nbr,
                 parm_log_msg_id, 		short_message, 
 		parm_log_level, 		current_timestamp, 
 		parm_elapsed_time, 		parm_caller_name, 
@@ -404,7 +404,7 @@ is
       if my_log_level > 9 then my_log_level := 9; end if;
 
 --
-      create_process_log (parm_ut_process_status_id      => g_process_status_id,
+      create_process_log (parm_job_log_id      => g_process_status_id,
                           parm_log_msg_id                 => NULL,
                           parm_log_msg                    => p_log_msg,
                           parm_log_level                  => my_log_level,
@@ -423,7 +423,7 @@ is
 --
    procedure begin_job (parm_process_name in varchar2)
    --% procedure begin_job (parm_process_name in varchar2)
-   --% *create a record in ut_process_status
+   --% *create a record in job_log
    is
       PRAGMA AUTONOMOUS_TRANSACTION;
    begin
@@ -440,12 +440,12 @@ is
 
 --
 --   todo why are we no longer using the returning 
-      select ut_process_status_id_seq.NEXTVAL into g_process_status_id from DUAL; 
+      select job_log_id_seq.NEXTVAL into g_process_status_id from DUAL; 
 --
-      INSERT into ut_process_status
+      INSERT into job_log
                   (process_name, schema_name, thread_name,
                    process_run_nbr, status_msg, status_id, status_ts, SID,
-                   serial#, ut_process_status_id
+                   serial#, job_log_id
                   )
            VALUES (g_process_name, g_current_schema, 'main',
                                                 -- no threading in pl/sql jobs
@@ -458,7 +458,7 @@ is
                   );
 
         --ut_surrogate_seq.NEXTVAL )
-    --RETURNING ut_process_status_id into g_process_status_id ;
+    --RETURNING job_log_id into g_process_status_id ;
 --
       g_last_log_seq_nbr := 1;
 --
@@ -472,7 +472,7 @@ is
 			     p_thread_name  in varchar2)
             RETURN number
    --% procedure begin_job (parm_process_name in varchar2)
-   --% *create a record in ut_process_status
+   --% *create a record in job_log
    --% 
    is
       PRAGMA AUTONOMOUS_TRANSACTION;
@@ -491,11 +491,11 @@ is
       my_trace_file_name := get_trace_file_name();
 --
 --   todo why are we no longer using the returning 
-      select ut_process_status_id_seq.NEXTVAL 
+      select job_log_id_seq.NEXTVAL 
       into g_process_status_id 
       from DUAL; 
 --
-      INSERT into ut_process_status (
+      INSERT into job_log (
 	process_name, 
 	schema_name, 
 	thread_name,
@@ -505,7 +505,7 @@ is
 	status_ts, 
 	SID,
         serial#, 
-	ut_process_status_id,
+	job_log_id,
         class_name,
         module_name,
         trace_file_name
@@ -526,7 +526,7 @@ is
         my_trace_file_name
       );
         --ut_surrogate_seq.NEXTVAL )
-    --RETURNING ut_process_status_id into g_process_status_id ;
+    --RETURNING job_log_id into g_process_status_id ;
 --
       g_last_log_seq_nbr := 1;
 --
@@ -537,7 +537,7 @@ is
 --
    procedure end_job
    --% procedure end_job
-   --% update ut_process_status.status_id to 'C' and status_msg to 'DONE'
+   --% update job_log.status_id to 'C' and status_msg to 'DONE'
    is
       PRAGMA AUTONOMOUS_TRANSACTION;
       elapsed_tm   INTERVAL DAY TO SECOND;
@@ -546,14 +546,14 @@ is
       elapsed_tm := g_process_end_tm - g_process_start_tm;
 
 --
-      UPDATE ut_process_status
+      UPDATE job_log
          SET total_elapsed = elapsed_tm,
              SID = NULL,
              serial# = NULL,
              status_msg = 'DONE',
              status_id = 'C',
              status_ts = SYSDATE
-       where ut_process_status_id = g_process_status_id;
+       where job_log_id = g_process_status_id;
 
 --
       COMMIT;
@@ -565,7 +565,7 @@ is
 -- private
    procedure abort_job
    --% procedure abort_job
-   --% * update ut_process_status 
+   --% * update job_log 
    --% # elapsed_time 
    --% # status_id = 'I'
    --% # status_msg = 'ABORT'
@@ -577,14 +577,14 @@ is
       elapsed_tm := g_process_end_tm - g_process_start_tm;
 
 --
-      UPDATE ut_process_status
+      UPDATE job_log
          SET total_elapsed = elapsed_tm,
              SID = NULL,
              serial# = NULL,
              status_msg = 'ABORT',
              status_id = 'I',
              status_ts = SYSDATE
-       where ut_process_status_id = g_process_status_id;
+       where job_log_id = g_process_status_id;
 
 --
       close_log_file;
@@ -859,7 +859,7 @@ is
 --
 --    g_last_log_time := my_log_time;
 --
-      create_process_log (parm_ut_process_status_id   => g_process_status_id,
+      create_process_log (parm_job_log_id   => g_process_status_id,
                           parm_log_msg_id              => p_msg_id,
                           parm_log_msg                 => p_log_msg,
                           parm_log_level               => my_log_level,
@@ -879,7 +879,7 @@ is
       my_elapsed    INTERVAL DAY TO SECOND;
    begin
 --
-      create_process_log (parm_ut_process_status_id      => g_process_status_id,
+      create_process_log (parm_job_log_id      => g_process_status_id,
                           parm_log_msg_id                 => p_snap_name,
                           parm_log_msg                    => p_snap_name,
                           parm_log_level                  => g_snap,
@@ -891,7 +891,7 @@ is
 
 --
       INSERT into ut_process_stat (	
-	     ut_process_status_id, log_seq_nbr,       statistic#,      VALUE
+	     job_log_id, log_seq_nbr,       statistic#,      VALUE
       )
       select g_process_status_id, g_last_log_seq_nbr, stat.statistic#, stat.VALUE
         from SYS.v$mystat stat
@@ -965,7 +965,7 @@ is
       cursor directory_cur is
       select owner, directory_name, directory_path
       from all_directories
-      where directory_name = g_ut_process_log_dir;
+      where directory_name = g_job_msg_dir;
 
       directory_rec directory_cur%rowtype;
       
@@ -983,7 +983,7 @@ is
    procedure test_dir is 
          my_file_handle           UTL_FILE.file_type;
    begin
-         my_file_handle := UTL_FILE.fopen ('UT_PROCESS_LOG_DIR', 'wtf.log', 'A');
+         my_file_handle := UTL_FILE.fopen ('job_msg_DIR', 'wtf.log', 'A');
          UTL_FILE.put_line (my_file_handle, 'wtf');
 	 utl_file.fclose (my_file_handle); 
    end;

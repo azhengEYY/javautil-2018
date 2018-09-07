@@ -24,5 +24,5 @@ alter user &test_dblogger quota unlimited on sales_reporting;
 #grant execute on sys.dbms_lock to &test_dblogger with grant option;
 --
 #grant execute on sys.utl_http to &test_dblogger with grant option;
-create directory ut_process_log_dir as '/common/scratch/ut_process_log_dir'; 
-grant read, write on directory ut_process_log_dir to &test_dblogger;
+create directory job_msg_dir as '/common/scratch/job_msg_dir'; 
+grant read, write on directory job_msg_dir to &test_dblogger;

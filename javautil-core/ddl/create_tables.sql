@@ -1,10 +1,10 @@
 set echo on 
 
 
-  create sequence ut_process_status_id_seq cache 1000;
+  create sequence job_log_id_seq cache 1000;
 
-  CREATE TABLE UT_PROCESS_STATUS
-   (    UT_PROCESS_STATUS_ID NUMBER(9,0),
+  CREATE TABLE job_log
+   (    job_log_ID NUMBER(9,0),
         SCHEMA_NAME          VARCHAR2(30),
         PROCESS_NAME         VARCHAR2(128),
         THREAD_NAME          VARCHAR2(128),
@@ -20,13 +20,13 @@ set echo on
         CLASS_NAME           VARCHAR2(255),
         trace_file_name      varchar2(255),
          CHECK ( IGNORE_FLG IN ('Y', 'N')) ENABLE,
-         CONSTRAINT UT_PROCESS_STATUS_PK PRIMARY KEY (UT_PROCESS_STATUS_ID)
+         CONSTRAINT job_log_PK PRIMARY KEY (job_log_ID)
    );
 
 
-  CREATE TABLE UT_PROCESS_LOG
-   (    UT_PROCESS_LOG_ID 	NUMBER(9,0),
-        UT_PROCESS_STATUS_ID 	NUMBER(9,0),
+  CREATE TABLE job_msg
+   (    job_msg_ID 	NUMBER(9,0),
+        job_log_ID 	NUMBER(9,0),
         LOG_MSG_ID 		VARCHAR2(8),
         LOG_MSG 		VARCHAR2(256),
         LOG_MSG_CLOB 		CLOB,
@@ -37,25 +37,25 @@ set echo on
         LINE_NBR 		NUMBER(5,0),
         CALL_STACK 		CLOB,
         LOG_LEVEL 		NUMBER(2,0),
-         CONSTRAINT UT_PROCESS_LOG_PK PRIMARY KEY (UT_PROCESS_STATUS_ID, LOG_SEQ_NBR)
+         CONSTRAINT job_msg_PK PRIMARY KEY (job_log_ID, LOG_SEQ_NBR)
   );
 
-alter table ut_process_log 
+alter table job_msg 
 add constraint upl_ups_fk 
-foreign key (ut_process_status_id) 
-references ut_process_status(ut_process_status_id);
+foreign key (job_log_id) 
+references job_log(job_log_id);
   CREATE TABLE UT_PROCESS_STAT 
   (    
-	UT_PROCESS_STATUS_ID 	NUMBER(9,0) NOT NULL ENABLE,
+	job_log_ID 	NUMBER(9,0) NOT NULL ENABLE,
         LOG_SEQ_NBR 		NUMBER(9,0) NOT NULL ENABLE,
         SID 			NUMBER,
         STATISTIC# 		NUMBER,
         VALUE 			NUMBER,
-         CONSTRAINT UT_PROCESS_STAT_PK PRIMARY KEY (UT_PROCESS_STATUS_ID, LOG_SEQ_NBR, STATISTIC#)
+         CONSTRAINT UT_PROCESS_STAT_PK PRIMARY KEY (job_log_ID, LOG_SEQ_NBR, STATISTIC#)
    ) organization index;
 
 alter table ut_process_stat
 add constraint up_process_stat_fk 
-              foreign key(ut_process_status_id, log_seq_nbr)
-references ut_process_log(ut_process_status_id, log_seq_nbr);
+              foreign key(job_log_id, log_seq_nbr)
+references job_msg(job_log_id, log_seq_nbr);
 exit;

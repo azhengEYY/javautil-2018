@@ -84,9 +84,9 @@ public class SqlSplitterTest2 {
 	public void test3() throws IOException, SqlSplitterException {
 
 		SqlStatements sqls = new SqlSplitter(this, "testsr/dblogger_install_tables.sr.sql").getSqlStatements();
-		assertEquals(sqls.get(0).getSql().trim(), "create sequence ut_process_status_id_seq cache 1000");
+		assertEquals(sqls.get(0).getSql().trim(), "create sequence job_log_id_seq cache 1000");
 		// logger.info("sql 1\n{}", sqls.get(1).getSql().trim());
-		assertTrue(sqls.get(1).getSql().trim().startsWith("CREATE TABLE UT_PROCESS_STATUS"));
+		assertTrue(sqls.get(1).getSql().trim().startsWith("CREATE TABLE job_log"));
 		assertTrue(sqls.get(1).getSql().trim().endsWith(")"));
 		// logger.info("sql 2\n{}", sqls.get(2).getSql().trim());
 		String sql = sqls.get(2).getSql();
@@ -94,16 +94,16 @@ public class SqlSplitterTest2 {
 		String sqlLast = StringUtil.getLastLine(sql);
 		// logger.info("sql 2 first : " + sqlFirst);
 		// logger.info("sql 2 last :" + sqlLast);
-		assertEquals("CREATE TABLE UT_PROCESS_LOG", sqlFirst.trim());
-		assertEquals("references ut_process_status(ut_process_status_id)", sqlLast.trim());
+		assertEquals("CREATE TABLE job_msg", sqlFirst.trim());
+		assertEquals("references job_log(job_log_id)", sqlLast.trim());
 		// TODO more tests
 		// assertTrue(sqls.get(2).getSql().trim().startsWith("CREATE TABLE
-		// UT_PROCESS_LOG"));
-		// assertTrue(sqls.get(2).getSql().trim().endsWith("--end ut_process_log"));
+		// job_msg"));
+		// assertTrue(sqls.get(2).getSql().trim().endsWith("--end job_msg"));
 		// assertTrue(sqls.get(3).getSql().trim().startsWith("alter table
-		// ut_process_log"));
+		// job_msg"));
 		// assertTrue(sqls.get(3).getSql().trim().endsWith("references
-		// ut_process_status(ut_process_status_id)"));
+		// job_log(job_log_id)"));
 		// assertTrue(sqls.get(4).getSql().trim().startsWith("CREATE TABLE
 		// UT_PROCESS_STAT"));
 		// assertTrue(sqls.get(4).getSql().trim().endsWith(") organization index"));
@@ -112,7 +112,7 @@ public class SqlSplitterTest2 {
 		// index"));
 		// assertTrue(
 		// sqls.get(5).getSql().trim().endsWith("references
-		// ut_process_log(ut_process_status_id, log_seq_nbr)"));
+		// job_msg(job_log_id, log_seq_nbr)"));
 		assertEquals(5, sqls.size());
 	}
 
@@ -135,7 +135,7 @@ public class SqlSplitterTest2 {
 	// SqlSplitter runner = new SqlSplitter(this,
 	// "testsr/dblogger_uninstall.sr.sql");
 	// ArrayList<SqlStatement> sqls = runner.getSqls();
-	// assertEquals("drop sequence ut_process_status_id_seq",sqls.get(0));
+	// assertEquals("drop sequence job_log_id_seq",sqls.get(0));
 	// assertEquals("drop package logger",sqls.get(6));
 	// assertEquals(7,sqls.size());
 	// }

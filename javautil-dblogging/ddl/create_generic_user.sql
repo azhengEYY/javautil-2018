@@ -15,11 +15,11 @@ grant create view to &username_name;
 
 --
 create role dblogging;
-create directory ut_process_log_dir as  '/scratch/dblogging';
+create directory job_msg_dir as  '/scratch/dblogging';
 grant select on sys.v_$mystat to dblogging;
-grant read, write on directory ut_process_log_dir to dblogging;
-grant read, write on directory ut_process_log_dir to &username_name;
---create public synonym ut_process_log_dir for ut_process_log_dir;
+grant read, write on directory job_msg_dir to dblogging;
+grant read, write on directory job_msg_dir to &username_name;
+--create public synonym job_msg_dir for job_msg_dir;
 /* &username_name should be declare */
 grant  dblogging to &username_name; 
 grant select on sys.v_$mystat to &username_name with grant option;

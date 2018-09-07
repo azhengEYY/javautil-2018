@@ -101,7 +101,7 @@ show errors
 
 CREATE OR REPLACE PACKAGE BODY pllogger
 is
-   g_ut_process_log_dir    varchar2 (32) := 'UT_PROCESS_LOG_DIR';
+   g_job_msg_dir    varchar2 (32) := 'job_msg_DIR';
    g_filter_level          pls_integer := G_INFO ;
    g_record_level          pls_integer := G_INFO ;
    g_file_handle           UTL_FILE.file_type;
@@ -132,7 +132,7 @@ is
    end set_trace;
 
    function open_log_file (p_file_name varchar) return varchar
-   --% opens a log file with the specified file name in the directory g_ut_process_log_dir
+   --% opens a log file with the specified file name in the directory g_job_msg_dir
    is
       my_file_name varchar(255);
       my_directory_path varchar2(4000);
@@ -140,14 +140,14 @@ is
       if (NOT UTL_FILE.is_open (g_file_handle))
       then
          if g_process_status_id is null then
-            g_process_status_id := ut_process_status_id_seq.nextval;
+            g_process_status_id := job_logus_id_seq.nextval;
          end if;
      if p_file_name is null then
             my_file_name := 'job_' || to_char(g_process_status_id);
          else
                 my_file_name := p_file_name;
          end if;
-     g_file_handle := UTL_FILE.fopen (g_ut_process_log_dir, my_file_name, 'A');
+     g_file_handle := UTL_FILE.fopen (g_job_msg_dir, my_file_name, 'A');
       end if;
          return my_file_name;
    end open_log_file;
@@ -155,7 +155,7 @@ is
    function get_g_process_status_id return number is
    begin
        if g_process_status_id  is  null then
-           g_process_status_id := ut_process_status_id_seq.nextval;
+           g_process_status_id := job_logus_id_seq.nextval;
        end if;
        return g_process_status_id;
    end;
@@ -163,15 +163,15 @@ is
   procedure update_tracefile_name(p_tracefile_name in varchar) is
      pragma autonomous_transaction ;
   begin
-	  update ut_process_status set tracefile_name = p_tracefile_name 
-	  where ut_process_status_id = g_process_status_id;
+	  update job_logus set tracefile_name = p_tracefile_name 
+	  where job_logus_id = g_process_status_id;
 	  commit;
   end;
 
 
   --::<
   procedure create_process_log (
-      p_ut_process_status_id   in   pls_integer,
+      p_job_logus_id   in   pls_integer,
       p_log_msg_id              in   varchar2,
       p_log_msg                 in   varchar2,
       p_log_level               in   pls_integer,
@@ -181,7 +181,7 @@ is
       p_call_stack              in   varchar2 DEFAULT NULL
    )
    --::* g_last_log_seq_nbr
-   --::* p_ut_process_status_id
+   --::* p_job_logus_id
    --::* p_log_msg_id
    --::* to_char (current_timestamp, 'YYYY-MM-DD HH24:MI:SSXFF')
    --::* my_msg
@@ -226,7 +226,7 @@ is
 
           my_message := logger_message_formatter  (
               log_seq_nbr            =>   g_last_log_seq_nbr,
-              ut_process_status_id   =>   p_ut_process_status_id,
+              job_logus_id   =>   p_job_logus_id,
               log_msg_id             =>   p_log_msg_id,
               log_msg                =>   p_log_msg,
               log_level              =>   p_log_level,
@@ -240,15 +240,15 @@ is
 
       if p_log_level = g_snap OR p_log_level <= g_record_level
       then
-          insert into ut_process_log (
-               ut_process_log_id,
-               ut_process_status_id,   log_seq_nbr,    log_msg_id,    log_msg,
+          insert into job_msg (
+               job_msg_id,
+               job_logus_id,   log_seq_nbr,    log_msg_id,    log_msg,
                log_level,              log_msg_ts,     caller_name,
                line_nbr,               log_msg_clob
           )
           values (
-	       ut_process_log_id_seq.nextval,
-               p_ut_process_status_id, g_last_log_seq_nbr, p_log_msg_id,   short_message,
+	       job_msg_id_seq.nextval,
+               p_job_logus_id, g_last_log_seq_nbr, p_log_msg_id,   short_message,
                p_log_level,            current_timestamp,   p_caller_name,
                p_line_number,          long_message
          );
@@ -303,7 +303,7 @@ is
 
       dbms_output.put_line('about to create process log');
 
-      create_process_log (p_ut_process_status_id  => g_process_status_id,
+      create_process_log (p_job_logus_id  => g_process_status_id,
                           p_log_msg_id            => NULL,
                           p_log_msg               => p_log_msg,
                           p_log_level             => my_log_level,
@@ -534,7 +534,7 @@ is
       if my_log_level < 1 then my_log_level := 1; end if;
       if my_log_level > 9 then my_log_level := 9; end if;
 
-      create_process_log (p_ut_process_status_id   => g_process_status_id,
+      create_process_log (p_job_logus_id   => g_process_status_id,
                           p_log_msg_id              => p_msg_id,
                           p_log_msg                 => p_log_msg,
                           p_log_level               => my_log_level,
@@ -575,7 +575,7 @@ is
       cursor directory_cur is
       select  owner, directory_name, directory_path
       from    all_directories
-      where   directory_name = g_ut_process_log_dir;
+      where   directory_name = g_job_msg_dir;
 
       directory_rec directory_cur%rowtype;
 

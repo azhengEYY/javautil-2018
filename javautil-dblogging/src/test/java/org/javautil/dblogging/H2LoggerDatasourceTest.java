@@ -35,7 +35,7 @@ public class H2LoggerDatasourceTest {
         Statement s = connection.createStatement();
         logger.info("dropping all objects");
         s.execute("drop all objects");
-        s.execute("create table ut_process_status (ut_process_status_id number(9))");
+        s.execute("create table job_log (job_log_id number(9))");
         connection.commit();
         System.out.println("getDatabaseInstrumentation connection: " + connection);
 
@@ -45,7 +45,7 @@ public class H2LoggerDatasourceTest {
     }
 
     public long testDataSource(DataSource ds) throws SQLException {
-        final String count = "select count(*) cnt from ut_process_status";
+        final String count = "select count(*) cnt from job_log";
         Connection conn1 = ds.getConnection();
         Statement statement1 = conn1.createStatement();
         ResultSet rset1 = statement1.executeQuery(count);
@@ -69,7 +69,7 @@ public class H2LoggerDatasourceTest {
         Connection conn2 = h2loggerDataSource.getConnection();
         Statement h2stmt = conn2.createStatement();
         // blows up here with Table UT_PROCESS_STAT not found
-        h2stmt.executeUpdate("insert into ut_process_status (ut_process_status_id) values (-2)");
+        h2stmt.executeUpdate("insert into job_log (job_log_id) values (-2)");
         conn2.commit();
 
         long count3 = testDataSource(h2loggerDataSource);

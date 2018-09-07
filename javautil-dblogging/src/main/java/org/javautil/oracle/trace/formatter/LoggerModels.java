@@ -23,22 +23,22 @@ public class LoggerModels {
     }
 
     public NameValue getJobInfo(long jobId) throws SQLException {
-        String statusVwSql = "select ut_process_status_id, process_name, thread_name, "
+        String statusVwSql = "select job_log_id, process_name, thread_name, "
                 + "status_msg, status_id, status_ts, tracefile_name, classname "
-                + "from ut_process_status where ut_process_status_id = :ut_process_status_id";
+                + "from job_log where job_log_id = :job_log_id";
         SqlStatement statusVwSs = new SqlStatement(connection, statusVwSql);
         Binds binds = new Binds();
-        binds.put("ut_process_status_id", jobId);
+        binds.put("job_log_id", jobId);
         NameValue statusVwNameValue = statusVwSs.getNameValue(binds, true);
         statusVwSs.close();
         return statusVwNameValue;
     }
 
     public ListOfNameValue getStepInfo(long jobId) throws SQLException {
-        String stepVwSql = "select * from ut_process_step_vw where ut_process_status_id = :ut_process_status_id order by ut_process_step_id";
+        String stepVwSql = "select * from job_step_vw where job_log_id = :job_log_id order by job_step_id";
         SqlStatement stepVwSs = new SqlStatement(connection, stepVwSql);
         Binds binds = new Binds();
-        binds.put("ut_process_status_id", jobId);
+        binds.put("job_log_id", jobId);
         ListOfNameValue stepVwNameValue = stepVwSs.getListOfNameValue(binds);
         stepVwSs.close();
         return stepVwNameValue;

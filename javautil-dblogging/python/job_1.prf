@@ -249,9 +249,9 @@ Rows (1st) Rows (avg) Rows (max)  Row Source Operation
 
 SQL ID: fxg862z4af6gk Plan Hash: 0
 
-INSERT INTO UT_PROCESS_STATUS ( PROCESS_NAME, SCHEMA_NAME, THREAD_NAME, 
+INSERT INTO job_log ( PROCESS_NAME, SCHEMA_NAME, THREAD_NAME, 
   PROCESS_RUN_NBR, STATUS_MSG, STATUS_ID, STATUS_TS, SID, 
-  UT_PROCESS_STATUS_ID, CLASS_NAME, MODULE_NAME, TRACE_FILE_NAME ) 
+  job_log_ID, CLASS_NAME, MODULE_NAME, TRACE_FILE_NAME ) 
 VALUES
  ( :B9 , :B8 , :B7 , :B4 , :B6 , 'A', SYSTIMESTAMP, :B5 , :B4 , :B3 , :B2 , 
   :B1 )
@@ -273,7 +273,7 @@ Number of plan statistics captured: 1
 
 Rows (1st) Rows (avg) Rows (max)  Row Source Operation
 ---------- ---------- ----------  ---------------------------------------------------
-         0          0          0  LOAD TABLE CONVENTIONAL  UT_PROCESS_STATUS (cr=5 pr=0 pw=0 time=56671 us starts=1)
+         0          0          0  LOAD TABLE CONVENTIONAL  job_log (cr=5 pr=0 pw=0 time=56671 us starts=1)
 
 ********************************************************************************
 
@@ -3407,10 +3407,10 @@ Parsing user id: 672
 
 SQL ID: 96qfz44rfjumw Plan Hash: 295601117
 
-UPDATE UT_PROCESS_STATUS SET TOTAL_ELAPSED = :B2 , SID = NULL, STATUS_MSG = 
+UPDATE job_log SET TOTAL_ELAPSED = :B2 , SID = NULL, STATUS_MSG = 
   'DONE', STATUS_ID = 'C', STATUS_TS = SYSDATE 
 WHERE
- UT_PROCESS_STATUS_ID = :B1 
+ job_log_ID = :B1 
 
 
 call     count       cpu    elapsed       disk      query    current        rows
@@ -3429,8 +3429,8 @@ Number of plan statistics captured: 1
 
 Rows (1st) Rows (avg) Rows (max)  Row Source Operation
 ---------- ---------- ----------  ---------------------------------------------------
-         0          0          0  UPDATE  UT_PROCESS_STATUS (cr=1 pr=0 pw=0 time=38 us starts=1)
-         1          1          1   INDEX UNIQUE SCAN UT_PROCESS_STATUS_PK (cr=1 pr=0 pw=0 time=4 us starts=1 cost=1 size=184 card=1)(object id 100572)
+         0          0          0  UPDATE  job_log (cr=1 pr=0 pw=0 time=38 us starts=1)
+         1          1          1   INDEX UNIQUE SCAN job_log_PK (cr=1 pr=0 pw=0 time=4 us starts=1 cost=1 size=184 card=1)(object id 100572)
 
 ********************************************************************************
 

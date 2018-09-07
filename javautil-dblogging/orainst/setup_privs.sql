@@ -1,14 +1,14 @@
 set echo on
 alter session set container = sales_reporting_pdb;
 
-drop directory ut_process_log;
+drop directory job_msg;
 drop role dblogging;
 create role dblogging;
 
-create directory ut_process_log_dir as  '/scratch/dblogging';
-grant read, write on directory ut_process_log_dir to dblogging;
-grant read, write on directory ut_process_log_dir to sa;
-create public synonym ut_process_log_dir for ut_process_log_dir;
+create directory job_msg_dir as  '/scratch/dblogging';
+grant read, write on directory job_msg_dir to dblogging;
+grant read, write on directory job_msg_dir to sa;
+create public synonym job_msg_dir for job_msg_dir;
 grant  dblogging to sa; 
 
 create or replace view my_session_process as 

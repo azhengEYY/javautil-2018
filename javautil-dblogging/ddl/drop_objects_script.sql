@@ -1,12 +1,12 @@
-drop SEQUENCE UT_PROCESS_LOG_ID_SEQ;                                            
-drop VIEW UT_PROCESS_STEP_VW;                                                   
-drop VIEW UT_PROCESS_STATUS_VW;                                                 
+drop SEQUENCE job_msg_ID_SEQ;                                            
+drop VIEW job_step_VW;                                                   
+drop VIEW job_log_VW;                                                 
 drop PACKAGE LOGGER;                                                            
 drop PACKAGE BODY LOGGER;                                                       
 drop table VALIDATED_ADDRESS cascade;                                           
-drop table UT_PROCESS_STATUS cascade;                                           
-drop table UT_PROCESS_LOG cascade;                                              
-drop table UT_PROCESS_STEP cascade;                                             
+drop table job_log cascade;                                           
+drop table job_msg cascade;                                              
+drop table job_step cascade;                                             
 drop table cursor_text cascade;
 drop table cursor_explain_plan cascade;
 drop table cursor_sql_text cascade;

@@ -48,7 +48,7 @@ public class DbloggerH2 extends AbstractDblogger implements Dblogger {
     public long getUtProcessStatusId() {
         long utProcessStatusId = -1;
         try {
-            utProcessStatusId = sequenceHelper.getSequence("ut_process_status_id_seq");
+            utProcessStatusId = sequenceHelper.getSequence("job_log_id_seq");
         } catch (SQLException sqe) {
             logger.error(sqe.getMessage());
         }

@@ -84,7 +84,7 @@ public class CdsDataLoader implements FilenameFilter {
      */
     public long process(InputStream dataStream, String dataStreamDescr, String distributorCd, boolean validate)
             throws ParseException, IOException, SQLException {
-        logger.info("CDSDataLoader:process ut_process_status_id {}",dblogger.getUtProcessStatusId());
+        logger.info("CDSDataLoader:process job_log_id {}",dblogger.getUtProcessStatusId());
         dblogger.insertStep("CdsDataLoader", dataStreamDescr, getClass().getName());
         dblogger.setModule("CdsDataLoader", null);
         dblogger.setAction("initial insert");

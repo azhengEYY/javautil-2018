@@ -1,6 +1,6 @@
-drop sequence ut_process_status_id_seq;
-drop sequence ut_process_step_id_seq;
-drop TABLE UT_PROCESS_STATUS cascade constraints;
-drop TABLE UT_PROCESS_LOG cascade constraints;
+drop sequence job_log_id_seq;
+drop sequence job_step_id_seq;
+drop TABLE job_log cascade constraints;
+drop TABLE job_msg cascade constraints;
 drop TABLE UT_PROCESS_STAT cascade constraints; 
 drop package logger;

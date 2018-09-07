@@ -100,7 +100,7 @@ public class DbloggerForOracle extends AbstractDblogger implements Dblogger {
     @Override
     public long beginJob(final String processName, String className, String moduleName, String statusMsg,
             String threadName, String tracefileName) throws SQLException {
-        final String sql = "       begin\n" + "         :ut_process_status_id := logger.begin_java_job (\n"
+        final String sql = "       begin\n" + "         :job_log_id := logger.begin_java_job (\n"
                 + "           p_process_name => :p_process_name,  -- VARCHAR2,\n"
                 + "           p_classname   => :p_classname,    -- varchar2,\n"
                 + "           p_module_name  => :p_module_name,   -- varchar2,\n"
@@ -110,7 +110,7 @@ public class DbloggerForOracle extends AbstractDblogger implements Dblogger {
                 + "";
         if (beginJobStatement == null) {
             beginJobStatement = prepareCall(sql);
-            beginJobStatement.registerOutParameter("ut_process_status_id", java.sql.Types.INTEGER);
+            beginJobStatement.registerOutParameter("job_log_id", java.sql.Types.INTEGER);
         }
         final CallableStatement cs = beginJobStatement;
         cs.setString("p_process_name", processName);
@@ -119,7 +119,7 @@ public class DbloggerForOracle extends AbstractDblogger implements Dblogger {
         cs.setString("p_status_msg", statusMsg);
         cs.setString("p_thread_name", threadName);
         cs.execute();
-        final int retval = cs.getInt("ut_process_status_id");
+        final int retval = cs.getInt("job_log_id");
         setUtProcessStatusId(retval);
         // cs.close();
         logger.info("started job {} " + retval);

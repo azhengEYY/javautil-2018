@@ -1,5 +1,5 @@
-create table ut_process_status (
-  ut_process_status_id   serial primary key,
+create table job_log (
+  job_log_id   serial primary key,
   schema_nm              varchar(30),
   process_nm             varchar(128),
   thread_nm              varchar(128),
@@ -13,14 +13,14 @@ create table ut_process_status (
   ignore_flg             varchar(1)       default 'N'
 )
 
---alter table ut_process_status add (
+--alter table job_log add (
 --  check ( ignore_flg in ('Y', 'N')))
 
 ;--
-create table ut_process_log (
-  ut_process_log_id     serial primary key,
-  ut_process_status_id  integer references
-    ut_process_status(ut_process_status_id),
+create table job_msg (
+  job_msg_id     serial primary key,
+  job_log_id  integer references
+    job_log(job_log_id),
   log_seq_nbr            numeric(18)             not null,
   log_msg_id             varchar(8),
   log_msg                text,

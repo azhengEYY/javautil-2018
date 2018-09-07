@@ -109,9 +109,9 @@ public class AllLoggersTest
     
     public void testResults(Connection conn, long id) throws SQLException {
     
-    SqlStatement ss = new SqlStatement(conn,"select * from ut_process_status where ut_process_status_id = :ut_process_status_id");
+    SqlStatement ss = new SqlStatement(conn,"select * from job_log where job_log_id = :job_log_id");
     Binds binds = new Binds();
-    binds.put("ut_process_status_id",id);
+    binds.put("job_log_id",id);
     final NameValue status = ss.getNameValue(binds,false);
     ss.close();
     logger.debug(status.getSortedMultilineString());
@@ -123,7 +123,7 @@ public class AllLoggersTest
     assertEquals(-1, xeindex);
     
     // check out step
-    ss = new SqlStatement(conn,"select * from ut_process_step where ut_process_status_id = :ut_process_status_id");
+    ss = new SqlStatement(conn,"select * from job_step where job_log_id = :job_log_id");
     final NameValue stepStatusNv = ss.getNameValue(binds,false);
     logger.info("step: {}" , stepStatusNv.getSortedMultilineString());
     }
@@ -141,8 +141,8 @@ public class AllLoggersTest
 //    }
 
 //    NameValue getLastUtProcessStatus(Connection connection) throws SQLException {
-//        final String sql = "select * from ut_process_status "
-//                + "where ut_process_status_id = (select max(ut_process_status_id) from ut_process_status)";
+//        final String sql = "select * from job_log "
+//                + "where job_log_id = (select max(job_log_id) from job_log)";
 //        final SqlStatement ss = new SqlStatement(connection, sql);
 //        final NameValue retval = ss.getNameValue();
 //        ss.close();

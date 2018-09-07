@@ -36,7 +36,7 @@ public class OracleInstallTest {
     }
 
     NameValue getUtProcessStatus(Connection connection2, long id) throws SQLException {
-        final String sql = "select * from ut_process_status where ut_process_status_id = :id";
+        final String sql = "select * from job_log where job_log_id = :id";
       //  final Connection connection2 = dataSource.getConnection();
         final PreparedStatement statusStatement = connection2.prepareStatement(sql);
         statusStatement.setLong(1, id);

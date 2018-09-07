@@ -30,8 +30,8 @@ create directory udump_dir as '/common/oracle/diag/rdbms/dev18b/dev18b/trace/';
 create public synonym udump_dir for udump_dir;
 grant read on directory udump_dir to &test_dblogger;
 
-drop directory ut_process_log_dir;
-create directory ut_process_log_dir as '/common/scratch/ut_process_log_dir';
-grant read, write on directory ut_process_log_dir to &test_dblogger;
-drop public synonym ut_process_log_dir;
-create public synonym ut_process_log_dir for ut_process_log_dir;
+drop directory job_msg_dir;
+create directory job_msg_dir as '/common/scratch/job_msg_dir';
+grant read, write on directory job_msg_dir to &test_dblogger;
+drop public synonym job_msg_dir;
+create public synonym job_msg_dir for job_msg_dir;

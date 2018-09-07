@@ -1,6 +1,6 @@
 CREATE OR REPLACE PACKAGE BODY logger
 is
-   g_ut_process_log_dir    varchar2 (32) := 'UT_PROCESS_LOG_DIR';
+   g_job_msg_dir    varchar2 (32) := 'job_msg_DIR';
    g_filter_level          pls_integer := G_INFO ;
    g_record_level          pls_integer := G_INFO ;
    g_file_handle           UTL_FILE.file_type;
@@ -34,7 +34,7 @@ is
    function get_g_process_status_id return number is
    begin
        if g_process_status_id  is  null then
-           g_process_status_id := ut_process_status_id_seq.nextval;
+           g_process_status_id := job_logus_id_seq.nextval;
        end if;
        return g_process_status_id;
    end;
@@ -42,8 +42,8 @@ is
   procedure update_tracefile_name(p_tracefile_name in varchar) is
      pragma autonomous_transaction ;
   begin
-	  update ut_process_status set tracefile_name = p_tracefile_name 
-	  where ut_process_status_id = g_process_status_id;
+	  update job_logus set tracefile_name = p_tracefile_name 
+	  where job_logus_id = g_process_status_id;
 	  commit;
   end;
 
@@ -103,14 +103,14 @@ is
 
       g_process_start_tm := current_timestamp;
 
-      g_process_status_id := ut_process_status_id_seq.nextval;
+      g_process_status_id := job_logus_id_seq.nextval;
 
 
 
-      INSERT into ut_process_status (
+      INSERT into job_logus (
 	  process_name,         schema_name, thread_name, process_run_nbr,      
 	  status_msg,           status_id,   status_ts,   SID,
-          ut_process_status_id, tracefile_name
+          job_logus_id, tracefile_name
       ) VALUES (
 	  g_process_name,       g_current_schema,    'main',  g_process_status_id,  
           'init',               'A',                 SYSDATE,
@@ -143,7 +143,7 @@ is
          g_process_name := p_process_name;
       end if;
 
-      g_process_status_id := ut_process_status_id_seq.NEXTVAL;
+      g_process_status_id := job_logus_id_seq.NEXTVAL;
       dbms_output.put_line('begin java job ' || to_char(g_process_status_id));
 
       g_process_start_tm := current_timestamp;
@@ -153,10 +153,10 @@ is
 
       set_action('begin_java_job ' || to_char(g_process_status_id));
 
-      insert into ut_process_status (
+      insert into job_logus (
         process_name,         schema_name, thread_name, process_run_nbr,
         status_msg,           status_id,   status_ts,   SID,
-        ut_process_status_id, classname,  module_name, tracefile_name
+        job_logus_id, classname,  module_name, tracefile_name
       ) values (
         g_process_name,        g_current_schema, p_thread_name, g_process_status_id,
         p_status_msg,          'A',              systimestamp,  g_sid,
@@ -171,7 +171,7 @@ is
 
    --::<
    procedure end_job
-   --::* update ut_process_status.status_id to 'C' and status_msg to 'DONE'
+   --::* update job_logus.status_id to 'C' and status_msg to 'DONE'
    --::>
    is
       PRAGMA AUTONOMOUS_TRANSACTION;
@@ -181,13 +181,13 @@ is
       g_process_end_tm := current_timestamp;
       elapsed_tm := g_process_end_tm - g_process_start_tm;
 
-      UPDATE ut_process_status
+      UPDATE job_logus
          SET 
              SID = NULL,
              status_msg = 'DONE',
              status_id = 'C',
              status_ts = SYSDATE
-       where ut_process_status_id = g_process_status_id;
+       where job_logus_id = g_process_status_id;
 
       COMMIT;
       set_action('end_job complete');
@@ -196,7 +196,7 @@ is
    --::<
    procedure abort_job(p_stacktrace in varchar)
    --::* procedure abort_job
-   --::* update ut_process_status
+   --::* update job_logus
    --::* elapsed_time
    --::* status_id = 'I'
    --::* status_msg = 'ABORT'
@@ -209,14 +209,14 @@ is
       g_process_end_tm := current_timestamp;
       elapsed_tm := g_process_end_tm - g_process_start_tm;
 
-      UPDATE ut_process_status
+      UPDATE job_logus
          SET 
              SID = NULL,
              status_msg = 'ABORT',
              status_id = 'A',
              status_ts = SYSDATE,
              abort_stacktrace = p_stacktrace
-       where ut_process_status_id = g_process_status_id;
+       where job_logus_id = g_process_status_id;
 
 
       COMMIT;
@@ -242,7 +242,7 @@ is
       cursor directory_cur is
       select  owner, directory_name, directory_path
       from    all_directories
-      where   directory_name = g_ut_process_log_dir;
+      where   directory_name = g_job_msg_dir;
 
       directory_rec directory_cur%rowtype;
 
