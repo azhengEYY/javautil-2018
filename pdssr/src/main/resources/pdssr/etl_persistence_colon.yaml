@@ -3,7 +3,7 @@ org_sql:
      select org_id from org where org_cd = :ORG_CD
 etl_customer_insert:
   sql: >
-    insert into ETL_CUSTOMER (
+    insert /*+ append */ into ETL_CUSTOMER (
       ETL_FILE_ID, LINE_NUMBER, SHIP_TO_CUST_ID, CUST_NM,
       ADDR_1, ADDR_2, CITY, STATE,
       POSTAL_CD, TEL_NBR, NATIONAL_ACCT_ID,
@@ -16,7 +16,7 @@ etl_customer_insert:
     )
 etl_file_initial_insert:
   sql: >
-    insert into ETL_FILE ( RPT_ORG_ID, DATAFEED_ORG_ID)
+    insert /*+ append */ into ETL_FILE ( RPT_ORG_ID, DATAFEED_ORG_ID)
     select org_id, org_id
     from org
     where org_cd = :ORG_CD
@@ -63,7 +63,7 @@ etl_inventory_tot_insert:
     )
 etl_sale_insert:
     sql: >
-        insert into ETL_SALE (
+        insert /*+ append */ into ETL_SALE (
             ETL_FILE_ID, 
             LINE_NUMBER,
             DISTRIB_ID, MFR_ID,

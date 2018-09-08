@@ -133,7 +133,7 @@ public class DbloggerForOracle extends AbstractDblogger implements Dblogger {
      * @see org.javautil.dblogging.DatabaseInstrumentation#abortJob()
      */
 
-    public void abortJob(Exception e) throws SQLException, FileNotFoundException, IOException {
+    public void abortJob(Exception e) throws SQLException {
 
         StringBuilder sb = new StringBuilder();
         sb.append(e.getMessage());

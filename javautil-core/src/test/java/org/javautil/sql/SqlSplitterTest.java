@@ -42,15 +42,6 @@ public class SqlSplitterTest {
 
 	}
 
-	@Test
-	public void testDbLoggerH2Tables() throws IOException, SqlSplitterException {
-		final SqlSplitter sr = new SqlSplitter(this, "testsr/dblogger_install_tables.h2.sr.sql").setVerbosity(0);
-		// sr.formatLines();
-		final ArrayList<String> sqls = sr.getSqlTexts();
-		
-		assertEquals(8, sqls.size());
-		// TODO test the statements, line counts, first and last line
-	}
 	
 	//@Test
 	public void testNamed() throws IOException, SqlSplitterException {

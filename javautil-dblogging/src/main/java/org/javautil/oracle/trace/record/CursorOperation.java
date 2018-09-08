@@ -65,6 +65,7 @@ public abstract class CursorOperation extends AbstractCursorEvent implements Rec
     protected static final Pattern physicalBlocksReadPattern    = Pattern.compile("p=(\\d*)");
     protected static final Pattern rowPattern                   = Pattern.compile("[^a-z]r=(\\d*)");
     protected static final Pattern timePattern                  = Pattern.compile("tim=(\\d*)");
+    protected static final Pattern explainHashPattern                  = Pattern.compile("plh=(\\d*)");
 
     /**
      * Number of blocks read from cache in consistent mode.
@@ -129,6 +130,8 @@ public abstract class CursorOperation extends AbstractCursorEvent implements Rec
 
     private boolean                echoInput;
 
+    private long explainHash;
+
     public CursorOperation(int lineNumber, final String traceLine) {
         super(lineNumber, traceLine);
         setCursorNumber(getLong(traceLine, cursorNumberPattern));
@@ -142,11 +145,14 @@ public abstract class CursorOperation extends AbstractCursorEvent implements Rec
         setDepth(getInt(traceLine, depthPattern));
         setOptimizerGoal(getInt(traceLine, ogPattern));
         setRowCount(getInt(traceLine, rowPattern));
+        setExplainHash(getLong(traceLine,explainHashPattern));
 
         if (events.exists(LOG_CONSTRUCTOR)) {
             logRecord(traceLine);
         }
     }
+
+   
 
     // TODO what the hell is this?
     private void append(final StringBuilder b, final String label, final long stat) {
@@ -314,6 +320,15 @@ public abstract class CursorOperation extends AbstractCursorEvent implements Rec
             logger.info("time not set");
         }
         this.time = time;
+    }
+    
+    private void setExplainHash(long explainHash) {
+        this.explainHash = explainHash;
+        
+    }
+    
+    public long getExplainHash() {
+        return explainHash; 
     }
 
     @Override

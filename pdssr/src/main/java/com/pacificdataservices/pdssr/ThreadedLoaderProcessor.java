@@ -22,46 +22,32 @@ public class ThreadedLoaderProcessor implements Runnable {
     private DataSource                dbloggerDataSource;
     private int                       threadCount;
     private LoadFileInputStreamSource fileSource;
+    private boolean batch;
 
-    public ThreadedLoaderProcessor(DataSource appDataSource, DataSource dbloggerDataSource, int threadCount) {
+    public ThreadedLoaderProcessor(DataSource appDataSource, DataSource dbloggerDataSource, int threadCount, boolean batch) {
         this.appDataSource = appDataSource;
         this.dbloggerDataSource = dbloggerDataSource;
         this.threadCount = threadCount;
         fileSource = new LoadFileInputStreamSource();
+        this.batch = batch;
     }
 
-    public void run2() {
 
-        try {
-            for (int i = 0; i < threadCount; i++) {
-                Connection appConnection = appDataSource.getConnection();
-                Dblogger persistenceLogger = new DbloggerForOracle(dbloggerDataSource.getConnection());
-                final SplitLoggerForOracle dblogger = new SplitLoggerForOracle(appConnection, persistenceLogger);
-                LoadProcessor loadProcessor = new LoadProcessor(appConnection, dblogger, fileSource);
-                logger.info("Starting loadProcessor " + i);
-                Thread t = new Thread(loadProcessor);
-                t.start();
-                t.join();
-
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            logger.error(e.getMessage());
-        }
-    }
-
+   
     public Runnable getLoadProcessor() {
         Runnable processor = null;
         try {
             Connection appConnection = appDataSource.getConnection();
             Dblogger persistenceLogger = new DbloggerForOracle(dbloggerDataSource.getConnection());
             final SplitLoggerForOracle dblogger = new SplitLoggerForOracle(appConnection, persistenceLogger);
-            processor = new LoadProcessor(appConnection, dblogger, fileSource);
+            processor = new LoadProcessor(appConnection, dblogger, fileSource, batch);
         
            
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            // TODO this mus be blowing up it is sometimes returning null
+            logger.error("====" + e.getMessage());
         }
+        
         return processor;
     }
 

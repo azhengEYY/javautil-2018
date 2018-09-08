@@ -42,5 +42,5 @@ public interface Dblogger {
 
     void updateTraceFileName(String appTracefileName) throws SQLException;
 
-    void abortJob(Exception e) throws SQLException, FileNotFoundException, IOException;
+    void abortJob(Exception e) throws SQLException;
 }

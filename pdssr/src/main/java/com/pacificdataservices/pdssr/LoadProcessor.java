@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 
 public class LoadProcessor implements FilenameFilter, Runnable {
     private CdsDataLoader                           loader;
+    private CdsBatchDataLoader                      batchLoader;
 
     private InstrumentedLoadConditionIdentification loadConditions;
 
@@ -35,18 +36,26 @@ public class LoadProcessor implements FilenameFilter, Runnable {
     private DataSource                              h2loggerDataSource;
     
     private LoadFileInputStreamSource loadSource;
+    private boolean batch;
 
-    public LoadProcessor(Connection connection, Dblogger dblogger, LoadFileInputStreamSource loadSource) throws SqlSplitterException, Exception {
+    public LoadProcessor(Connection connection, Dblogger dblogger, LoadFileInputStreamSource loadSource, boolean batch) throws SqlSplitterException, Exception {
         this.dblogger = dblogger;
         this.connection = connection;
         logger.info("dblogger : " + dblogger);
         logger.info("Database Instrumentation: " + dblogger.getClass().getCanonicalName());
         this.loadSource = loadSource;
         initializeSubProcesses();
+        this.batch = batch;
     }
 
     private void initializeSubProcesses() throws SQLException, IOException, SqlSplitterException {
+        // TODO create an interface
+        if (batch) {
+            batchLoader = new CdsBatchDataLoader(connection,dblogger);
+        } else {
         loader = new CdsDataLoader(connection, dblogger);
+        }
+        batchLoader = new CdsBatchDataLoader(connection,dblogger);
         loadConditions = new InstrumentedLoadConditionIdentification(connection, dblogger);
         prepost = new Prepost(connection, 5, dblogger);
         post = new Post(connection, 5);
@@ -102,7 +111,11 @@ public class LoadProcessor implements FilenameFilter, Runnable {
 
     public long loadFile(InputStream loadFile, String inputDescr, Dblogger dblogger)
             throws SQLException, ParseException, IOException {
-        return loader.process(loadFile, inputDescr, "EXOTICTX", false);
+        if (batch) {
+            return loader.process(loadFile, inputDescr, "EXOTICTX", false);
+        } else {
+            return loader.process(loadFile, inputDescr, "EXOTICTX", false);
+        }
     }
 
     public void runConditions(long etlFileId) throws SQLException, IOException, SqlSplitterException {
@@ -130,6 +143,7 @@ public class LoadProcessor implements FilenameFilter, Runnable {
                 logger.info("about to process {}",f.getAbsolutePath());
                 process(is,f.getAbsolutePath());
             }
+            // TODO clean this crap up
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -139,6 +153,13 @@ public class LoadProcessor implements FilenameFilter, Runnable {
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
         logger.info("processed {}",count);
         

@@ -2,6 +2,7 @@ package com.pacificdataservices.pdssr;
 
 
 
+import java.io.Closeable;
 import java.sql.Connection;
 
 
@@ -39,11 +40,18 @@ public class ThreadedLoaderProcessorTest extends CreateSchemaTest {
         condiobj.process();
     
         Timer timer = new Timer();
-        final ThreadedLoaderProcessor loadProcessor = new ThreadedLoaderProcessor(dataSource, xeDatasource,8);
+        final ThreadedLoaderProcessor loadProcessor = new ThreadedLoaderProcessor(dataSource, xeDatasource,1,true);
         loadProcessor.run();
         logger.info("elapsed " + timer.getElapsedMillis());
+       
+        Closeable closeableSource = (Closeable) dataSource;
+        closeableSource.close();
+        closeableSource = (Closeable) xeDatasource;
+         
         // TODO check the number of tables in etl_File
 //        // 1 is 349,266
         // 8 is 102,056
+        // 8 batching is 99895
+        // 8 load only batching 70492
     }
 }

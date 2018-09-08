@@ -1,27 +1,6 @@
 Overview
 ========
 
-Instrumenting your application is extremely important. Here we provide a simple mechanism
-
-Granularity
------------
-
-Start a transaction.
-
-Begin a job.
-
-Demarcate steps.
-
-End job.
-
-Gather Statistics
------------------
-Wall time
-Database time by step and each SQL statement within the step, percent of various resources for the total job.
-
-Make your changes, compare to baseline.
-
-
 
 Terminology
 -----------

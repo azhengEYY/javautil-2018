@@ -43,6 +43,7 @@ public class SqlStatement {
 	private Connection conn;
 	private PreparedStatement preparedStatement = null;
 	private boolean trace = false;
+	private boolean batching = false;
 	/**
 	 *
 	 */
@@ -249,7 +250,6 @@ public class SqlStatement {
 		final Statement stmt = conn.createStatement();
 		stmt.execute(sql);
 		stmt.close();
-
 	}
 
 	public ResultSet executeQuery(Binds binds) throws SQLException {
@@ -487,6 +487,48 @@ public class SqlStatement {
 		rset.close();
 		s.close();
 		return retval;
+	}
+	
+	
+	public void executeBatch() throws SQLException {
+        if (batching) {
+        preparedStatement.executeBatch();
+        batching = false;
+        }
+    }
+
+	
+	public void clearBatch() throws SQLException {
+	    if (batching) {
+	    preparedStatement.clearBatch();
+	    batching = false;
+	    }
+	}
+	
+	
+	public void addBatch(Binds binds) throws SQLException {
+
+	        if (trace) {
+	            String message = String.format("executeUpdate sql:\n%s\nbinds:\n%s", sql,binds);
+	        System.out.println(message);
+	        }
+	        try {
+	            checkConnectionArgument(conn);
+	            setConnection(conn);
+	            prepare();
+	            if (binds != null) {
+	                bind(binds);
+	            }
+	    
+	            batching = true;
+	            preparedStatement.addBatch();
+	            
+	        } catch (final SQLException sqe) {
+	            final String message = String.format("While processing:\nsql:\n'%s'\nbinds:\n%s\n%s", sql, binds, sqe.getMessage());
+	            logger.error(message);
+	            throw new SQLException(message);
+	        }
+	    
 	}
 
 	public int executeUpdate(Binds b) throws SQLException {

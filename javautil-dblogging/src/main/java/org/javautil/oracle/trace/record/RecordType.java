@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 // TODO document
 
 public enum RecordType {
-    PARSING, PARSE, BIND, EXEC, WAIT, FETCH, STAT, END_OF_STATEMENT, IGNORED, TIMESTAMP, STARS, ERROR, SEPARATOR, XCTEND, APP_NAME, PARSE_ERROR, UNMAP, CLOSE, ACTION, MODULE, UNKNOWN, EXE;
+    PARSING, PARSE, BIND, EXEC, WAIT, FETCH, STAT, END_OF_STATEMENT, IGNORED, TIMESTAMP, STARS, ERROR, SEPARATOR, XCTEND, APP_NAME, PARSE_ERROR, UNMAP, CLOSE, ACTION, MODULE, UNKNOWN, EXE, EXCTEND;
 
     @SuppressWarnings("unused")
     private static final Logger                logger  = LoggerFactory.getLogger(RecordType.class.getName());

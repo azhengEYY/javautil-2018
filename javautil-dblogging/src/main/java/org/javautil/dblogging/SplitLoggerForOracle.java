@@ -59,7 +59,9 @@ public class SplitLoggerForOracle extends DbloggerForOracle implements Dblogger 
             String tracefileName) throws SQLException {
         logger.debug("beginJob: " + OracleSessionInfo.getConnectionInfo(connection));
         logger.warn("tracefileName ignored");
+    
         long id = persistencelogger.beginJob(processName, className, moduleName, statusMsg, threadName, null);
+        setTracefileIdentifier(id);
         String appTracefileName = getTraceFileName();
         logger.info("********updating tracefile name to {}", appTracefileName);
         persistencelogger.updateTraceFileName(appTracefileName);
@@ -67,7 +69,7 @@ public class SplitLoggerForOracle extends DbloggerForOracle implements Dblogger 
     }
 
     @Override
-    public void abortJob(Exception e) throws SQLException, FileNotFoundException, IOException {
+    public void abortJob(Exception e) throws SQLException {
         persistencelogger.abortJob(e);
     }
 

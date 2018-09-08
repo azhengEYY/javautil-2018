@@ -145,20 +145,15 @@ public abstract class AbstractDblogger implements Dblogger {
         } else {
             logger.warn("finishJob: {}", utProcessStatusId);
         }
-        try {
+        
             updateJob(utProcessStatusId);
-        } catch (FileNotFoundException e) { // TODO need a separate Logger
-            logger.error(e.getMessage());
-        } catch (IOException e) {
-            logger.error(e.getMessage());
-
-        }
+        
         connection.commit();
         System.out.println("job " + utProcessStatusId + " finished =====");
     }
 
     @Override
-    public void abortJob(Exception e) throws SQLException, FileNotFoundException, IOException {
+    public void abortJob(Exception e) throws SQLException {
         finishJob(statements.getSqlStatement("abort_job"));
     }
 
@@ -183,7 +178,7 @@ public abstract class AbstractDblogger implements Dblogger {
 
     }
 
-    public void updateJob(long jobId) throws SQLException, FileNotFoundException, IOException {
+    public void updateJob(long jobId) throws SQLException {
         String ups = "select tracefile_name from job_log "
                 + "where job_log_id = :job_log_id";
 
@@ -205,28 +200,41 @@ public abstract class AbstractDblogger implements Dblogger {
             throw new IllegalStateException("traceFileName is null");
         }
         Clob clob = connection.createClob();
-        String tracefileData = FileUtil.getAsString(traceFileName);
+        String tracefileData = null;
+        try {
+            tracefileData = FileUtil.getAsString(traceFileName);
+        } catch (IOException e) {
+            logger.error(e.getMessage());
+        }
         clob.setString(1, tracefileData);
         //
         Clob jsonClob = connection.createClob();
-        OracleTraceProcessor tfr = new OracleTraceProcessor(traceFileName);
-        tfr.process();
-        CursorsStats cursorStats = tfr.getCursors();
-        String jsonString = cursorStats.toString();
-        jsonClob.setString(1, jsonString);
+        OracleTraceProcessor tfr;
+        try {
+            tfr = new OracleTraceProcessor(traceFileName);
+            tfr.process();
+            CursorsStats cursorStats = tfr.getCursors();
+            String jsonString = cursorStats.toString();
+            jsonClob.setString(1, jsonString);
 
-        PreparedStatement updateTraceFile = connection.prepareStatement(upd);
+            PreparedStatement updateTraceFile = connection.prepareStatement(upd);
 
-        updateTraceFile.setClob(1, clob);
-        updateTraceFile.setClob(2, jsonClob);
-        updateTraceFile.setLong(3, jobId);
-        int count = updateTraceFile.executeUpdate();
+            updateTraceFile.setClob(1, clob);
+            updateTraceFile.setClob(2, jsonClob);
+            updateTraceFile.setLong(3, jobId);
+            int count = updateTraceFile.executeUpdate();
 
-        binds.put("tracefile_data", clob);
-        if (count != 1) {
-            throw new IllegalArgumentException("unable to update job_log_id " + jobId);
+            binds.put("tracefile_data", clob);
+            if (count != 1) {
+                throw new IllegalArgumentException("unable to update job_log_id " + jobId);
+            }
+            logger.warn("updated {}", jobId);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            logger.error(e.getMessage());
         }
-        logger.warn("updated {}", jobId);
+       
     }
 
     public Connection getConnection() {
