@@ -11,10 +11,10 @@ insert into job_log (
 --@name job_step_insert
 insert into job_step (
         job_step_id,   job_log_id, step_name, step_info, 
-        classname,            start_ts
+        classname,     start_ts,   stacktrace
 ) values (
         :job_step_id, :job_log_id, :step_name,:step_info, 
-        :classname,           :start_ts
+        :classname,   :start_ts,   :stacktrace
 );
 --@name end_step
 update job_step 

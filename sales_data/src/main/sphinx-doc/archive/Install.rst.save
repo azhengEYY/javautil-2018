@@ -1,0 +1,58 @@
+Install
+=======
+
+Prerequisites
+-------------
+
+Java
+****
+
+Maven
+*****
+
+Postgres
+********
+
+git
+***
+
+Installation
+------------
+
+Overview
+********
+* Create the database to be used.
+* Modify the database connection information to match the database you created
+
+Get the code
+************
+git xxxxx TODO
+
+Create Database
+***************
+TODO explain
+
+Modify Connection Information
+*****************************
+
+Modify the configuration file to reflect your postgres data
+
+String yamlName = homeDir + "/connections_java.yaml";
+
+code::
+
+        "pdssr_it":
+                driver_class: "org.postgresql.Driver"
+                url: "jdbc:postgresql://localhost/sales_reporting_db"
+                username: "jjs"
+                password: "jjs"
+
+
+cd xxx TODO 
+
+mvn install
+
+maven will pull down a large number of dependendencies
+
+Create the schema
+Seed the database

@@ -15,7 +15,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Spring Developers" href="SpringDeveloperIntroduction.html" />
+    <link rel="next" title="Quick Start" href="QuickStart.html" />
     <link rel="prev" title="Database Instrumentation" href="index.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -35,11 +35,20 @@
             
   <div class="section" id="overview">
 <h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
-<p>User Tracking</p>
-<p>A user will login into the application
-The user is not known until login is successful</p>
-<p>Use $$LOGIN as user</p>
-<p>During the course of using this web page many Spring</p>
+<p>Instrumenting your application is extremely important. Here we provide a simple mechanism</p>
+<div class="section" id="granularity">
+<h2>Granularity<a class="headerlink" href="#granularity" title="Permalink to this headline">¶</a></h2>
+<p>Start a transaction.</p>
+<p>Begin a job.</p>
+<p>Demarcate steps.</p>
+<p>End job.</p>
+</div>
+<div class="section" id="gather-statistics">
+<h2>Gather Statistics<a class="headerlink" href="#gather-statistics" title="Permalink to this headline">¶</a></h2>
+<p>Wall time
+Database time by step and each SQL statement within the step, percent of various resources for the total job.</p>
+<p>Make your changes, compare to baseline.</p>
+</div>
 <div class="section" id="terminology">
 <h2>Terminology<a class="headerlink" href="#terminology" title="Permalink to this headline">¶</a></h2>
 </div>
@@ -166,6 +175,8 @@ replicate trace files</p>
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#granularity">Granularity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gather-statistics">Gather Statistics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#terminology">Terminology</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#what-is-a-transaction">What is a transaction?</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#transactional">&#64;Transactional</a></li>
@@ -197,9 +208,12 @@ replicate trace files</p>
 <li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="QuickStart.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ExampleInstrumentation.html">Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="SpringDeveloperIntroduction.html">Spring Developers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="SpringDeveloperIntroduction.html#tracing">Tracing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="OracleTracing.html">Oracle Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TraceRecords.html">Trace Records</a></li>
 <li class="toctree-l1"><a class="reference internal" href="OracleDbaIntroduction.html">DBMS_APPLICATION_INFO</a></li>
 <li class="toctree-l1"><a class="reference internal" href="OracleDbaIntroduction.html#module">Module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="OracleDbaIntroduction.html#action">Action</a></li>
@@ -220,7 +234,7 @@ replicate trace files</p>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
       <li>Previous: <a href="index.html" title="previous chapter">Database Instrumentation</a></li>
-      <li>Next: <a href="SpringDeveloperIntroduction.html" title="next chapter">Spring Developers</a></li>
+      <li>Next: <a href="QuickStart.html" title="next chapter">Quick Start</a></li>
   </ul></li>
 </ul>
 </div>
@@ -251,7 +265,7 @@ replicate trace files</p>
       &copy;2018, jjs.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.9</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
       
       |

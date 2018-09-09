@@ -43,7 +43,8 @@ public class SqlMarshallerTest {
         dbFileName = f.getAbsolutePath();
         connection = H2FileDatabase.getConnection(f, "", "");
         
-        SqlRunner sr =  new SqlRunner(new SqlMarshallerTest(),"cursor_stat.sql");
+        SqlRunner sr =  new SqlRunner(new SqlMarshallerTest(),"ddl/oracle/dblogger_install_tables.sr.sql");
+       // SqlRunner sr =  new SqlRunner(new SqlMarshallerTest(),"cursor_stat.sql");
         sr.setConnection(connection);
         sr.setPrintSql(true);
         sr.process();

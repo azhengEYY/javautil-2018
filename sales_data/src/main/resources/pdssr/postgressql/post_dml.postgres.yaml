@@ -1,0 +1,68 @@
+
+-
+  name: product_nomen_insert
+  sql: >
+    with rec_count as (
+    insert into product_nomen(
+          org_id,
+          product_ref_cd,
+          descr,
+          case_gtin
+      ) select distinct
+          ef.rpt_org_id,
+          es.distrib_product_ref,
+          es.product_descr,
+          es.case_gtin
+      from etl_sale es,
+           etl_file ef
+      where
+          ef.etl_file_id = es.etl_file_id
+          and ef.etl_file_id = %(ETL_FILE_ID)s
+      except
+      select org_id, product_ref_cd, descr, case_gtin from product_nomen
+      returning 1
+      )
+      select count(*) from rec_count
+  descr: >
+    populate product nomen
+    There could be duplicate references if
+
+-
+  name: post_sale_insert
+  sql: >
+    insert into post_sale (
+      etl_sale_id,   org_distrib_id, org_mfr_id, 
+      product_id,    distributor_customer_id,item_qty,
+      case_equiv_qty, inv_amt,inv_dt
+    )
+    select
+        s.etl_sale_id, s.org_distrib_id, s.org_mfr_id,
+        s.product_id, s.distributor_customer_id, 
+        s.cases_shipped * p.units_per_case + 
+        s.boxes_shipped * p.units_per_box +
+        s.units_shipped,
+        (s.cases_shipped * p.units_per_case + 
+        s.boxes_shipped  * p.units_per_box +
+        s.units_shipped ) / p.units_per_case,
+        s.extended_net_amt, invoice_dt
+    from etl_sale s,
+         product p
+    where
+        s.product_id =  p.product_id and 
+        s.etl_sale_id is not null
+        and s.org_distrib_id is not null
+        and s.org_mfr_id is not null
+        and s.product_id is not null
+        and s.distributor_customer_id is not null
+        and s.etl_file_id = %(ETL_FILE_ID)s
+        and not exists (
+            select 'x'
+            from post_sale p
+            where p.etl_sale_id = s.etl_sale_id)
+-
+  name: effective_date_select
+  sql: >
+    select max(ship_dt) max_ship_dt, max(invoice_dt) max_invoice_dt
+    from etl_sale
+    where etl_file_id = %(ETL_FILE_ID)s
+

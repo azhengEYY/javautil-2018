@@ -1,0 +1,24 @@
+-
+  name: ut_condition_row_msg_delete_for_run
+  sql:  >
+	delete from ut_condition_row_msg
+        where ut_condition_run_step in (
+	    select ut_condition_run_step
+	    from ut_condition_run
+	    where ut_condition_run_id = :UT_CONDITION_RUN_ID
+  )
+-
+  name: ut_condition_run_step_delete_for_run
+  sql:  >
+	delete from ut_condition_run_step
+	where ut_condition_run_id = :UT_CONDITION_RUN_ID
+-
+  name: ut_condition_run_parm_delete_for_run
+  sql:  >
+        delete from ut_condition_run_parm
+	where ut_condition_run_id = :UT_CONDITION_RUN_ID
+-
+  name: ut_condition_run_delete_for_run
+  sql:  >
+        delete from ut_condition_run
+	where ut_condition_run_id = :UT_CONDITION_RUN_ID

@@ -58,7 +58,7 @@ public class DbloggerForOracle extends AbstractDblogger implements Dblogger {
 
     private CallableStatement         setTracefileIdentifierStatement;
 
-    SequenceHelper                    sh;
+    private SequenceHelper                    sh;
 
     private CallableStatement         updateTracefileNameStatement;
 

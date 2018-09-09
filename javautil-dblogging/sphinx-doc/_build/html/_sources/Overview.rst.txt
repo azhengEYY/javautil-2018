@@ -1,15 +1,27 @@
 Overview
 ========
 
+Instrumenting your application is extremely important. Here we provide a simple mechanism
 
-User Tracking
+Granularity
+-----------
 
-A user will login into the application
-The user is not known until login is successful
+Start a transaction.
 
-Use $$LOGIN as user 
+Begin a job.
 
-During the course of using this web page many Spring 
+Demarcate steps.
+
+End job.
+
+Gather Statistics
+-----------------
+Wall time
+Database time by step and each SQL statement within the step, percent of various resources for the total job.
+
+Make your changes, compare to baseline.
+
+
 
 Terminology
 -----------

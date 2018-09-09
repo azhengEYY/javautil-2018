@@ -1,0 +1,230 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Overview &#8212; Springboot Sample Projects 1.0.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="overview">
+<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="terminology">
+<h2>Terminology<a class="headerlink" href="#terminology" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="what-is-a-transaction">
+<h2>What is a transaction?<a class="headerlink" href="#what-is-a-transaction" title="Permalink to this headline">¶</a></h2>
+<p>We will differentiate database transactions from spring transactions.</p>
+<div class="section" id="transactional">
+<h3>&#64;Transactional<a class="headerlink" href="#transactional" title="Permalink to this headline">¶</a></h3>
+<p>ref: <a class="reference external" href="https://dzone.com/articles/how-does-spring-transactional">https://dzone.com/articles/how-does-spring-transactional</a></p>
+</div>
+<div class="section" id="oracletransaction">
+<h3>~OracleTransaction<a class="headerlink" href="#oracletransaction" title="Permalink to this headline">¶</a></h3>
+<p><a href="#id1"><span class="problematic" id="id2">*</span></a>A transaction is a logical unit of work that contains one or more SQL statements. A transaction is an atomic unit. The effects of all the SQL statements in a transaction can be either all committed (applied to the database) or all rolled back (undone from the database).</p>
+<p>A transaction begins with the first executable SQL statement. A transaction ends when it is committed or rolled back, either explicitly with a COMMIT or ROLLBACK statement or implicitly when a DDL statement is issued.*</p>
+<p>ref:  <a class="reference external" href="https://docs.oracle.com/cd/B19306_01/server.102/b14220/transact.htm">https://docs.oracle.com/cd/B19306_01/server.102/b14220/transact.htm</a></p>
+</div>
+</div>
+<div class="section" id="session">
+<h2>Session<a class="headerlink" href="#session" title="Permalink to this headline">¶</a></h2>
+<p>&#64;&#64;SpringSession
+Associated with a client user, starts after login. TODO explain</p>
+<div class="section" id="oraclesession">
+<h3>~OracleSession<a class="headerlink" href="#oraclesession" title="Permalink to this headline">¶</a></h3>
+<p>An oracle session begins when the DataSource ConnectionPool calls connection()
+on the underlying jdbc driver.</p>
+<p>It is <strong>not</strong> created with each call to dataSource.getConnection(), these are
+shared in a ConnectionPool.</p>
+</div>
+<div class="section" id="api-calls">
+<h3>Api Calls<a class="headerlink" href="#api-calls" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="tracking-level">
+<h2>Tracking Level<a class="headerlink" href="#tracking-level" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="client-identifier">
+<h3>Client Identifier<a class="headerlink" href="#client-identifier" title="Permalink to this headline">¶</a></h3>
+<p>TODO what is it</p>
+</div>
+</div>
+<div class="section" id="redo">
+<h2>Redo<a class="headerlink" href="#redo" title="Permalink to this headline">¶</a></h2>
+<p>Store elsewhere</p>
+</div>
+<div class="section" id="bind-variables">
+<h2>Bind Variables<a class="headerlink" href="#bind-variables" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="compression">
+<h2>Compression<a class="headerlink" href="#compression" title="Permalink to this headline">¶</a></h2>
+<p>Statement hashes and stats</p>
+<p>String length
+hashes
+Statements stored just once</p>
+</div>
+<div class="section" id="id3">
+<h2>Redo<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>Why a separate databse</p>
+</div>
+</div>
+<div class="section" id="connection-pools">
+<h1>Connection Pools<a class="headerlink" href="#connection-pools" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="after-getting-a-connection">
+<h2>After Getting a connection<a class="headerlink" href="#after-getting-a-connection" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="id4">
+<h2>Client Identifier<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>The client identifier should be set with either</p>
+<ul class="simple">
+<li>The logged in user name</li>
+<li>The daemon name</li>
+</ul>
+</div>
+<div class="section" id="module">
+<h2>Module<a class="headerlink" href="#module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="action">
+<h2>Action<a class="headerlink" href="#action" title="Permalink to this headline">¶</a></h2>
+<p>TIFIER and CLEAR_IDENTIFIER procedures to allow the real user to be associated with a session, regardless of what database user was being used for the connection.</p>
+<p>Session</p>
+</div>
+<div class="section" id="metrics">
+<h2>Metrics<a class="headerlink" href="#metrics" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>try {</dt>
+<dd>String e2eMetrics[] = new String[OracleConnection.END_TO_END_STATE_INDEX_MAX];
+e2eMetrics[OracleConnection.END_TO_END_ACTION_INDEX]   = null;
+e2eMetrics[OracleConnection.END_TO_END_MODULE_INDEX]   = null;
+e2eMetrics[OracleConnection.END_TO_END_CLIENTID_INDEX] = null;
+((OracleConnection) conn).setEndToEndMetrics(e2eMetrics, Short.MIN_VALUE);</dd>
+<dt>} catch (SQLException sqle) {</dt>
+<dd>// Do something…</dd>
+</dl>
+<p>}</p>
+<p>0 - No trace. Like switching sql_trace off.
+2 - The equivalent of regular sql_trace.
+4 - The same as 2, but with the addition of bind variable values.
+8 - The same as 2, but with the addition of wait events.
+12 - The same as 2, but with both bind variable values and wait events.</p>
+<p>Monitoring long running
+<a class="reference external" href="https://oracle-base.com/articles/11g/real-time-sql-monitoring-11gr1">https://oracle-base.com/articles/11g/real-time-sql-monitoring-11gr1</a></p>
+</div>
+<div class="section" id="todo">
+<h2>TODO<a class="headerlink" href="#todo" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://oracle-base.com/articles/misc/dbms_session">https://oracle-base.com/articles/misc/dbms_session</a></p>
+<p><a class="reference external" href="https://oracle-base.com/articles/misc/sql-trace-10046-trcsess-and-tkprof">https://oracle-base.com/articles/misc/sql-trace-10046-trcsess-and-tkprof</a></p>
+<p>Separate Container and database for logging postgres</p>
+<p>TODO state diagram with other servive</p>
+<p>Performance Impact</p>
+<p>Create a new file for to minimize trcsess overhead
+replicate trace files</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="index.html">Table Of Contents</a></h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Overview.html#connection-pools">Connection Pools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="QuickStart.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ExampleInstrumentation.html">Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SpringDeveloperIntroduction.html">Spring Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SpringDeveloperIntroduction.html#tracing">Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OracleTracing.html">Oracle Tracing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TraceRecords.html">Trace Records</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OracleDbaIntroduction.html">DBMS_APPLICATION_INFO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OracleDbaIntroduction.html#module">Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OracleDbaIntroduction.html#action">Action</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OracleDbaIntroduction.html#turning-on-statistic-and-trace">Turning on statistic and trace</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OracleDbaIntroduction.html#setting-the-trace-file-identifier">Setting the trace file identifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OracleDbaIntroduction.html#getting-the-name-of-the-trace-file">Getting the name of the trace file</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OracleDbaIntroduction.html#setting-identifier">Setting identifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OracleDbaIntroduction.html#setting-client-info">Setting client info</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OracleDbaIntroduction.html#setting-module">Setting module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OracleDbaIntroduction.html#setting-action">Setting Action</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ConnectionPools.html">Connection Pools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FurtherReading.html">Further Reading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TODO.html">TODO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TODO.html#oracle">Oracle</a></li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Overview2.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, jjs.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.9</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
+      
+      |
+      <a href="_sources/Overview2.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

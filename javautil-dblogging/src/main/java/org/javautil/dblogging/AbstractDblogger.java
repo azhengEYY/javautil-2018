@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import org.javautil.io.FileUtil;
+import org.javautil.lang.ThreadUtil;
 import org.javautil.oracle.trace.CursorsStats;
 import org.javautil.oracle.trace.OracleTraceProcessor;
 import org.javautil.sql.Binds;
@@ -83,9 +84,15 @@ public abstract class AbstractDblogger implements Dblogger {
         this.utProcessStatusId = id;
 
     }
+    
+
+    public long insertStep(String stepName, String stepInfo, String className) {
+        String stackTrace  = ThreadUtil.getStackTrace(2);
+        return insertStep(stepName,stepInfo,className,stackTrace);
+    }
 
     @Override
-    public long insertStep(String stepName, String stepInfo, String className) {
+    public long insertStep(String stepName, String stepInfo, String className, String stacktrace) {
         long retval = -1;
         try {
             if (sequenceHelper == null) {
@@ -99,6 +106,7 @@ public abstract class AbstractDblogger implements Dblogger {
             binds.put("step_info", stepInfo);
             binds.put("classname", className);
             binds.put("start_ts", new java.sql.Timestamp(System.currentTimeMillis()));
+            binds.put("stacktrace", stacktrace);
             if (statements == null) {
                 throw new IllegalStateException("statements is null");
             }

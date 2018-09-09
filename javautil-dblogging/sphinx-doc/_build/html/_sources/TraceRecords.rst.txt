@@ -16,4 +16,13 @@ mis  libraryCacheMissCount Cursor missed in the cache.
 r    rowCount              Number of rows processed.
 dep  recursiveDepth        Recursive call depth (0 = user SQL, >0 = recursive).
 og   optimizerGoal         Optimizer goal:  1=All_Rows  2=First_Rows,  3=Rule,  4=Choose
+pw   physicalWrites        Physical Write
 tim  time                  Timestamp (large number in 100ths of a second). Use this to determine the time between any 2 operations.
+
+
+Stat Records
+id   id                    Stat Record identifier, starts with ??? per sqlid
+obj  objectNumber
+op   operation
+pid  parentId              References id (also used in formatting operation depth)
+pos  position              Position in explain plan STAT 

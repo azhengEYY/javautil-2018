@@ -1,0 +1,2 @@
+select * from customer_prod_pct_vw 
+order by ship_to_cust_id, case_gtin;

@@ -69,16 +69,16 @@ public class SqlSplitterTest2 {
 
 	}
 
-	@Test
-	public void testProcedures() throws IOException, SqlSplitterException {
-		SqlSplitter sr = new SqlSplitter(this, "testsr/logger_message_formatter.plsql.sr.sql").setProceduresOnly(true).setTraceState(0);
-		sr.analyze();
-//		System.out.println(sr.snapshot());
+//	@Test
+//	public void testProcedures() throws IOException, SqlSplitterException {
+//		SqlSplitter sr = new SqlSplitter(this, "testsr/logger_message_formatter.plsql.sr.sql").setProceduresOnly(true).setTraceState(0);
+//		sr.analyze();
+////		System.out.println(sr.snapshot());
 //		List<String> sqls = sr.getSqlTexts();
 //		for (String sql : sqls) {
 //			System.out.println(sql);
 //		}
-	}
+//	}
 
 	// @Test
 	public void test3() throws IOException, SqlSplitterException {
@@ -96,47 +96,9 @@ public class SqlSplitterTest2 {
 		// logger.info("sql 2 last :" + sqlLast);
 		assertEquals("CREATE TABLE job_msg", sqlFirst.trim());
 		assertEquals("references job_log(job_log_id)", sqlLast.trim());
-		// TODO more tests
-		// assertTrue(sqls.get(2).getSql().trim().startsWith("CREATE TABLE
-		// job_msg"));
-		// assertTrue(sqls.get(2).getSql().trim().endsWith("--end job_msg"));
-		// assertTrue(sqls.get(3).getSql().trim().startsWith("alter table
-		// job_msg"));
-		// assertTrue(sqls.get(3).getSql().trim().endsWith("references
-		// job_log(job_log_id)"));
-		// assertTrue(sqls.get(4).getSql().trim().startsWith("CREATE TABLE
-		// UT_PROCESS_STAT"));
-		// assertTrue(sqls.get(4).getSql().trim().endsWith(") organization index"));
-		// logger.info("5 {}", sqls.get(5).getSql().trim());
-		// assertTrue(sqls.get(5).getSql().trim().startsWith("-- todo compress 2 on
-		// index"));
-		// assertTrue(
-		// sqls.get(5).getSql().trim().endsWith("references
-		// job_msg(job_log_id, log_seq_nbr)"));
+		
 		assertEquals(5, sqls.size());
 	}
 
-	//
-	// //@Test
-	// public void testFunctionDeclaration() throws IOException {
-	// SqlSplitter runner = new SqlSplitter(this,
-	// "testsr/logger_message_formatter.plsql.sql").setProceduresOnly(true);
-	// ArrayList<SqlStatement> sqls = runner.getSqlStatements();
-	//
-	// assertEquals(-1,sqls..getSql().indexOf("set echo"));
-	// assertTrue(sql.trim().startsWith("create or replace function
-	// logger_message_formatter"));
-	// assertTrue(sql.trim().endsWith("end;"));
-	// logger.debug(String.format("function:\n%s", sql));
-	// }
-	//
-	// //@Test
-	// public void semiColonTest() throws IOException {
-	// SqlSplitter runner = new SqlSplitter(this,
-	// "testsr/dblogger_uninstall.sr.sql");
-	// ArrayList<SqlStatement> sqls = runner.getSqls();
-	// assertEquals("drop sequence job_log_id_seq",sqls.get(0));
-	// assertEquals("drop package logger",sqls.get(6));
-	// assertEquals(7,sqls.size());
-	// }
+
 }

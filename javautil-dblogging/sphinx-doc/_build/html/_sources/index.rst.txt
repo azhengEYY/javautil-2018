@@ -22,6 +22,7 @@ Introduction
 
    Overview
    QuickStart
+   ExampleInstrumentation
    SpringDeveloperIntroduction
    OracleTracing
    TraceRecords

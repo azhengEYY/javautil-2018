@@ -12,10 +12,17 @@ public interface Dblogger {
 
 	long beginJob(String processName, String className, String moduleName, String statusMsg, String threadName, String tracefileName)
 			throws SQLException;
+	
+	  void abortJob(Exception e) throws SQLException;
 
 	//void abortJob() throws SQLException;
 
 	void endJob() throws SQLException;
+	
+    long insertStep(String stepName, String stepInfo, String className);
+
+
+    void finishStep() throws SQLException;
 
 	void setAction(String actionName) throws SQLException;
 
@@ -31,10 +38,7 @@ public interface Dblogger {
 
 	String openFile(String fileName) throws SQLException;
 	
-	 long insertStep(String stepName, String stepInfo, String className);
 
-
-	void finishStep() throws SQLException;
 	
 	void showConnectionInformation();
 
@@ -42,5 +46,7 @@ public interface Dblogger {
 
     void updateTraceFileName(String appTracefileName) throws SQLException;
 
-    void abortJob(Exception e) throws SQLException;
+    long insertStep(String stepName, String stepInfo, String className, String stack);
+
+  
 }

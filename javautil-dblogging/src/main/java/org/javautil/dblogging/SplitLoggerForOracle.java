@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import org.javautil.lang.ThreadUtil;
 import org.javautil.oracle.OracleSessionInfo;
 import org.javautil.sql.Binds;
 import org.javautil.sql.Dialect;
@@ -87,7 +88,11 @@ public class SplitLoggerForOracle extends DbloggerForOracle implements Dblogger 
 
     @Override
     public long insertStep(String stepName, String stepInfo, String className) {
-        return persistencelogger.insertStep(stepName, stepInfo, className);
+        String stack = ThreadUtil.getStackTrace();
+        if (stack.length() > 4000) {
+            stack = stack.substring(0,4000);
+        }
+        return persistencelogger.insertStep(stepName, stepInfo, className, stack);
     }
 
     @Override

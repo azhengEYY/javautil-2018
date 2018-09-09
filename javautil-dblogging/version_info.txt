@@ -1,0 +1,3 @@
+Hotsos SQL Test Harness v 2.0.0
+valid as of 2006 May 31
+

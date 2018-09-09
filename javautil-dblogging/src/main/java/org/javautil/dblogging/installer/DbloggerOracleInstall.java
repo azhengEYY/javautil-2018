@@ -42,7 +42,7 @@ public class DbloggerOracleInstall {
 
         logger.info("creating tables");
         loggerObjectInstall();
-        installCursorTables();
+      //  installCursorTables();
         // final String plSqlErrors = OracleConnectionHelper.getPLSQLErrors(connection);
         // if (plSqlErrors != null) {
         // logger.error("\n" + plSqlErrors);
@@ -73,12 +73,12 @@ public class DbloggerOracleInstall {
                 .setPrintSql(showSql).setProceduresOnly(true).setContinueOnError(true).process();
     }
 
-    public void installCursorTables() throws SqlSplitterException, SQLException, IOException {
-        logger.info("======== creating logger cursor_stat.sqls");
-
-        new SqlRunner(this, "cursor_stat.sql").setConnection(connection).setTrace(true)
-                .setPrintSql(true).setContinueOnError(true).setShowError(true).process();
-    }
+//    public void installCursorTables() throws SqlSplitterException, SQLException, IOException {
+//        logger.info("======== creating logger cursor_stat.sqls");
+//
+//        new SqlRunner(this, "cursor_stat.sql").setConnection(connection).setTrace(true)
+//                .setPrintSql(true).setContinueOnError(true).setShowError(true).process();
+//    }
 
     public DbloggerOracleInstall setDrop(boolean drop) {
         this.drop = drop;

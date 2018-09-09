@@ -81,4 +81,10 @@ public class DbloggerNoOperation implements Dblogger {
 
     }
 
+    @Override
+    public long insertStep(String stepName, String stepInfo, String className, String stack) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
 }

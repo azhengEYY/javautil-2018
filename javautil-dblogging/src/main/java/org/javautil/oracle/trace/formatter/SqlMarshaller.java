@@ -4,9 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
 
 import org.javautil.oracle.trace.CursorInfo;
 import org.javautil.oracle.trace.CursorOperationAggregation;
@@ -18,7 +15,6 @@ import org.javautil.sql.SequenceHelper;
 import org.javautil.sql.SqlSplitterException;
 import org.javautil.sql.SqlStatement;
 import org.javautil.util.ListOfNameValue;
-import org.javautil.util.NameValue;
 import org.javautil.util.ShaHasher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +30,7 @@ public class SqlMarshaller {
     private SqlStatement       cursorInfoInsert;
     private SqlStatement       cursorStatInsert;
     private Connection         connection;
-    private Logger logger = LoggerFactory.getLogger(getClass());
+    private Logger             logger = LoggerFactory.getLogger(getClass());
 
     public SqlMarshaller(Connection connection) throws SQLException, SqlSplitterException, IOException {
 
@@ -45,29 +41,29 @@ public class SqlMarshaller {
                 new File("src/main/resources/cursor_stat_dml.sr.sql"));
         this.connection = connection;
         sequenceHelper = new SequenceHelper(connection);
-       
+
         cursorStatInsert = statements.getSqlStatement("cursor_stat_insert");
         cursorStatInsert.setConnection(connection);
-        
+
         cursorTextInsert = statements.getSqlStatement("cursor_text_insert");
         cursorTextInsert.setConnection(connection);
-        
+
         cursorInfoRunInsert = statements.getSqlStatement("cursor_info_run_insert");
         cursorInfoRunInsert.setConnection(connection);
-        
+
         cursorInfoInsert = statements.getSqlStatement("cursor_info_insert");
         cursorInfoInsert.setConnection(connection);
     }
 
     public long saveAll(CursorsStats cursors) throws SQLException {
         Binds cursorRunBinds = cursorRunInsert();
-        
+
         for (CursorInfo cursor : cursors.getCursorInfos(false)) {
             saveCursor(cursor);
         }
         return cursorRunBinds.getLong("cursor_info_run_id");
     }
-    
+
     public Binds cursorRunInsert() throws SQLException {
         long runId = sequenceHelper.getSequence("cursor_info_run_id_seq");
         Binds binds = new Binds();
@@ -81,9 +77,9 @@ public class SqlMarshaller {
 
         String planHash = cursorPlanInsert(cursor);
         String sqlTextHash = cursorTextInsert(cursor);
-        
+
         Binds cursorBinds = cursorInfoInsert(cursor, planHash, sqlTextHash);
-       long cursorId = cursorBinds.getLong("cursor_info_id");
+        long cursorId = cursorBinds.getLong("cursor_info_id");
 
         int sequenceNbr = 1;
         if (cursor.getStats() != null) {
@@ -92,55 +88,48 @@ public class SqlMarshaller {
             }
         }
     }
-    
-    
+
     public String cursorTextInsert(CursorInfo cursor) throws SQLException {
-     
+
         String sqlText = cursor.getParsing().getSqlText();
         String sqlHash = ShaHasher.hashAsBase64(sqlText);
         SqlStatement byHashSs = statements.getSqlStatement("cursor_text_by_hash");
         byHashSs.setConnection(connection);
         Binds binds = new Binds();
         binds.put("sql_text_hash", sqlHash);
-        ListOfNameValue nv = byHashSs.getListOfNameValue(binds,true);
+        ListOfNameValue nv = byHashSs.getListOfNameValue(binds, true);
         if (nv.size() == 0) {
             binds.put("sql_text_hash", sqlHash);
             binds.put("sql_text", sqlText);
-            logger.info("sql_text_hash =====: {}", sqlHash);
+            logger.debug("sql_text_hash =====: {}", sqlHash);
             SqlStatement cursorTextInsert = statements.get("cursor_text_insert");
             cursorTextInsert.setConnection(connection);
             cursorTextInsert.executeUpdate(binds);
         }
-        logger.info("cursor_text:\n{}",binds);
+        logger.debug("cursor_text:\n{}", binds);
         return sqlHash;
     }
-    
+
     public String cursorPlanInsert(CursorInfo cursor) throws SQLException {
-  
+
         String planText = cursor.formatExplainPlan();
         String planHash = ShaHasher.hashAsBase64(planText);
         SqlStatement byHashSs = statements.getSqlStatement("cursor_plan_by_hash");
         byHashSs.setConnection(connection);
         Binds binds = new Binds();
         binds.put("explain_plan_hash", planHash);
-        ListOfNameValue nv = byHashSs.getListOfNameValue(binds,true);
+        ListOfNameValue nv = byHashSs.getListOfNameValue(binds, true);
         if (nv.size() == 0) {
-//            cursorPlanId = sequenceHelper.getSequence("cursor_plan_id_seq");
-//            binds.put("cursor_plan_id", cursorPlanId);
             binds.put("explain_plan_hash", planHash);
             binds.put("explain_plan", planText);
-            logger.info("explain_plan:\n{}",planText);
+            logger.debug("explain_plan:\n{}", planText);
             SqlStatement cursorPlanInsert = statements.get("cursor_plan_insert");
             cursorPlanInsert.setConnection(connection);
             cursorPlanInsert.executeUpdate(binds);
         }
-        logger.info("cursor_plan:\n{}" ,binds);
+        logger.debug("cursor_plan:\n{}", binds);
         return planHash;
     }
-
-
-
-
 
     public Binds cursorInfoInsert(CursorInfo cursor, String explainPlanHash, String sqlTextHash) throws SQLException {
 
@@ -152,9 +141,7 @@ public class SqlMarshaller {
 
         Binds binds = new Binds();
         Long cursorInfoId = sequenceHelper.getSequence("cursor_info_id_seq");
-        binds.put("explain_plan_hash",explainPlanHash);
-      //  binds.put("cursor_plan_id", explainPlanHash);
-        binds.put("cursor_info_id", cursorInfoId);
+        binds.put("explain_plan_hash", explainPlanHash);
         // binds.put("cursor_stat_id", cursorStatId);
         binds.put("sql_text_hash", sqlTextHash);
         binds.put("parse_cpu_micros", parse.getCpu());
@@ -179,9 +166,9 @@ public class SqlMarshaller {
         binds.put("fetch_current_blocks", hasFetch ? fetch.getCurrentModeBlocks() : null);
         // binds.put("fetch_lib_miss",fetch.getLibMiss() );
         binds.put("fetch_row_count", hasFetch ? fetch.getRowCount() : null);
-        logger.info("cursor_info:\n{}",binds);
+        logger.debug("cursor_info:\n{}", binds);
         cursorInfoInsert.executeUpdate(binds);
-      
+
         return binds;
     }
 
@@ -198,7 +185,7 @@ public class SqlMarshaller {
         binds.put("elapsed_millis", stat.getTime());
         cursorStatInsert.setConnection(connection);
         cursorStatInsert.executeUpdate(binds);
-        logger.info("cursor_stat:\n{}",binds);
+        logger.debug("cursor_stat:\n{}", binds);
     }
 
 }

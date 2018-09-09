@@ -44,8 +44,8 @@ public class H2Install extends AbstractDbloggerDatabaseObjectsInstaller implemen
 
         new SqlRunner(this, createTablesResource).setConnection(connection).setPrintSql(showSql)
                 .setContinueOnError(noFail).process();
-        new SqlRunner(this, "cursor_stat.sql").setConnection(connection)
-        .setPrintSql(showSql).setProceduresOnly(true).setContinueOnError(true).process();
+//        new SqlRunner(this, "cursor_stat.sql").setConnection(connection)
+//        .setPrintSql(showSql).setProceduresOnly(true).setContinueOnError(true).process();
         logger.info("SqlRunner complete");
         connection.commit();
         // connection.close();

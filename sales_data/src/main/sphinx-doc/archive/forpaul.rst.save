@@ -1,0 +1,28 @@
+
+For Paul
+========
+
+The data format is specified below.
+
+The source of the data is the distributors, they already provide this data and we can read the existing files reported.
+
+The target is the manufacturer, that would gain access to all of the distributors.
+
+Missing sales opportunities allows the manufacturer and the distributor sell additional products.
+
+Who installs?
+
+This is a hosted service, nothing has to be installed by the manufacturer or distributor.
+
+FL sells the chips to distributors who sell to vending machine operators, retail stores, schools, sporting concessions, hotel chains, etc.
+
+It doesn't matter who the distributor sells it to, it is just a customer and a customer type from our perspective.
+
+The persons at Pepsi and Frito-Lay who are currently in charge of the rebate programs.
+
+Rebate programs are custom and quarterly, with rebates based on growth or growth of certain products.
+
+I presume the function of the contact at FL and Frito is the same as Don Lear at Hershey.
+
+Please look at the custdata.com website for a list of manufacturers being processed, there are many.
+

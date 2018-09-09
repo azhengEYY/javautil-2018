@@ -19,9 +19,11 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
+import org.javautil.dblogging.installer.DbloggerOracleInstall;
 import org.javautil.io.FileUtil;
 import org.javautil.sql.ApplicationPropertiesDataSource;
 import org.javautil.sql.Binds;
+import org.javautil.sql.SqlSplitterException;
 import org.javautil.sql.SqlStatement;
 import org.javautil.util.ListOfNameValue;
 import org.javautil.util.NameValue;
@@ -39,7 +41,7 @@ public class DbloggerForOracleExampleTest {
     static Dblogger dblogger;
     
     @BeforeClass
-    public static void beforeClass() throws IOException, SQLException {
+    public static void beforeClass() throws SqlSplitterException, Exception {
         String propertyPath = "src/test/resources/logger_and_application.properties";
         FileInputStream fis = new FileInputStream(propertyPath);
         Properties properties = new Properties();
@@ -50,6 +52,9 @@ public class DbloggerForOracleExampleTest {
         loggerDataSource = DbloggerPropertiesDataSource.getDataSource(properties);
         loggerConnection = loggerDataSource.getConnection();
         dblogger = new SplitLoggerForOracle(applicationConnection, loggerConnection);
+        
+        new DbloggerOracleInstall(applicationConnection,true,true).process();
+        new DbloggerOracleInstall(loggerConnection,true,true).process();
          
     }
     
@@ -87,8 +92,8 @@ public class DbloggerForOracleExampleTest {
        assertEquals(step1.get("step_info"),"full join");
        assertNotNull(step1.get("start_ts"));
        assertNotNull(step1.get("end_ts"));
-
-       System.out.println(jobNv);
+       //TODO continue with cursor stuff
+       //System.out.println(jobNv);
     }
 
 }
