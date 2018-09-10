@@ -3,7 +3,9 @@ package org.javautil.dblogging;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.io.Writer;
+import java.sql.Clob;
 import java.sql.SQLException;
 
 public interface Dblogger {
@@ -47,6 +49,12 @@ public interface Dblogger {
     void updateTraceFileName(String appTracefileName) throws SQLException;
 
     long insertStep(String stepName, String stepInfo, String className, String stack);
+
+    Clob createClob() throws SQLException;
+
+
+    
+    public void persistenceUpdateTrace(long jobId, Clob traceData) throws SQLException;
 
   
 }

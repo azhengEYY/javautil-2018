@@ -4,10 +4,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.io.Writer;
 import java.sql.CallableStatement;
 import java.sql.Clob;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -303,7 +305,7 @@ public class DbloggerForOracle extends AbstractDblogger implements Dblogger {
      * org.javautil.dblogging.DatabaseInstrumentation#getMyTraceFile(java.io.Writer)
      */
     @Override
-    public void getMyTraceFile(Writer writer) throws SQLException, IOException {
+    public void getMyTraceFile(Writer writer) throws SQLException{
         if (getMyTraceFileStatement == null) {
             getMyTraceFileStatement = prepareCall("begin :my_tracefile_data := logger.get_my_tracefile(); end;");
             getMyTraceFileStatement.registerOutParameter(1, java.sql.Types.CLOB);
@@ -311,7 +313,25 @@ public class DbloggerForOracle extends AbstractDblogger implements Dblogger {
         getMyTraceFileStatement.execute();
 
         final Clob clob = getMyTraceFileStatement.getClob(1);
-        OracleConnectionHelper.clobWrite(clob, writer);
+        try {
+            OracleConnectionHelper.clobWrite(clob, writer);
+        } catch (IOException e) {
+           logger.error("Unable to write trace file " + e.getMessage());
+        }
+    }
+    
+    public Clob getMyTraceFile() throws SQLException{
+        if (getMyTraceFileStatement == null) {
+            getMyTraceFileStatement = prepareCall("begin :my_tracefile_data := logger.get_my_tracefile(); end;");
+            getMyTraceFileStatement.registerOutParameter(1, java.sql.Types.CLOB);
+        }
+        getMyTraceFileStatement.execute();
+        Clob retval = getMyTraceFileStatement.getClob(1);
+        if (retval == null) {
+            throw new IllegalStateException("null returned from logger.get_my_trace_file");
+        }
+        return getMyTraceFileStatement.getClob(1);
+       
     }
 
     // // TODO should be in jdbcHelper
@@ -363,5 +383,8 @@ public class DbloggerForOracle extends AbstractDblogger implements Dblogger {
         updateTracefileNameStatement.execute();
 
     }
+
+    
+
 
 }

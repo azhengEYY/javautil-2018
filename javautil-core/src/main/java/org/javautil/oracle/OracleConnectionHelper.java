@@ -75,17 +75,17 @@ public class OracleConnectionHelper extends ConnectionHelper {
 
 	}
 
-	public static void clobWrite(Clob clob, Writer writer) throws SQLException, IOException {
-		final int length = 1024 * 1024;
-		final Reader reader = clob.getCharacterStream();
-		final char[] buffer = new char[length];
-		int count;
-		while ((count = reader.read(buffer)) != -1) {
-			writer.write(buffer, 0, count);
-		}
-		clob.free();
-	    reader.close();
-	}
+//	public static void clobWrite(Clob clob, Writer writer) throws SQLException, IOException {
+//		final int length = 1024 * 1024;
+//		final Reader reader = clob.getCharacterStream();
+//		final char[] buffer = new char[length];
+//		int count;
+//		while ((count = reader.read(buffer)) != -1) {
+//			writer.write(buffer, 0, count);
+//		}
+//		clob.free();
+//	    reader.close();
+//	}
 
 	public static String getDuplicateCursors(Connection connection) throws SQLException {
 		final SqlStatement dupeCursors = new SqlStatement(connection, "select * from my_duplicate_cursor");

@@ -9,7 +9,6 @@ import org.javautil.oracle.trace.record.CursorOperation;
 import org.javautil.oracle.trace.record.Parse;
 import org.javautil.oracle.trace.record.Parsing;
 import org.javautil.oracle.trace.record.Stat;
-import org.javautil.sql.Binds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -202,7 +201,7 @@ public class CursorInfo {
     }
 
     public static void setStatDepths(List<Stat> stats) {
-        logger.info("============");
+        logger.debug("============");
         int statNbr = 0;
         int seqNbr = 1;
         int depth = 0;
@@ -215,11 +214,11 @@ public class CursorInfo {
                 int parentDepth = parent.getDepth();
                 
                 depth = parent.getDepth() + 1;
-                logger.info("parent depth : {} depth {)",parentDepth, depth);
+                logger.debug("parent depth : {} depth {)",parentDepth, depth);
                 stat.setDepth(depth);
             }
             statNbr++;
-            logger.info("set depth to {} attempted {} {}", stat.getDepth(), depth, stat);
+            logger.debug("set depth to {} attempted {} {}", stat.getDepth(), depth, stat);
         }
     }
 
@@ -233,15 +232,14 @@ public class CursorInfo {
             for (Stat stat : getStats()) {
                 int indent = stat.getDepth() + 1;
                 String formatString = "%-" + indent + "s%s\n";
-                logger.info("formatExplainPlan: indent {} operation: '{}'s", indent, stat.getOperation());
-                logger.info("formatString " + formatString);
+             
                 String line = String.format(formatString, "", stat.getOperation());
-                logger.info("formatted: {}",line);
+                //logger.debug("formatted: {}",line);
                 sb.append(line);
-                logger.info("\n" + sb.toString());
+                logger.debug("\n" + sb.toString());
             }
         }
-        logger.info("returning:\n{}",sb.toString());
+        logger.debug("returning:\n{}",sb.toString());
         return sb.toString();
     }
 

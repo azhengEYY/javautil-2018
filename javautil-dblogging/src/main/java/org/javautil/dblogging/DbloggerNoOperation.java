@@ -3,6 +3,7 @@ package org.javautil.dblogging;
 import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
+import java.sql.Clob;
 import java.sql.SQLException;
 
 public class DbloggerNoOperation implements Dblogger {
@@ -85,6 +86,18 @@ public class DbloggerNoOperation implements Dblogger {
     public long insertStep(String stepName, String stepInfo, String className, String stack) {
         // TODO Auto-generated method stub
         return 0;
+    }
+
+    @Override
+    public Clob createClob() throws SQLException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public void persistenceUpdateTrace(long jobId, Clob traceData) throws SQLException {
+        // TODO Auto-generated method stub
+        
     }
 
 }

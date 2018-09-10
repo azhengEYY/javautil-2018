@@ -2,6 +2,12 @@ package org.javautil.dblogging;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Reader;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,6 +15,7 @@ import java.sql.SQLException;
 
 import org.javautil.io.FileUtil;
 import org.javautil.lang.ThreadUtil;
+import org.javautil.oracle.OracleConnectionHelper;
 import org.javautil.oracle.trace.CursorsStats;
 import org.javautil.oracle.trace.OracleTraceProcessor;
 import org.javautil.sql.Binds;
@@ -275,6 +282,62 @@ public abstract class AbstractDblogger implements Dblogger {
             logger.info("updated job_log {}", appTracefileName);
         }
 
+    }
+    
+    public void persistenceUpdateTrace(long jobId, Clob traceClob) throws SQLException {
+        if (traceClob == null) {
+            throw new IllegalArgumentException("null traceClob");
+        }
+        Clob clob = connection.createClob();
+        String upd = "update job_log "
+                + "set tracefile_data =  ? "
+                + "where job_log_id = ?";
+       
+    
+        Reader traceReader = traceClob.getCharacterStream();
+        
+ //       OutputStream os = clob.setAsciiStream(1);
+//        Writer writer = new OutputStreamWriter(os);
+//        
+//        final int length = 1024 * 1024;
+//        final Reader reader = clob.getCharacterStream();
+        
+//        final char[] buffer = new char[length];
+//        int count;
+//        
+//        try {
+//            while ((count = reader.read(buffer)) != -1) {
+//                writer.write(buffer, 0, count);
+//            }
+//            traceClob.free();
+//            reader.close();
+//        } catch (IOException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//            logger.error(e.getMessage());
+//            throw new RuntimeException(e);
+//        }
+     
+        
+        PreparedStatement updateTraceFile = connection.prepareStatement(upd);
+
+        updateTraceFile.setCharacterStream(1, traceReader);
+    //    updateTraceFile.setClob(1, clob);
+        updateTraceFile.setLong(2, jobId);
+      
+        int rowcount = updateTraceFile.executeUpdate();
+
+        if (rowcount != 1) {
+            throw new IllegalArgumentException("unable to update job_log_id " + jobId);
+        }
+    
+    }
+    
+   
+
+    public Clob createClob() throws SQLException {
+        // TODO Auto-generated method stub
+        return connection.createClob();
     }
 
 }

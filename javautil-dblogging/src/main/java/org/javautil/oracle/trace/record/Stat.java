@@ -82,7 +82,7 @@ public class Stat extends AbstractCursorEvent {
         position = getInt(stmt, posPattern);
         objectNumber = getInt(stmt, objPattern);
         String operationText = getString(stmt,operationPattern);
-        logger.info("operationText " + operationText);
+      //  logger.info("operationText " + operationText);
         operation = operationText.trim();
         consistentReads = getInt(stmt, currentReadPattern);
         physicalReads = getInt(stmt, physicalReadPattern);
@@ -90,7 +90,7 @@ public class Stat extends AbstractCursorEvent {
         
   
         int statTime = getInt(stmt,timePattern);
-        logger.info("stattime is " + statTime);
+        //logger.info("stattime is " + statTime);
         time = statTime;
         cost = getInt(stmt,costPattern);
         size = getLong(stmt,sizePattern);

@@ -403,7 +403,7 @@ public class SqlSplitter {
 		final ArrayList<SqlStatement> statements = new ArrayList<>();
 
 		ArrayList<String> sqlTexts = getSqlTexts();
-		logger.info("getSqlStatementList " + "getSqlTexts returned " + sqlTexts.size() );
+		logger.debug("getSqlStatementList {} {}","getSqlTexts returned ",sqlTexts.size() );
 		for (final String sqlText : getSqlTexts()) {
 			final String sqlTextLines[] = sqlText.split("\n");
 			String name = null;
@@ -420,7 +420,7 @@ public class SqlSplitter {
 			ss.setName(name);
 			statements.add(ss);
 		}
-		logger.info("getSqlStatementList: size() " + statements.size());
+		logger.debug("getSqlStatementList: size() {}", statements.size());
 		return statements;
 	}
 

@@ -76,6 +76,7 @@ public class TraceFileReader implements Closeable {
     // }
 
     public TraceFileReader(final String fileName) throws IOException {
+        logger.info("reading file {}", fileName);
         this.fileName = fileName;
         br = new LineNumberReader(new BufferedReader(new FileReader(fileName)));
         initResources();

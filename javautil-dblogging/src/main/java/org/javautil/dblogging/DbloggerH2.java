@@ -3,6 +3,7 @@ package org.javautil.dblogging;
 import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
+import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -146,6 +147,8 @@ public class DbloggerH2 extends AbstractDblogger implements Dblogger {
     public long getUtProcessStepId() {
         return utProcessStepId;
     }
+
+    
 
 
 

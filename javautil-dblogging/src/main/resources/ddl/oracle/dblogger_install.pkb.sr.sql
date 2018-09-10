@@ -1,6 +1,6 @@
 CREATE OR REPLACE PACKAGE BODY logger
 is
-   g_job_msg_dir    varchar2 (32) := 'job_msg_DIR';
+   g_job_msg_dir    varchar2 (32) := 'UT_PROCESS_LOG_DIR';
    g_filter_level          pls_integer := G_INFO ;
    g_record_level          pls_integer := G_INFO ;
    g_file_handle           UTL_FILE.file_type;

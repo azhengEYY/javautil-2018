@@ -2,9 +2,14 @@ package org.javautil.dblogging;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.sql.Clob;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import org.javautil.io.FileUtil;
 import org.javautil.lang.ThreadUtil;
 import org.javautil.oracle.OracleSessionInfo;
 import org.javautil.sql.Binds;
@@ -22,6 +27,8 @@ import org.javautil.util.NameValue;
 public class SplitLoggerForOracle extends DbloggerForOracle implements Dblogger {
 
     private Dblogger persistencelogger;
+    
+    private long jobId;
 
     public SplitLoggerForOracle(Connection connection, Connection loggerPersistenceConnection)
             throws IOException, SQLException, SqlSplitterException {
@@ -61,22 +68,25 @@ public class SplitLoggerForOracle extends DbloggerForOracle implements Dblogger 
         logger.debug("beginJob: " + OracleSessionInfo.getConnectionInfo(connection));
         logger.warn("tracefileName ignored");
     
-        long id = persistencelogger.beginJob(processName, className, moduleName, statusMsg, threadName, null);
-        setTracefileIdentifier(id);
+        jobId = persistencelogger.beginJob(processName, className, moduleName, statusMsg, threadName, null);
+        setTracefileIdentifier(jobId);
         String appTracefileName = getTraceFileName();
         logger.info("********updating tracefile name to {}", appTracefileName);
         persistencelogger.updateTraceFileName(appTracefileName);
-        return id;
+        
+        return jobId;
     }
 
     @Override
     public void abortJob(Exception e) throws SQLException {
         persistencelogger.abortJob(e);
+        updateJobWithTrace();
     }
 
     @Override
     public void endJob() throws SQLException {
         persistencelogger.endJob();
+        updateJobWithTrace();
     }
 
     @Override
@@ -116,5 +126,39 @@ public class SplitLoggerForOracle extends DbloggerForOracle implements Dblogger 
         String tracefileName = status.getString("TRACEFILE_NAME");
         return tracefileName;
     }
+    
+    public void updateJobWithTrace() throws SQLException {
+        StringWriter traceFileWriter = new StringWriter();
+       
+        Clob inputClob = null;
+            try {
+            inputClob = getMyTraceFile();
+           
+            } catch (Exception e) {
+                String message = "Does directory 'UDUMP_DIR' exist? Is this where the trace files are? Can this oracle reader read the diretory?";
+                logger.error(message + " " + e.getMessage());
+                throw new RuntimeException(e);
+            }
+            persistencelogger.persistenceUpdateTrace(jobId, inputClob);
+           
+            
 
+
+
+//            SqlStatement upsStatement = new SqlStatement(connection, ups);
+
+//            NameValue upsRow = upsStatement.getNameValue(binds, true);
+//            String traceFileName = upsRow.getString("tracefile_name");
+//            Clob clob = connection.createClob();
+//            String tracefileData = FileUtil.getAsString(traceFileName);
+//            clob.setString(1, tracefileData);
+
+            
+       
+        logger.warn("updated {}", jobId);
+    }
+
+
+    
+  
 }

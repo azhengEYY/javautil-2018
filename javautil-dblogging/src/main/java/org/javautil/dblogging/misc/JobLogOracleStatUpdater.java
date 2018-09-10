@@ -21,13 +21,13 @@ import org.javautil.util.NameValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class OracleProfileUpdate {
+public class JobLogOracleStatUpdater implements JobLogTraceUpdater {
 
     private Connection connection;
 
     Logger             logger = LoggerFactory.getLogger(getClass());
 
-    OracleProfileUpdate(Connection connection) throws SqlSplitterException, IOException, SQLException {
+    JobLogOracleStatUpdater(Connection connection) throws SqlSplitterException, IOException, SQLException {
         this.connection = connection;
     }
 
@@ -64,7 +64,13 @@ public class OracleProfileUpdate {
             updateJob(nv.getLong("job_stat_id"));
         }
     }
+    
+    
 
+    /* (non-Javadoc)
+     * @see org.javautil.dblogging.misc.JobLogTraceUpdater#updateJob(long)
+     */
+    @Override
     public void updateJob(long jobId) throws SQLException, FileNotFoundException, IOException {
         String ups = "select tracefile_name from job_log "
                 + "where job_log_id = :job_log_id";
