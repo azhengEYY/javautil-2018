@@ -97,8 +97,8 @@ public class Stat extends AbstractCursorEvent {
         cardinality = getInt(stmt,cardinalityPattern);
         
         
-        final Long cursorNumber = getLong(stmt, cursorNumberPattern);
-        setCursorNumber(cursorNumber);
+//        final Long cursorNumber = getLong(stmt, cursorNumberPattern);
+//        setCursorNumber(cursorNumber);
     }
 
     public int getCnt() {

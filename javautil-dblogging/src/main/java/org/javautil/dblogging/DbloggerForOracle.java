@@ -186,12 +186,13 @@ public class DbloggerForOracle extends AbstractDblogger implements Dblogger {
 
     }
 
-    public void setTraceStep(final String stepName) throws SQLException {
-        final String sql = "begin logger.trace_step(p_step_name => :p_step_name); end;";
+    public void setTraceStep(final String stepName, long jobStepId) throws SQLException {
+        final String sql = "begin logger.trace_step(p_step_name => :p_step_name, p_job_step_id => :p_job_step_id); end;";
         if (setTraceStepStatement == null) {
             setTraceStepStatement = prepareCall(sql);
         }
         setTraceStepStatement.setString("p_step_name", stepName);
+        setTraceStepStatement.setLong("p_job_step_id",jobStepId);    
         setTraceStepStatement.execute();
 
     }

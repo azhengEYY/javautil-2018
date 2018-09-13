@@ -97,12 +97,21 @@ public class SplitLoggerForOracle extends DbloggerForOracle implements Dblogger 
     }
 
     @Override
-    public long insertStep(String stepName, String stepInfo, String className) {
+    public long insertStep(String stepName, String stepInfo, String className)  {
         String stack = ThreadUtil.getStackTrace();
         if (stack.length() > 4000) {
             stack = stack.substring(0,4000);
         }
-        return persistencelogger.insertStep(stepName, stepInfo, className, stack);
+        
+        long stepId =  persistencelogger.insertStep(stepName, stepInfo, className, stack);
+        try {
+            setTraceStep(stepName,stepId);
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            logger.error(e.getMessage());
+        }
+        return stepId;
     }
 
     @Override

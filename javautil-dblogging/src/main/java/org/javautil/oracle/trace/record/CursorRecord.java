@@ -1,7 +1,8 @@
 package org.javautil.oracle.trace.record;
 
 public interface CursorRecord extends Record {
-    public Long getCursorNumber();
+
+    public long getCursorNumber();
 
     @Override
     public int getLineNumber();
@@ -9,11 +10,10 @@ public interface CursorRecord extends Record {
     @Override
     public RecordType getRecordType();
 
-    public void setCursorNumber(Long cursorNumber);
 
     public String getSqlid();
 
     public void setSqlid(String sqlId);
 
-    public String getCursorId();
+  //  public String getCursorId();
 }

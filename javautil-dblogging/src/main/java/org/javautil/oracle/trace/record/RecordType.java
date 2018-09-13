@@ -33,16 +33,20 @@ public enum RecordType {
 
     public static RecordType getRecordType(final String record) {
         RecordType returnValue = null;
-        if (record.indexOf(" ") > 0) {
-            String lead = record.split(" ")[0];
-            returnValue = textMap.get(lead);
-        }
+//        if (record.indexOf(" ") > 0) {
+//            String lead = record.split(" ")[0];
+//            returnValue = textMap.get(lead);
+//        }
 
         // TODO complete and remove those covered above
+        // TOOD optimization opportunity, find first space
         if (returnValue == null) {
             if (record.startsWith("XCTEND")) {
                 returnValue = XCTEND;
-            } else if (record.startsWith("PARSE")) {
+            } else if (record.startsWith("PARSE ERROR")) {
+                returnValue = PARSE_ERROR;
+            }
+            else if (record.startsWith("PARSE")) {
                 returnValue = PARSE;
             } else if (record.startsWith("PARSING")) {
                 returnValue = PARSING;

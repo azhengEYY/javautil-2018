@@ -314,15 +314,14 @@ is
         return my_clob;
     end get_tracefile;
 
-    procedure trace_step (p_step_name in varchar) is 
-    -- record the step name and then restore the action
-    -- the execute immediate makes sure the action is written to the trace file
-    -- as if there is no sql activity it is not written
+    procedure trace_step(p_step_name in varchar, p_job_step_id in number) is
+       job_step_id varchar(9) := to_char(p_job_step_id);
+       sql_text varchar(255) := 'select ''step_name: ''''' || p_step_name || ''''' job_log_id: ' || g_process_status_id || ' job_step_id: ' || p_job_step_id || ''' from dual';
     begin
-       set_action(p_step_name);
-       execute immediate 'select ''' || p_step_name || ''' from dual';
-       --set_action(my_my_session_info.action);
+     --  dbms_output.put_line(sql_text);
+       execute immediate sql_text;
     end;
+
 
     PROCEDURE prepare_connection is
        context_info DBMS_SESSION.AppCtxTabTyp;

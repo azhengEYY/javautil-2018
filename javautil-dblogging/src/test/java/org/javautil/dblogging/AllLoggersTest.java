@@ -34,8 +34,8 @@ public class AllLoggersTest {
     @BeforeClass
     public static void beforeClass() throws SqlSplitterException, Exception {
         appDataSource = new ApplicationPropertiesDataSource().getDataSource(new AllLoggersTest(),
-                "oracle.application.properties");
-        xeDataSource = new DbloggerPropertiesDataSource("dblogger.xe.properties").getDataSource();
+                "logger_and_application.properties");
+        xeDataSource = new DbloggerPropertiesDataSource("logger_and_application.properties").getDataSource();
     }
 
     public long sampleUsage(Dblogger dblogger, Connection appConnection) throws SqlSplitterException, Exception {
@@ -56,17 +56,21 @@ public class AllLoggersTest {
         return id;
     }
 
-    // @Test
+    //@Test
     public void testSplitLogger() throws SqlSplitterException, Exception {
         Connection appConnection = appDataSource.getConnection();
         Connection xeConnection = xeDataSource.getConnection();
+        logger.info("xeInstall");
         DbloggerOracleInstall orainst = new DbloggerOracleInstall(xeConnection, true, false);
         orainst.process();
+        logger.info("DbloggerOracleInstall");
         orainst = new DbloggerOracleInstall(appConnection, true, false);
         orainst.process();
         //
+        logger.info("new persistenceLogger");
         Dblogger persistenceLogger = new DbloggerForOracle(xeDataSource.getConnection());
         Dblogger dblogger = new SplitLoggerForOracle(appConnection, persistenceLogger);
+        logger.info("sampleUsage");
         long id = sampleUsage(dblogger, appConnection);
         Connection conn = xeDataSource.getConnection();
         testResults(conn, id);
@@ -75,12 +79,13 @@ public class AllLoggersTest {
         conn.close();
     }
 
-    // @Test
+    @Test
     public void testDbloggerForOracle() throws SqlSplitterException, Exception {
         Connection appConnection = appDataSource.getConnection();
-
-        DbloggerOracleInstall orainst = new DbloggerOracleInstall(appConnection, true, false);
+        logger.info("installing objects for appConnection");
+        DbloggerOracleInstall orainst = new DbloggerOracleInstall(appConnection, true, true);
         orainst.process();
+        logger.info("objects created");
         //
         Dblogger dblogger = new DbloggerForOracle(appConnection);
         long id = sampleUsage(dblogger, appConnection);
@@ -90,7 +95,7 @@ public class AllLoggersTest {
         appConnection.close();
     }
 
-    @Test
+    //@Test
     public void testH2logger() throws SqlSplitterException, Exception {
         DataSource h2DataSource = new H2LoggerDataSource().getPopulatedH2FromDbLoggerProperties(this,
                 "h2.dblogger.properties");

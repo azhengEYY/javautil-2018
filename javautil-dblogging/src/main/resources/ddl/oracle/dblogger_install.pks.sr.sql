@@ -49,7 +49,7 @@ CREATE OR REPLACE PACKAGE logger AS
 
     procedure prepare_connection;
 
-    procedure trace_step(p_step_name in varchar);
+    procedure trace_step(p_step_name in varchar, p_job_step_id in number);
 
     function set_tracefile_identifier(p_job_nbr in number) return varchar;
     

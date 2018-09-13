@@ -79,6 +79,9 @@ public class OracleTraceProcessor {
                 Stat stat = (Stat) record;
                 cursors.handle(stat);
                 break;
+            case XCTEND:
+                logger.warn("Xctend not handled {}",record);
+                break;
             default:
                 logger.warn("unhandled: {}", record);
             }

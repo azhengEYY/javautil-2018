@@ -123,9 +123,8 @@ public class CursorsStats {
         cursorStats.setTracer(tracer);
 
         cursorStatsByNumber.put(record.getCursorNumber(), cursorStats);
-        if (record.getSqlid() == null) {
-            throw new IllegalStateException("sqlId is null");
-        }
+        
+
         CursorInfo cursorStatsForSqlId = cursorStatsById.get(record.getSqlid());
         if (cursorStatsForSqlId == null) {
             cursorStatsById.put(record.getSqlid(), cursorStats);

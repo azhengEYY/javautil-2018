@@ -13,10 +13,10 @@ import org.slf4j.LoggerFactory;
 // TODO FORMAT javadoc
 /**
  * ----------------------------------------------------------------------------
- * PARSE #<CURSOR>:c=0,e=0,p=0,cr=0,cu=0,mis=0,r=0,dep=0,og=4,tim=0 EXEC
- * #<CURSOR>:c=0,e=0,p=0,cr=0,cu=0,mis=0,r=0,dep=0,og=4,tim=0 FETCH
- * #<CURSOR>:c=0,e=0,p=0,cr=0,cu=0,mis=0,r=0,dep=0,og=4,tim=0 UNMAP
- * #<CURSOR>:c=0,e=0,p=0,cr=0,cu=0,mis=0,r=0,dep=0,og=4,tim=0
+ * PARSE #<CURSOR>:c=0,e=0,p=0,cr=0,cu=0,mis=0,r=0,dep=0,og=4,tim=0 
+ * EXEC #<CURSOR>:c=0,e=0,p=0,cr=0,cu=0,mis=0,r=0,dep=0,og=4,tim=0 
+ * FETCH #<CURSOR>:c=0,e=0,p=0,cr=0,cu=0,mis=0,r=0,dep=0,og=4,tim=0 
+ * UNMAP #<CURSOR>:c=0,e=0,p=0,cr=0,cu=0,mis=0,r=0,dep=0,og=4,tim=0
  * ----------------------------------------------------------------------------
  * - OPERATIONS:
  * 
@@ -51,13 +51,14 @@ public abstract class CursorOperation extends AbstractCursorEvent implements Rec
     private static Logger          logger                       = LoggerFactory
             .getLogger(CursorOperation.class.getName());
 
+   
     private static EventHelper     events                       = new EventHelper();
     private static final Integer   LOG_CONSTRUCTOR              = 1;
 
     protected static final Pattern consistentReadBlocksPattern  = Pattern.compile("cr=(\\d*).*");
     protected static final Pattern cpuPattern                   = Pattern.compile("c=(\\d*)");
     protected static final Pattern currentModePattern           = Pattern.compile("cu=(\\d*)");
-    protected static final Pattern cursorNumberPattern          = Pattern.compile("[^ ]* #(\\d*)");
+ 
     protected static final Pattern depthPattern                 = Pattern.compile("dep=(\\d*)");
     protected static final Pattern elapsedMicrosecondsPattern   = Pattern.compile("e=(\\d*)");
     protected static final Pattern libraryCacheMissCountPattern = Pattern.compile("mis=(\\d*)");
@@ -66,7 +67,7 @@ public abstract class CursorOperation extends AbstractCursorEvent implements Rec
     protected static final Pattern rowPattern                   = Pattern.compile("[^a-z]r=(\\d*)");
     protected static final Pattern timePattern                  = Pattern.compile("tim=(\\d*)");
     protected static final Pattern explainHashPattern                  = Pattern.compile("plh=(\\d*)");
-
+  //  public static final Pattern cursorNumberPattern = Pattern.compile(".*#(\\d*).*");
     /**
      * Number of blocks read from cache in consistent mode.
      * 
@@ -90,7 +91,7 @@ public abstract class CursorOperation extends AbstractCursorEvent implements Rec
     /**
      * Recursive depth. In trace file as "dep".
      */
-    private int                    depth;
+//    private int                    depth;
 
     /**
      * Elapsed duration of the call. In trace file as "e".
@@ -131,10 +132,14 @@ public abstract class CursorOperation extends AbstractCursorEvent implements Rec
     private boolean                echoInput;
 
     private long explainHash;
+    
+  //  private long cursorNumber;
+    
+    private int recursionDepth;
 
     public CursorOperation(int lineNumber, final String traceLine) {
         super(lineNumber, traceLine);
-        setCursorNumber(getLong(traceLine, cursorNumberPattern));
+     //   setCursorNumber(getLong(traceLine, cursorNumberPattern));
         setCpu(getInt(traceLine, cpuPattern));
         setElapsedMicroSeconds(getLong(traceLine, elapsedMicrosecondsPattern));
         setPhysicalBlocksRead(getInt(traceLine, physicalBlocksReadPattern));
@@ -142,7 +147,7 @@ public abstract class CursorOperation extends AbstractCursorEvent implements Rec
         setCurrentModeBlocks(getInt(traceLine, currentModePattern));
         setLibraryCacheMissCount(getInt(traceLine, libraryCacheMissCountPattern));
         setTime(getLong(traceLine, timePattern));
-        setDepth(getInt(traceLine, depthPattern));
+        recursionDepth = getInt(traceLine, depthPattern);
         setOptimizerGoal(getInt(traceLine, ogPattern));
         setRowCount(getInt(traceLine, rowPattern));
         setExplainHash(getLong(traceLine,explainHashPattern));
@@ -183,12 +188,12 @@ public abstract class CursorOperation extends AbstractCursorEvent implements Rec
         return currentModeBlocks;
     }
 
-    /**
-     * @return Returns the dep.
-     */
-    protected int getDepth() {
-        return depth;
-    }
+//    /**
+//     * @return Returns the dep.
+//     */
+//    protected int getDepth() {
+//        return depth;
+//    }
 
     /**
      * @return Returns the e.
@@ -218,8 +223,7 @@ public abstract class CursorOperation extends AbstractCursorEvent implements Rec
         return physicalBlocksRead;
     }
 
-    @Override
-    public abstract RecordType getRecordType();
+
 
     /**
      * @return Returns the r.
@@ -267,13 +271,13 @@ public abstract class CursorOperation extends AbstractCursorEvent implements Rec
         this.currentModeBlocks = cu;
     }
 
-    /**
-     * @param dep
-     *            The dep to set.
-     */
-    protected void setDepth(final int dep) {
-        this.depth = dep;
-    }
+//    /**
+//     * @param dep
+//     *            The dep to set.
+//     */
+//    protected void setDepth(final int dep) {
+//        this.depth = dep;
+//    }
 
     /**
      * @param ela
@@ -330,6 +334,10 @@ public abstract class CursorOperation extends AbstractCursorEvent implements Rec
     public long getExplainHash() {
         return explainHash; 
     }
+    
+    public int getRecursionDepth() {
+        return recursionDepth;
+    }
 
     @Override
     public String toString() {
@@ -346,7 +354,7 @@ public abstract class CursorOperation extends AbstractCursorEvent implements Rec
         append(b, "cu", currentModeBlocks);
         append(b, "mis", libraryCacheMissCount);
         append(b, "time", time);
-        append(b, "dep", depth);
+        append(b, "dep", getRecursionDepth());
         append(b, "og", optimizerGoal);
         return b.toString();
     }

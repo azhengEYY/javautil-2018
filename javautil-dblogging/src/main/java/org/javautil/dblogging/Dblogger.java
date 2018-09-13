@@ -21,7 +21,7 @@ public interface Dblogger {
 
 	void endJob() throws SQLException;
 	
-    long insertStep(String stepName, String stepInfo, String className);
+    long insertStep(String stepName, String stepInfo, String className) throws SQLException;
 
 
     void finishStep() throws SQLException;
@@ -55,6 +55,16 @@ public interface Dblogger {
 
     
     public void persistenceUpdateTrace(long jobId, Clob traceData) throws SQLException;
+    
+    /**
+     * Store the trace file in job_log on job_abort or job_end.
+     * 
+     * This burns some cycles on the instrumented application but ensures the file is not lost.
+     * @param persistTrace
+     */
+    public void setPersistTraceOnJobCompletion(boolean persistTrace);
+    
+    public void setPersistPlansOnJobCompletion(boolean persistPlans);
 
   
 }

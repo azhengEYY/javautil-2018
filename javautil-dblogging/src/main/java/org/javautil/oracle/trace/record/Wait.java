@@ -75,11 +75,11 @@ public class Wait extends AbstractCursorEvent implements Record {
         final Matcher p3Matcher = p3Pattern.matcher(stmt);
         timPattern.matcher(stmt);
 
-        final String cursorNumberText = cursorNumberMatcher.group(1);
-        if (cursorNumberText == null) {
-            throw new IllegalStateException("cant find cursorNumberText");
-        }
-        setCursorNumber(Long.parseLong(cursorNumberText));
+//        final String cursorNumberText = cursorNumberMatcher.group(1);
+//        if (cursorNumberText == null) {
+//            throw new IllegalStateException("cant find cursorNumberText");
+//        }
+//        setCursorNumber(Long.parseLong(cursorNumberText));
         ela = elaMatcher.find() ? Integer.parseInt(elaMatcher.group(1)) : -1;
         p1 = p1Matcher.find() ? Integer.parseInt(p1Matcher.group(1)) : -1;
         p2 = p2Matcher.find() ? Integer.parseInt(p2Matcher.group(1)) : -1;

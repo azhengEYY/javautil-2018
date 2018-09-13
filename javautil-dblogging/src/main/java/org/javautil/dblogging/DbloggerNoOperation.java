@@ -100,4 +100,16 @@ public class DbloggerNoOperation implements Dblogger {
         
     }
 
+    @Override
+    public void setPersistTraceOnJobCompletion(boolean persistTrace) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void setPersistPlansOnJobCompletion(boolean persistPlans) {
+        // TODO Auto-generated method stub
+        
+    }
+
 }

@@ -1,14 +1,6 @@
---#<
-set echo on
-drop table cursor_text;
-drop table cursor_info;
-drop table cursor_info_run;
-drop table cursor_stat;
---#>
 
-
-
-
+=====================
+PARSE ERROR #140729315264320:len=3885 dep=0 uid=105 oct=1 lid=105 tim=100406013140 err=922
 /* Explain Plan */
 create table cursor_explain_plan (
     explain_plan_hash  varchar(44) not null,
@@ -31,19 +23,18 @@ add constraint cursor_text_pk
 primary key (sql_text_hash);
 
 /* Run */
-create sequence cursor_info_run_id_seq;
+
 create table cursor_info_run(
     cursor_info_run_id    number(9) not null,
     cursor_info_run_descr clob
 );
-
 
 alter table cursor_info_run 
 add constraint cursor_info_run_id 
 primary key (cursor_info_run_id);
 
 
-create sequence cursor_info_id_seq;
+
 create table cursor_info (
 	cursor_info_id          number(9) not null,
     cursor_info_run_id      number(9),
@@ -149,3 +140,16 @@ constraint cursor_stat_pk
 primary key (cursor_info_id, seq_nbr);
 
 
+
+*** 2018-09-07T07:38:17.912602-05:00 (SALES_REPORTING_PDB(5))
+CLOSE #140176818809360:c=13,e=14,dep=0,type=0,tim=100408224897
+CLOSE #140176818491144:c=5,e=5,dep=0,type=0,tim=100408225047
+CLOSE #140176821324112:c=4,e=4,dep=0,type=0,tim=100408225083
+CLOSE #140176820510416:c=3,e=4,dep=0,type=0,tim=100408225111
+CLOSE #140176818403312:c=3,e=3,dep=0,type=0,tim=100408225152
+CLOSE #140176822405936:c=3,e=3,dep=0,type=0,tim=100408225178
+CLOSE #140176818815904:c=3,e=3,dep=0,type=0,tim=100408225207
+CLOSE #140176822394088:c=8,e=8,dep=0,type=0,tim=100408225241
+CLOSE #140176822386040:c=4,e=4,dep=0,type=0,tim=100408225279
+CLOSE #140176821037616:c=3,e=3,dep=0,type=0,tim=100408225312
+CLOSE #140176822458944:c=4,e=4,dep=0,type=0,tim=100408225345

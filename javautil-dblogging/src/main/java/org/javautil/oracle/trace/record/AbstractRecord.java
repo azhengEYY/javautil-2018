@@ -5,6 +5,21 @@ import java.util.regex.Pattern;
 
 public abstract class AbstractRecord implements Record {
 
+    protected static final Pattern consistentReadBlocksPattern  = Pattern.compile("cr=(\\d*).*");
+    
+
+    protected int    lineNumber;
+    protected String text;
+
+    
+
+    public AbstractRecord(int lineNumber, String stmt) {
+        this.lineNumber = lineNumber;
+        this.text = stmt;
+        
+    }
+
+    
     public static int getInt(final String recordText, final Pattern pattern) {
         if (recordText == null) {
             throw new IllegalStateException("recordText is null");
@@ -35,15 +50,8 @@ public abstract class AbstractRecord implements Record {
         return returnValue;
     }
 
-    protected int    lineNumber;
-    protected String text;
-
     // private long recordNumber;
 
-    public AbstractRecord(int lineNumber, String stmt) {
-        this.lineNumber = lineNumber;
-        this.text = stmt;
-    }
 
     @Override
     public final int getLineNumber() {

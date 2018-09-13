@@ -141,6 +141,7 @@ public class SqlMarshaller {
 
         Binds binds = new Binds();
         Long cursorInfoId = sequenceHelper.getSequence("cursor_info_id_seq");
+        binds.put("cursor_info_id", cursorInfoId);
         binds.put("explain_plan_hash", explainPlanHash);
         // binds.put("cursor_stat_id", cursorStatId);
         binds.put("sql_text_hash", sqlTextHash);

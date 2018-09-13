@@ -1,0 +1,40 @@
+
+
+
+tring[] lines = {
+    "PARSING IN CURSOR #140603589769800 len=49 dep=2 uid=0 oct=3 lid=0 tim=2359115366 hv=1758550401 ad='60f33380' sqlid='0a7q9v9nd2qc1'",
+    "select count(*) from association$ where obj# = :1",
+    "END OF STMT",
+    "PARSE #140603589769800:c=0,e=14,p=0,cr=0,cu=0,mis=0,r=0,dep=2,og=4,plh=3747789477,tim=2359115366",
+    "EXEC #140603589769800:c=0,e=16,p=0,cr=0,cu=0,mis=0,r=0,dep=2,og=4,plh=3747789477,tim=2359115424",
+    "FETCH #140603589769800:c=0,e=9,p=0,cr=1,cu=0,mis=0,r=1,dep=2,og=4,plh=3747789477,tim=2359115448",
+    "STAT #140603589769800 id=1 cnt=1 pid=0 pos=1 obj=0 op='SORT AGGREGATE (cr=1 pr=0 pw=0 str=1 time=12 us)'",
+    "STAT #140603589769800 id=2 cnt=0 pid=1 pos=1 obj=636 op='INDEX RANGE SCAN ASSOC1 (cr=1 pr=0 pw=0 str=1 time=8 us cost=0 size=13 card=1)'"
+    };
+
+      Parsing Parse Exec Fetch Stat Parse Error
+ad     X
+c               X
+card
+cost 
+cr
+dep    X
+e
+hv     X
+len    X
+lid    X
+mis
+oct    X
+og
+op
+p
+plh
+pw
+r
+size 
+sqlid  X
+str
+tim
+time
+tim    X
+uid    X

@@ -1,5 +1,6 @@
 package org.javautil.dblogging;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -47,6 +48,10 @@ public abstract class AbstractDblogger implements Dblogger {
 
     long                         utProcessStepId;
 
+    private boolean persistTrace;
+
+    private boolean persistPlans;
+
     public AbstractDblogger(Connection connection) throws SQLException, SqlSplitterException, IOException {
         super();
         if (connection == null) {
@@ -93,7 +98,7 @@ public abstract class AbstractDblogger implements Dblogger {
     }
     
 
-    public long insertStep(String stepName, String stepInfo, String className) {
+    public long insertStep(String stepName, String stepInfo, String className) throws SQLException {
         String stackTrace  = ThreadUtil.getStackTrace(2);
         return insertStep(stepName,stepInfo,className,stackTrace);
     }
@@ -121,7 +126,7 @@ public abstract class AbstractDblogger implements Dblogger {
             ss.setConnection(connection);
             ss.executeUpdate(binds);
             connection.commit();
-            logger.info("insertStep {} with binds {} " + stepName, binds);
+            logger.debug("insertStep {} with binds {} " + stepName, binds);
             retval = utProcessStepId;
         } catch (SQLException sqe) {
             sqe.printStackTrace();
@@ -338,6 +343,65 @@ public abstract class AbstractDblogger implements Dblogger {
     public Clob createClob() throws SQLException {
         // TODO Auto-generated method stub
         return connection.createClob();
+    }
+
+//    @Override
+//    public void prepareConnection() throws SQLException {
+//        // TODO Auto-generated method stub
+//        
+//    }
+//
+//    @Override
+//    public void setAction(String actionName) throws SQLException {
+//        // TODO Auto-generated method stub
+//        
+//    }
+//
+//    @Override
+//    public void setModule(String moduleName, String actionName) throws SQLException {
+//        // TODO Auto-generated method stub
+//        
+//    }
+//
+//    @Override
+//    public String getTraceFileName() throws SQLException {
+//        // TODO Auto-generated method stub
+//        return null;
+//    }
+//
+//    @Override
+//    public void getMyTraceFile(File file) throws IOException, SQLException {
+//        // TODO Auto-generated method stub
+//        
+//    }
+//
+//    @Override
+//    public void getMyTraceFile(Writer writer) throws SQLException, IOException {
+//        // TODO Auto-generated method stub
+//        
+//    }
+//
+//    @Override
+//    public void dispose() throws SQLException {
+//        // TODO Auto-generated method stub
+//        
+//    }
+
+    @Override
+    public String openFile(String fileName) throws SQLException {
+       throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void setPersistTraceOnJobCompletion(boolean persistTrace) {
+      this.persistTrace = persistTrace;
+        
+    }
+
+    @Override
+    public void setPersistPlansOnJobCompletion(boolean persistPlans) {
+        this.persistPlans = persistPlans;
+        
     }
 
 }
