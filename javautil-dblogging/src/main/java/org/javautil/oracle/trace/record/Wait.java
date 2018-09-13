@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
  * WAITing under CURSOR no 1 for "db file sequential read" We waited 0.04
  * seconds for a single block read (p3=1) from file 4, block 1224
  */
-public class Wait extends AbstractCursorEvent implements Record {
+public class Wait extends CursorIdentifier implements Record {
     private static Logger  logger              = LoggerFactory.getLogger(Wait.class.getName());
     // private long tim;
     private static Pattern cursorNumberPattern = Pattern.compile("^WAIT #(\\d*):");

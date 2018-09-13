@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
  * In reality we find this STAT #3 id=1 cnt=188220 pid=0 pos=1 obj=77538
  * op='INDEX FAST FULL SCAN FC_FCST_NDX_02 (cr=2366 pr=0 pw=0 time=1129914 us)'
  */
-public class Stat extends AbstractCursorEvent {
+public class Stat extends CursorIdentifier {
     // private static Logger logger = LoggerFactory.getLogger(Stat.class.getName());
     private static final Logger logger = LoggerFactory.getLogger(Stat.class);
     private static Pattern         cursorNumberPattern  = Pattern.compile("^STAT #(\\d*) ");

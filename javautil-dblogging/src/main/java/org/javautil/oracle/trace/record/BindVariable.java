@@ -27,7 +27,7 @@ package org.javautil.oracle.trace.record;
  * It is also possible to see "bind 6: (No oacdef for this bind)", if no
  * separate bind buffer exists.
  */
-public class BindVariable extends AbstractCursorEvent implements Record {
+public class BindVariable extends CursorIdentifier implements Record {
 
     public BindVariable(int lineNumber, String stmt) {
         super(lineNumber, stmt);

@@ -10,6 +10,9 @@ import org.javautil.util.EventHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 // TODO FORMAT javadoc
 /**
  * ----------------------------------------------------------------------------
@@ -46,8 +49,22 @@ import org.slf4j.LoggerFactory;
  * tim Timestamp (large number in 100ths of a second). Use this to determine the
  * time between
  * any 2 operations.
+ *                              
+#          cursorNumber         
+c          CpuMicroSec
+cr         consistentR
+cu         currentMode
+dep        depth
+e          elapsedMicr
+mis        libraryCach
+og         optimizerGo
+p          physicalBlo
+plh
+r          rowCount
+tim
+
  */
-public abstract class CursorOperation extends AbstractCursorEvent implements Record {
+public abstract class CursorOperation extends CursorIdentifier implements Record {
     private static Logger          logger                       = LoggerFactory
             .getLogger(CursorOperation.class.getName());
 
@@ -67,6 +84,7 @@ public abstract class CursorOperation extends AbstractCursorEvent implements Rec
     protected static final Pattern rowPattern                   = Pattern.compile("[^a-z]r=(\\d*)");
     protected static final Pattern timePattern                  = Pattern.compile("tim=(\\d*)");
     protected static final Pattern explainHashPattern                  = Pattern.compile("plh=(\\d*)");
+//  protected static final Pattern cursorNumberPattern      = Pattern.compile(cursorNumberRegex);
   //  public static final Pattern cursorNumberPattern = Pattern.compile(".*#(\\d*).*");
     /**
      * Number of blocks read from cache in consistent mode.
@@ -133,13 +151,15 @@ public abstract class CursorOperation extends AbstractCursorEvent implements Rec
 
     private long explainHash;
     
+   // private Long                   cursorNumber;
+    
   //  private long cursorNumber;
     
     private int recursionDepth;
 
     public CursorOperation(int lineNumber, final String traceLine) {
         super(lineNumber, traceLine);
-     //   setCursorNumber(getLong(traceLine, cursorNumberPattern));
+//        setCursorNumber(getLong(traceLine, cursorNumberPattern));
         setCpu(getInt(traceLine, cpuPattern));
         setElapsedMicroSeconds(getLong(traceLine, elapsedMicrosecondsPattern));
         setPhysicalBlocksRead(getInt(traceLine, physicalBlocksReadPattern));
@@ -270,6 +290,10 @@ public abstract class CursorOperation extends AbstractCursorEvent implements Rec
     protected void setCurrentModeBlocks(final int cu) {
         this.currentModeBlocks = cu;
     }
+    
+//    private void setCursorNumber(long cursorNumber) {
+//        this.cursorNumber= cursorNumber;
+//    }
 
 //    /**
 //     * @param dep
@@ -338,6 +362,17 @@ public abstract class CursorOperation extends AbstractCursorEvent implements Rec
     public int getRecursionDepth() {
         return recursionDepth;
     }
+    
+//  public long getCursorNumber() {
+//  return cursorNumber;
+//}
+//
+    
+//    @Override
+//    public String toString() {
+//        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+//        return gson.toJson(this);
+//    }
 
     @Override
     public String toString() {
