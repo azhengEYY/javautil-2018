@@ -9,8 +9,6 @@ import org.javautil.sql.Binds;
 import org.javautil.sql.ConnectionUtil;
 import org.javautil.sql.SqlStatement;
 import org.javautil.util.NameValue;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class SampleUsage {
 

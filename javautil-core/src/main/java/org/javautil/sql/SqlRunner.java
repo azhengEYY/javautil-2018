@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.javautil.io.ResourceHelper;
+import org.javautil.lang.ThreadUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,6 +36,7 @@ public class SqlRunner {
     private boolean       showError                   = true;
 
     private boolean       listStatementsBeforeExecute = false;
+    private String constructorDescr;
 
     // TODO test that cursors are used once and closed;
     public SqlRunner() {
@@ -45,18 +47,20 @@ public class SqlRunner {
 
         splitterInputStream = ResourceHelper.getResourceAsInputStream(instantiator, resourceName);
         splitter = new SqlSplitter(splitterInputStream);
-        logger.info("split complete");
+        constructorDescr = "SqlRunner(Object instantiator, String resourceName)";
     }
 
     public SqlRunner(File inputFile) throws IOException, SqlSplitterException {
         splitterInputStream = new FileInputStream(inputFile);
         splitter = new SqlSplitter(splitterInputStream);
+        constructorDescr = "SqlRunner(File inputFile) ";
     }
 
     public SqlRunner(Connection connection, SqlStatements sqlStatements) {
         this.connection = connection;
         this.statements = sqlStatements;
         logger.debug("statements size: {}", statements.size());
+        constructorDescr = "SqlRunner(Connection connection, SqlStatements sqlStatements) ";
     }
 
     public SqlRunner(Connection connection, NamedSqlStatements sqlStatements, String... statementNames) {
@@ -67,6 +71,7 @@ public class SqlRunner {
         ArrayList<SqlStatement> statementsToRun = sqlStatements.getStatements(statementNames);
         statements = new NamedSqlStatements(statementsToRun);
         logger.debug("statements size: {}", statements.size());
+        constructorDescr = "SqlRunner(Connection connection, NamedSqlStatements sqlStatements, String... statementNames)";
     }
 
     public int getVerbosity() {
@@ -86,6 +91,7 @@ public class SqlRunner {
 			throws SQLException {
 
 		logger.info("processStatements: showSql?: {}, continueOnError? {}",printSql,continueOnError);
+	
 
 		int statementNumber = 0;
 		for (final SqlStatement ss : statements) {
@@ -109,10 +115,10 @@ public class SqlRunner {
 			
 					if (proceduresOnly) {
 						rc = ss.executeUpdate(connection, null); // nasty hack for quoted : 'yy:mm:dd'
-						logger.info("execute 1 complete {}",rc);
+						//logger.info("execute 1 complete {}",rc);
 					} else {
 						rc = ss.executeUpdate(connection, binds);
-						  logger.info("execute 2 complete {}",rc);
+						//  logger.info("execute 2 complete {}",rc);
 					}
 				
 				ss.close();
@@ -179,7 +185,8 @@ public class SqlRunner {
     }
 
     public SqlRunner setPrintSql(boolean printSql) {
-        logger.info("setPrintSql: {} ================", printSql);
+//        System.out.println(ThreadUtil.getStackTrace());
+//        logger.info("setPrintSql: {} ================", printSql);
         this.printSql = printSql;
         return this;
     }

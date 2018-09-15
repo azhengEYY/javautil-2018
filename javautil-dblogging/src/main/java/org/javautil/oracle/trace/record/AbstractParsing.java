@@ -32,24 +32,24 @@ import org.slf4j.LoggerFactory;
  * 
  * <statement> The actual SQL statement being parsed.
  */
-public  abstract class AbstractParsing extends AbstractRecord {
-    private static transient Logger logger              = LoggerFactory.getLogger(AbstractParsing.class);
+public abstract class AbstractParsing extends AbstractRecord {
+    private static transient Logger logger                   = LoggerFactory.getLogger(AbstractParsing.class);
     // TODO can't this all be in one expression
-    //private static final Pattern    parsingCursorNumberPattern = Pattern.compile("PARSING IN CURSOR #(\\d*).*");
-    protected static final Pattern sqlTextLengthPattern     = Pattern.compile(".*len=(\\d*).*");
-    protected static final Pattern recursionDepthPattern    = Pattern.compile(" dep=(\\d*) ");
-    protected static final Pattern userIdPattern            = Pattern.compile(" uid=(\\d*) ");
-    protected static final Pattern oracleCommandTypePattern = Pattern.compile(" oct=(\\d*) ");
-    protected static final Pattern lidPattern               = Pattern.compile(" lid=(\\d*) ");
-    protected static final Pattern timPattern               = Pattern.compile(" tim=(\\d*) ");
-    protected static final Pattern sqltextHashValuePattern  = Pattern.compile(" hv=(\\d*) ");
-    protected static final Pattern sgaAddressPattern        = Pattern.compile(" ad='([^']*)");
-   
+    // private static final Pattern parsingCursorNumberPattern =
+    // Pattern.compile("PARSING IN CURSOR #(\\d*).*");
+    protected static final Pattern  sqlTextLengthPattern     = Pattern.compile(".*len=(\\d*).*");
+    protected static final Pattern  recursionDepthPattern    = Pattern.compile(" dep=(\\d*) ");
+    protected static final Pattern  userIdPattern            = Pattern.compile(" uid=(\\d*) ");
+    protected static final Pattern  oracleCommandTypePattern = Pattern.compile(" oct=(\\d*) ");
+    protected static final Pattern  lidPattern               = Pattern.compile(" lid=(\\d*) ");
+    protected static final Pattern  timPattern               = Pattern.compile(" tim=(\\d*) ");
+    protected static final Pattern  sqltextHashValuePattern  = Pattern.compile(" hv=(\\d*) ");
+    protected static final Pattern  sgaAddressPattern        = Pattern.compile(" ad='([^']*)");
 
     /**
      * Recursion depth
      */
-   private final int               recursionDepth;
+    private final int               recursionDepth;
     private final int               uid;
     /*
      * oct Oracle command type.
@@ -61,20 +61,15 @@ public  abstract class AbstractParsing extends AbstractRecord {
     /**
      * ad SQLTEXT address (see <View:V$SQLAREA> and <View:V$SQLTEXT>).
      */
-  //  private final String            sgaAddress;
-    private StringBuilder           sqltextBuffer       = new StringBuilder();
-    private int sqlTextLength;
-    protected final long cursorNumber;
-    
-    private String sqlId;
-    
-    
+    // private final String sgaAddress;
+    private StringBuilder           sqltextBuffer            = new StringBuilder();
+    private int                     sqlTextLength;
+    protected final long            cursorNumber;
+
+    private String                  sqlId;
 
     public AbstractParsing(final int lineNumber, final String stmt) {
         super(lineNumber, stmt);
-        logger.info("called Super");
-
-      //  final Matcher cursorNumberMatcher = parsingCursorNumberPattern.matcher(stmt);
         final Matcher lenMatcher = sqlTextLengthPattern.matcher(stmt);
         final Matcher depMatcher = recursionDepthPattern.matcher(stmt);
         final Matcher uidMatcher = userIdPattern.matcher(stmt);
@@ -83,16 +78,6 @@ public  abstract class AbstractParsing extends AbstractRecord {
         final Matcher timMatcher = timPattern.matcher(stmt);
         final Matcher hvMatcher = sqltextHashValuePattern.matcher(stmt);
 
-  //      final Matcher adMatcher = sgaAddressPattern.matcher(stmt);
-    //    final Matcher sqlidMatcher = sqlidPattern.matcher(stmt);
- //       parseCursorNumber(stmt);
-//        if (!cursorNumberMatcher.find()) {
-//            throw new IllegalStateException("cursorNumberMatcher failed on " + stmt);
-//        }
-    
-//        if (!depMatcher.find()) {
-//            throw new IllegalStateException("depMatcher failed ");
-//        }
         if (!uidMatcher.find()) {
             throw new IllegalStateException("uidMatcher failed ");
         }
@@ -105,38 +90,23 @@ public  abstract class AbstractParsing extends AbstractRecord {
         if (!timMatcher.find()) {
             throw new IllegalStateException("timMatcher failed ");
         }
-        
+
         if (!lenMatcher.find()) {
             throw new IllegalStateException("lenMatcher failed ");
         }
         if (!depMatcher.find()) {
             throw new IllegalStateException("depMatcher failed ");
         }
-//        if (!hvMatcher.find()) {
-//            throw new IllegalStateException("hvMatcher failed " + stmt) ;
-//        }
-//        if (!adMatcher.find()) {
-//            throw new IllegalStateException("adMatcher failed ");
-//        }
-//        if (!sqlidMatcher.find()) {
-//            throw new IllegalStateException("sqlidMatcher failed ");
-//        }
-   //     setCursorNumber(Long.parseLong(cursorNumberMatcher.group(1)));
 
-    //    recursionDepth = Integer.parseInt(depMatcher.group(1));
         uid = Integer.parseInt(uidMatcher.group(1));
         oracleCommandType = Integer.parseInt(octMatcher.group(1));
         timestamp = Long.parseLong(timMatcher.group(1));
         lid = Integer.parseInt(lidMatcher.group(1));
         sqlTextLength = Integer.parseInt(lenMatcher.group(1));
-       // sqlTextHashValue = Long.parseLong(hvMatcher.group(1));
-    //    sgaAddress = adMatcher.group(1);
-   //     super.setSqlid(sqlidMatcher.group(1));
-        logger.debug(this.toString());
         cursorNumber = parseCursorNumber();
         recursionDepth = Integer.parseInt(depMatcher.group(1));
     }
-    
+
     abstract long parseCursorNumber();
 
     public void addLine(final String line) {
@@ -146,24 +116,11 @@ public  abstract class AbstractParsing extends AbstractRecord {
         sqltextBuffer.append(line);
     }
 
-
     // @todo ensure called
     public void clean() {
         sqltextBuffer = null;
     }
 
-
-
-//    /**
-//     * @return Returns the dep.
-//     * 
-//     *         dep is the tag for recursion depth.
-//     */
-//    public int getRecursionDepth() {
-//        return recursionDepth;
-//    }
-
-   
     /**
      * @return Returns the lid.
      */
@@ -210,20 +167,14 @@ public  abstract class AbstractParsing extends AbstractRecord {
     public int getUid() {
         return uid;
     }
-    
+
     public long getCursorNumber() {
         return cursorNumber;
     }
-    
+
     public int getRecursionDepth() {
         return recursionDepth;
     }
-    
-//    public String getSqlId() {
-//        if (sqlId == null) { 
-//            throw new IllegalStateException("sqlid is null");
-//        }
-//        return sqlId;
-//    }
+
 
 }

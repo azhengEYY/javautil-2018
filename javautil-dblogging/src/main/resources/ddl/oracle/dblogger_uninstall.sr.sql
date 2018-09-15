@@ -9,7 +9,6 @@ drop table cursor_info cascade constraint;
 drop table cursor_info_run cascade constraint;                                   
 drop table cursor_sql_text cascade constraint;                                             
 drop table cursor_stat cascade constraint;
-drop table cursor_explain_plan cascade constraint;
 drop view cursor_info_vw;
 drop table job_log cascade constraint;
 drop table job_msg cascade constraint;                                  

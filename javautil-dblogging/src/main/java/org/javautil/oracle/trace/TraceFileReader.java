@@ -13,23 +13,27 @@ import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.javautil.oracle.trace.record.Action;
 import org.javautil.oracle.trace.record.Close;
-import org.javautil.oracle.trace.record.Exe;
 import org.javautil.oracle.trace.record.Exec;
 import org.javautil.oracle.trace.record.Fetch;
 import org.javautil.oracle.trace.record.Module;
 import org.javautil.oracle.trace.record.Parse;
+import org.javautil.oracle.trace.record.ParseError;
 import org.javautil.oracle.trace.record.Parsing;
 import org.javautil.oracle.trace.record.Record;
 import org.javautil.oracle.trace.record.RecordType;
 import org.javautil.oracle.trace.record.Stat;
 import org.javautil.oracle.trace.record.Wait;
 import org.javautil.oracle.trace.record.Xctend;
+import org.javautil.oracle.trace.record.Error;
 import org.javautil.util.EventHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 
 /**
  *
@@ -70,6 +74,11 @@ public class TraceFileReader implements Closeable {
     private int                           statCount;
     private int                           endOfStatementCount;
     private int                           ignoredCount;
+    private List<Integer>                 unhandledRecords = new LinkedList<>();
+    private List<ParseError>              parseErrors = new LinkedList<>();
+    
+    private boolean showError;
+    private boolean showParseError;
     // static {
     // events.addEvent(LOG_PARSED_RECORD);
     // events.addEvent(LOG_RAW_RECORD);
@@ -110,7 +119,7 @@ public class TraceFileReader implements Closeable {
                     xctendCount++;
                     break;
                 case PARSING:
-                    record = new Parsing(line, br.getLineNumber());
+                    record = new Parsing(line, br.getLineNumber()); //  TODO why create a new one?
                     final Parsing stmt = (Parsing) record;
                     while ((line = readLine()) != null) {
                         if (line.equals("END OF STMT")) {
@@ -128,9 +137,9 @@ public class TraceFileReader implements Closeable {
                     record = new Exec(line, br.getLineNumber());
                     execCount++;
                     break;
-                case EXE:
-                    record = new Exe(line, br.getLineNumber());
-                    break;
+//                case EXE:
+//                    record = new Exe(line, br.getLineNumber());
+//                    break;
                 case WAIT:
                     record = new Wait(line, br.getLineNumber());
                     final Wait wait = (Wait) record;
@@ -161,8 +170,27 @@ public class TraceFileReader implements Closeable {
                 case APP_NAME:
                     break;
                 case ERROR:
+                    record  = new Error(br.getLineNumber(),line);
+                    if (showError) {
+                        System.out.println(String.format("error found: %d %s",br.getLineNumber(),line));
+                    }
+
                     break;
                 case PARSE_ERROR:
+                    
+                    ParseError pe   = new ParseError(br.getLineNumber(),line);
+                    record = pe;
+                    logger.debug("parse error found: {} {}",br.getLineNumber(),line);
+                    while ((line = readLine()) != null) {
+                        if (line.startsWith("***")) {  // TOOD create regex or do a lookahead to see what next is
+                            break;
+                        }
+                        if (showParseError) {
+                            System.out.println(String.format("parse error found: %d %s",br.getLineNumber(),line));
+                        }
+                        pe.addLine(line);
+                    }
+                    parseErrors.add(pe);
                     break;
                 case SEPARATOR:
                     break;
@@ -175,8 +203,12 @@ public class TraceFileReader implements Closeable {
                 case CLOSE:
                     record = new Close(line, br.getLineNumber());
                     break;
+                case LOBREAD:
+                    
                 default:
-                    logger.warn("unhandled recordType {} text: '{}'", recordType, line);
+                    logUnhandled(br.getLineNumber(),line, recordType);
+                   
+       
                     logSkip();
                 }
             }
@@ -197,6 +229,12 @@ public class TraceFileReader implements Closeable {
             logger.debug(record.toString());
         }
         return record;
+    }
+
+    private void logUnhandled(int lineNumber, String line, RecordType recordType) {
+       unhandledRecords.add(lineNumber);
+       logger.warn("unhandled recordType {} text: '{}'", recordType, line);
+        
     }
 
     private String getWaitType(final String type) {
@@ -269,8 +307,8 @@ public class TraceFileReader implements Closeable {
     }
 
     private void readPreamble() throws IOException {
-        while (true) {
-            line = br.readLine();
+        while (  (line = br.readLine()) != null) {
+          
             if (line.startsWith("==")) {
                 break;
             }

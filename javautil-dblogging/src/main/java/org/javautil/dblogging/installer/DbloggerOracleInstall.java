@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.javautil.dblogging.DbloggerPropertiesDataSource;
-import org.javautil.sql.ApplicationPropertiesDataSource;
 import org.javautil.sql.Binds;
 import org.javautil.sql.SqlRunner;
 import org.javautil.sql.SqlSplitterException;
@@ -21,7 +20,7 @@ public class DbloggerOracleInstall {
 
     private boolean          drop    = true;
     private final Logger     logger  = LoggerFactory.getLogger(this.getClass());
-    private boolean          showSql = true;
+    private boolean          showSql = false;
 
     private boolean          dryRun;
 
@@ -67,14 +66,13 @@ public class DbloggerOracleInstall {
         logger.info("dropping tables");
         new SqlRunner(this, "ddl/oracle/dblogger_uninstall.sr.sql").setConnection(connection)
                 .setPrintSql(showSql).setContinueOnError(true).setShowError(false).process();
-//        new SqlRunner(this, "cursor_stat_drop.sql").setConnection(connection).setTrace(true)
-//                .setPrintSql(true).setContinueOnError(true).setShowError(false).process();
     }
 
     public void loggerObjectInstall() throws SqlSplitterException, SQLException, IOException {
         logger.info("loggerObjectInstall showSql: {}",showSql);
         final String createTablesResource = "ddl/oracle/dblogger_install_tables.sr.sql";
-        new SqlRunner(this, createTablesResource).setConnection(connection).setContinueOnError(true).setPrintSql(true).process();
+        new SqlRunner(this, createTablesResource).setConnection(connection).
+        setContinueOnError(true).setPrintSql(showSql).process();
 
         logger.info("======= creating logger_message_formatter");
         new SqlRunner(this, "ddl/oracle/logger_message_formatter.plsql.sr.sql").setConnection(connection)

@@ -8,6 +8,8 @@ import org.junit.Test;
 
 public class CloseTest {
     
+    //CLOSE #140177340467776:c=11,e=12,dep=0,type=0,tim=10253259232
+    
     @Test
     public void test() {
         String text = "CLOSE #139721389981080:c=2,e=3,dep=1,type=3,tim=11885913930\n";

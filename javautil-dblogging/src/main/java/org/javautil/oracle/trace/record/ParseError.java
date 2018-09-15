@@ -2,6 +2,8 @@
 package org.javautil.oracle.trace.record;
 
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -31,8 +33,9 @@ public class ParseError extends AbstractParsing {
     private static final Pattern errorNumberPattern            = Pattern.compile(".*err=(\\d*)");
     private int errorNumber;
     private Logger logger = LoggerFactory.getLogger(AbstractParsing.class);
+    private List<String> errors = new LinkedList<>();
 
-    public ParseError(String stmt, int lineNumber) {
+    public ParseError(int lineNumber, String stmt) {
     
         super(lineNumber, stmt);
         logger.info("called Super");
@@ -63,5 +66,9 @@ public class ParseError extends AbstractParsing {
         long cursorNumber = Long.parseLong(cursorNumberMatcher.group(1));
         return cursorNumber;
 
+    }
+    
+    public void addLine(String text) {
+        errors.add(text);
     }
 }

@@ -8,7 +8,6 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
-import org.javautil.dblogging.installer.H2Install;
 import org.javautil.io.ResourceHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

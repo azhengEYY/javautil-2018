@@ -12,7 +12,6 @@ import org.javautil.oracle.trace.OracleTraceProcessor;
 import org.javautil.oracle.trace.formatter.SqlMarshaller;
 import org.javautil.sql.Binds;
 import org.javautil.sql.H2FileDatabase;
-import org.javautil.sql.H2InMemory;
 import org.javautil.sql.SqlRunner;
 import org.javautil.sql.SqlSplitterException;
 import org.javautil.sql.SqlStatement;
@@ -20,7 +19,6 @@ import org.javautil.text.SimpleDateFormatFactory;
 import org.javautil.util.ListOfNameValue;
 import org.javautil.util.NameValue;
 import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -69,10 +67,10 @@ public class SqlMarshallerTest {
         SqlStatement ssText = new SqlStatement(connection,"select * from cursor_sql_text");
         NameValue runNv = ssRun.getNameValue();
         ListOfNameValue cursorsNv = ssCursors.getListOfNameValue(new Binds(),true);
-        System.out.println("cursorsNv" + cursorsNv);
+       logger.debug("cursorsNv" + cursorsNv);
         assertTrue(cursorsNv.size() > 0);
         ListOfNameValue textNv = ssText.getListOfNameValue(new Binds(), true);
-        System.out.println("text:\n" + textNv );
+        logger.debug("text:\n" + textNv );
         assertTrue(textNv.size() > 0);
         assertNotNull(runNv != null);
         // TODO read the tables and check row counts and values for sample records

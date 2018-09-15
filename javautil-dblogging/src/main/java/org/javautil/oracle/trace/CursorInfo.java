@@ -9,6 +9,7 @@ import org.javautil.oracle.trace.record.CursorOperation;
 import org.javautil.oracle.trace.record.Parse;
 import org.javautil.oracle.trace.record.Parsing;
 import org.javautil.oracle.trace.record.Stat;
+import org.javautil.oracle.trace.record.Close;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,6 +38,8 @@ public class CursorInfo {
     private ArrayList<Stat>            stats;
 
     private transient Tracer           tracer = new Tracer();
+    
+    private Close close;
 
     public CursorInfo(CursorOperation record) {
         if (parsing == null) {
@@ -61,11 +64,18 @@ public class CursorInfo {
     }
 
     public CursorInfo(Parse record) {
+        this.cursorNumber = record.getCursorNumber();
         this.parse = record;
     }
 
     public CursorInfo(Stat record) {
         this.cursorNumber = record.getCursorNumber();
+        stats.add(record);
+    }
+    
+    public CursorInfo(Close record) {
+        this.cursorNumber = record.getCursorNumber();
+        this.close = record;
     }
 
     public CursorInfo() {
@@ -241,6 +251,14 @@ public class CursorInfo {
         }
         logger.debug("returning:\n{}",sb.toString());
         return sb.toString();
+    }
+
+    public Close getClose() {
+        return close;
+    }
+
+    public void setClose(Close close) {
+        this.close = close;
     }
 
 }

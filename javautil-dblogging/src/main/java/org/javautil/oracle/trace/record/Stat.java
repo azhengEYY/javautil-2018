@@ -65,9 +65,9 @@ public class Stat extends CursorIdentifier {
     private final int              physicalReads;
     private final int              physicalWrites;
     private final int              time;
-    private final int              cost;
-    private final long             size;
-    private final int              cardinality;
+    private final Long             cost;
+    private final Long             size;
+    private final Integer             cardinality;
     /**
      * How deep this is. If you follow the linked list
      */
@@ -92,9 +92,9 @@ public class Stat extends CursorIdentifier {
         int statTime = getInt(stmt,timePattern);
         //logger.info("stattime is " + statTime);
         time = statTime;
-        cost = getInt(stmt,costPattern);
-        size = getLong(stmt,sizePattern);
-        cardinality = getInt(stmt,cardinalityPattern);
+        cost = getLong(stmt,costPattern,false);
+        size = getLong(stmt,sizePattern,false);
+        cardinality = getInt(stmt,cardinalityPattern,false);
         
         
 //        final Long cursorNumber = getLong(stmt, cursorNumberPattern);
@@ -189,15 +189,15 @@ public class Stat extends CursorIdentifier {
         
     }
 
-    public int getCost() {
+    public Long getCost() {
         return cost;
     }
 
-    public long getSize() {
+    public Long getSize() {
         return size;
     }
 
-    public int getCardinality() {
+    public Integer getCardinality() {
         return cardinality;
     }
 

@@ -1,15 +1,12 @@
 package org.javautil.dblogging;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.StringWriter;
 import java.io.Writer;
 import java.sql.CallableStatement;
 import java.sql.Clob;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;

@@ -4,41 +4,36 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.io.BufferedReader;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Properties;
 
 import javax.sql.DataSource;
 
 import org.javautil.dblogging.installer.DbloggerOracleInstall;
-import org.javautil.io.FileUtil;
 import org.javautil.sql.ApplicationPropertiesDataSource;
 import org.javautil.sql.Binds;
 import org.javautil.sql.SqlSplitterException;
 import org.javautil.sql.SqlStatement;
 import org.javautil.util.ListOfNameValue;
 import org.javautil.util.NameValue;
-import org.javautil.util.PropertiesFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DbloggerForOracleExampleTest {
     
     
-    static DataSource applicationDataSource;
-    static Connection applicationConnection;
-    static DataSource loggerDataSource;
-    static Connection loggerConnection;
-    static Dblogger dblogger;
+    private static DataSource applicationDataSource;
+    private static Connection applicationConnection;
+    private static DataSource loggerDataSource;
+    private static Connection loggerConnection;
+    private static Dblogger dblogger;
+    private Logger logger = LoggerFactory.getLogger(getClass());
+    private boolean showSql = false;
     
     @BeforeClass
     public static void beforeClass() throws SqlSplitterException, Exception {
@@ -53,8 +48,8 @@ public class DbloggerForOracleExampleTest {
         loggerConnection = loggerDataSource.getConnection();
         dblogger = new SplitLoggerForOracle(applicationConnection, loggerConnection);
         
-        new DbloggerOracleInstall(applicationConnection,true,true).process();
-        new DbloggerOracleInstall(loggerConnection,true,true).process();
+        new DbloggerOracleInstall(applicationConnection,true,false).process();
+        new DbloggerOracleInstall(loggerConnection,true,false).process();
          
     }
     
@@ -85,7 +80,7 @@ public class DbloggerForOracleExampleTest {
        stepSs.setConnection(loggerConnection);
        ListOfNameValue nvSteps = stepSs.getListOfNameValue(binds,true);
        assertEquals(2,nvSteps.size());
-       System.out.println(nvSteps);
+       logger.debug(nvSteps.toString());
        NameValue step1 = nvSteps.get(0);
        assertEquals(step1.get("step_name"),"Useless join");
        assertEquals(step1.get("classname"),"org.javautil.dblogging.DbloggerForOracleExample");

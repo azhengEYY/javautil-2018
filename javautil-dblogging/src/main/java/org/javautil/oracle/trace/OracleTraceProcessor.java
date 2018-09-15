@@ -5,12 +5,20 @@ package org.javautil.oracle.trace;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.TreeMap;
 
 import org.javautil.io.Tracer;
+import org.javautil.oracle.trace.record.Close;
 import org.javautil.oracle.trace.record.CursorOperation;
+import org.javautil.oracle.trace.record.Xctend;
 import org.javautil.oracle.trace.record.Parsing;
 import org.javautil.oracle.trace.record.Record;
 import org.javautil.oracle.trace.record.Stat;
+import org.javautil.oracle.trace.record.Xctend;
+import org.javautil.oracle.trace.record.ParseError;
+import org.javautil.oracle.trace.record.Error;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,9 +44,12 @@ public class OracleTraceProcessor {
 
     private int                   recordCount;
     private final CursorsStats    cursors = new CursorsStats();
+    private TreeMap<Long,Xctend>  xctendByTimestamp = new TreeMap<>();
 
     private File                  inputFile;
     private Tracer                tracer  = new Tracer();
+    private List<ParseError>      parseErrors= new LinkedList<>();
+    private List<Error>     errors= new LinkedList<>();
 
     public OracleTraceProcessor(final String fileName) throws IOException {
         reader = new TraceFileReader(fileName);
@@ -67,6 +78,9 @@ public class OracleTraceProcessor {
                 trace("parsing " + parsing.getLineAndText());
                 break;
             case CLOSE:
+                Close close = (Close) record;
+                cursors.handle(close);
+                break;
             case UNMAP:
             case EXEC:
             case FETCH:
@@ -80,7 +94,15 @@ public class OracleTraceProcessor {
                 cursors.handle(stat);
                 break;
             case XCTEND:
-                logger.warn("Xctend not handled {}",record);
+                Xctend exctend = (Xctend) record;
+                xctendByTimestamp.put(exctend.getTime(), exctend);
+             //   logger.warn("Xctend not handled {}",record);
+                break;
+            case PARSE_ERROR:
+                parseErrors.add((ParseError) record);
+                break;
+            case ERROR:
+                errors.add((Error) record);
                 break;
             default:
                 logger.warn("unhandled: {}", record);

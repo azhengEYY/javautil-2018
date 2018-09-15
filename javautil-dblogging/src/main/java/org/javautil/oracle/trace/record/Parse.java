@@ -4,8 +4,6 @@
 
 package org.javautil.oracle.trace.record;
 
-import java.util.regex.Pattern;
-
 /**
 *
 */

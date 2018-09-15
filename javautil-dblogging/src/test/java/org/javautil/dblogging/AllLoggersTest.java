@@ -11,8 +11,8 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
-import org.javautil.dblogging.installer.H2LoggerDataSource;
 import org.javautil.dblogging.installer.DbloggerOracleInstall;
+import org.javautil.dblogging.installer.H2LoggerDataSource;
 import org.javautil.sql.ApplicationPropertiesDataSource;
 import org.javautil.sql.Binds;
 import org.javautil.sql.ConnectionUtil;
@@ -30,6 +30,7 @@ public class AllLoggersTest {
     final String                processName = "Logging Example";
     private static DataSource   appDataSource;
     private static DataSource   xeDataSource;
+    private boolean showInstallSql = false;
 
     @BeforeClass
     public static void beforeClass() throws SqlSplitterException, Exception {
@@ -61,10 +62,10 @@ public class AllLoggersTest {
         Connection appConnection = appDataSource.getConnection();
         Connection xeConnection = xeDataSource.getConnection();
         logger.info("xeInstall");
-        DbloggerOracleInstall orainst = new DbloggerOracleInstall(xeConnection, true, false);
+        DbloggerOracleInstall orainst = new DbloggerOracleInstall(xeConnection, true, showInstallSql);
         orainst.process();
         logger.info("DbloggerOracleInstall");
-        orainst = new DbloggerOracleInstall(appConnection, true, false);
+        orainst = new DbloggerOracleInstall(appConnection, true, showInstallSql);
         orainst.process();
         //
         logger.info("new persistenceLogger");
@@ -83,7 +84,7 @@ public class AllLoggersTest {
     public void testDbloggerForOracle() throws SqlSplitterException, Exception {
         Connection appConnection = appDataSource.getConnection();
         logger.info("installing objects for appConnection");
-        DbloggerOracleInstall orainst = new DbloggerOracleInstall(appConnection, true, true);
+        DbloggerOracleInstall orainst = new DbloggerOracleInstall(appConnection, true, showInstallSql);
         orainst.process();
         logger.info("objects created");
         //
@@ -125,7 +126,7 @@ public class AllLoggersTest {
         // check out step
         ss = new SqlStatement(conn, "select * from job_step where job_log_id = :job_log_id");
         final NameValue stepStatusNv = ss.getNameValue(binds, false);
-        logger.info("step: {}", stepStatusNv.getSortedMultilineString());
+       // logger.info("step: {}", stepStatusNv.getSortedMultilineString());
     }
 
    

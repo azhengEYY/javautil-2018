@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import org.javautil.io.Tracer;
+import org.javautil.oracle.trace.record.Close;
 import org.javautil.oracle.trace.record.CursorOperation;
 import org.javautil.oracle.trace.record.Parsing;
 import org.javautil.oracle.trace.record.Stat;
@@ -118,20 +119,15 @@ public class CursorsStats {
 
     public void handle(Parsing record) {
         CursorInfo cursorStats = cursorStatsByNumber.get(record.getCursorNumber());
-
         cursorStats = new CursorInfo(record);
         cursorStats.setTracer(tracer);
-
         cursorStatsByNumber.put(record.getCursorNumber(), cursorStats);
-        
-
         CursorInfo cursorStatsForSqlId = cursorStatsById.get(record.getSqlid());
         if (cursorStatsForSqlId == null) {
             cursorStatsById.put(record.getSqlid(), cursorStats);
             cursorStatsForSqlId = cursorStats;
         }
         sqlIdByCursorNumber.put(record.getCursorNumber(), record.getSqlid());
-
     }
 
     public void handle(Stat record) {
@@ -155,6 +151,23 @@ public class CursorsStats {
     public void setTracer(Tracer tracer) {
         this.tracer = tracer;
 
+    }
+
+    public void handle(Close record) {
+        CursorInfo cursorStats = cursorStatsByNumber.get(record.getCursorNumber());
+        if (cursorStats == null) {
+            cursorStats = new CursorInfo(record);
+            cursorStatsByNumber.put(record.getCursorNumber(), cursorStats);
+        }
+        // cursorStats.aggregate(record);
+        //
+//        cursorStats = cursorStatsById.get(sqlId);
+//        if (cursorStats == null) {
+//            cursorStats = new CursorInfo(record);
+//            cursorStatsById.put(sqlId, cursorStats);
+//        }
+//        cursorStats.aggregate(record);
+        
     }
 
 }
