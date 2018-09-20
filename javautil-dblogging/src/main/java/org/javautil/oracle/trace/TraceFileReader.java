@@ -204,7 +204,7 @@ public class TraceFileReader implements Closeable {
                     record = new Close(line, br.getLineNumber());
                     break;
                 case LOBREAD:
-                    
+                  
                 default:
                     logUnhandled(br.getLineNumber(),line, recordType);
                    

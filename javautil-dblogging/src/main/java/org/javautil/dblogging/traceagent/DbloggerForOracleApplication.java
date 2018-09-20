@@ -1,4 +1,4 @@
-package org.javautil.dblogging;
+package org.javautil.dblogging.traceagent;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -19,7 +19,7 @@ import org.javautil.sql.SqlSplitterException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DbloggerForOracle extends AbstractDblogger implements Dblogger {
+public class DbloggerForOracleApplication implements DbloggerApplication {
 
     protected Logger                  logger             = LoggerFactory.getLogger(getClass());
 
@@ -57,19 +57,28 @@ public class DbloggerForOracle extends AbstractDblogger implements Dblogger {
 
     private CallableStatement         setTracefileIdentifierStatement;
 
-    private SequenceHelper                    sh;
+    private SequenceHelper            sh;
 
     private CallableStatement         updateTracefileNameStatement;
 
+    // private long jobId;
+
+    private Connection                connection;
+
+    private boolean                   throwExceptions    = true;
+    
+    private SequenceHelper       sequenceHelper;
+
     // private static Logger logger = LoggerFactory.getLogger(Dblogger.class);
 
-    public DbloggerForOracle(Connection connection) throws SQLException, SqlSplitterException, IOException {
-        super(connection);
+    public DbloggerForOracleApplication(Connection connection) throws SQLException, SqlSplitterException, IOException {
+        // super(connection);
+        this.connection = connection;
     }
 
     CallableStatement prepareCall(String sql) throws SQLException {
 
-        final CallableStatement retval = getConnection().prepareCall(sql);
+        final CallableStatement retval = connection.prepareCall(sql);
         callableStatements.add(retval);
         return retval;
     }
@@ -96,35 +105,91 @@ public class DbloggerForOracle extends AbstractDblogger implements Dblogger {
      * org.javautil.dblogging.DatabaseInstrumentation#beginJob(java.lang.String,
      * java.lang.String, java.lang.String, java.lang.String, java.lang.String)
      */
+    
+//    long appJobStart(String processName, String className, String moduleName, String statusMsg, String threadName,
+//          String tracefileName, int traceLevel) throws SQLException;
+
+   // String tracefileName = applicationLogger.appJobStart(processName, moduleName, statusMsg, jobId, traceLevel);
     @Override
-    public long beginJob(final String processName, String className, String moduleName, String statusMsg,
-            String threadName, String tracefileName) throws SQLException {
-        final String sql = "       begin\n" + "         :job_log_id := logger.begin_java_job (\n"
+    public String appJobStart(
+            final String processName, 
+            String className,
+            String moduleName, 
+            String statusMsg,
+            long jobLogId ,int traceLevel) throws SQLException {
+        
+
+        final String sql = 
+                
+                "       begin\n" 
+                + "         :p_tracefile_name := logger.begin_java_job (\n"
                 + "           p_process_name => :p_process_name,  -- VARCHAR2,\n"
-                + "           p_classname   => :p_classname,    -- varchar2,\n"
+                + "           p_classname    => :p_classname,    -- varchar2,\n"
                 + "           p_module_name  => :p_module_name,   -- varchar2,\n"
                 + "           p_status_msg   => :p_status_msg,    -- varchar2,\n"
-                + "           p_thread_name  => :p_thread_name   -- varchar2\n"
-                + "          );\n" + "       end;\n"
+                + "           p_thread_name  => :p_thread_name,   -- varchar2,\n"
+                + "           p_job_log_id   => :p_job_log_id, \n" 
+                + "           p_trace_level  => :p_trace_level "
+                + "          );\n" 
+                + "     end;\n"
                 + "";
         if (beginJobStatement == null) {
             beginJobStatement = prepareCall(sql);
-            beginJobStatement.registerOutParameter("job_log_id", java.sql.Types.INTEGER);
+            beginJobStatement.registerOutParameter("p_tracefile_name", java.sql.Types.VARCHAR);
         }
         final CallableStatement cs = beginJobStatement;
         cs.setString("p_process_name", processName);
         cs.setString("p_classname", className);
         cs.setString("p_module_name", moduleName);
         cs.setString("p_status_msg", statusMsg);
-        cs.setString("p_thread_name", threadName);
+        cs.setString("p_thread_name", Thread.currentThread().getName());
+        cs.setLong("p_job_log_id", jobLogId);
+        cs.setInt("p_trace_level", traceLevel);
         cs.execute();
-        final int retval = cs.getInt("job_log_id");
-        setUtProcessStatusId(retval);
-        // cs.close();
+        final String retval = cs.getString("p_tracefile_name");
+
         logger.info("started job {} " + retval);
         return retval;
 
     }
+
+//    /*
+//     * (non-Javadoc)
+//     *
+//     * @see
+//     * org.javautil.dblogging.DatabaseInstrumentation#beginJob(java.lang.String,
+//     * java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+//     */
+//    @Override
+//    public long beginJob(final String processName, String className, String moduleName, String statusMsg,
+//            String threadName, String tracefileName) throws SQLException {
+//        final String sql = "       begin\n" + "         :job_log_id := logger.begin_java_job (\n"
+//                + "           p_process_name => :p_process_name,  -- VARCHAR2,\n"
+//                + "           p_classname   => :p_classname,    -- varchar2,\n"
+//                + "           p_module_name  => :p_module_name,   -- varchar2,\n"
+//                + "           p_status_msg   => :p_status_msg,    -- varchar2,\n"
+//                + "           p_thread_name  => :p_thread_name   -- varchar2\n"
+//                + "          );\n" + "       end;\n"
+//                + "";
+//        if (beginJobStatement == null) {
+//            beginJobStatement = prepareCall(sql);
+//            beginJobStatement.registerOutParameter("job_log_id", java.sql.Types.INTEGER);
+//        }
+//        final CallableStatement cs = beginJobStatement;
+//        cs.setString("p_process_name", processName);
+//        cs.setString("p_classname", className);
+//        cs.setString("p_module_name", moduleName);
+//        cs.setString("p_status_msg", statusMsg);
+//        cs.setString("p_thread_name", threadName);
+//        cs.execute();
+//        final int retval = cs.getInt("job_log_id");
+//        // setUtProcessStatusId(retval);
+//        // cs.close();
+//        logger.info("started job {} " + retval);
+//        // this.jobId = retval;
+//        return retval;
+//
+//    }
 
     /*
      * (non-Javadoc)
@@ -149,22 +214,11 @@ public class DbloggerForOracle extends AbstractDblogger implements Dblogger {
         abortJobStatement.setString("p_stacktrace", abortMessage);
         abortJobStatement.execute();
         logger.warn("job terminated with: '{}'", abortMessage);
-        updateJob(getUtProcessStatusId());
+        // updateJob(getUtProcessStatusId());
 
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see org.javautil.dblogging.DatabaseInstrumentation#endJob()
-     */
-    @Override
-    public void endJob() throws SQLException {
-        if (endJobStatement == null) {
-            endJobStatement = prepareCall("begin logger.end_job(); end;");
-        }
-        endJobStatement.execute();
-    }
+
 
     /*
      * (non-Javadoc)
@@ -189,7 +243,7 @@ public class DbloggerForOracle extends AbstractDblogger implements Dblogger {
             setTraceStepStatement = prepareCall(sql);
         }
         setTraceStepStatement.setString("p_step_name", stepName);
-        setTraceStepStatement.setLong("p_job_step_id",jobStepId);    
+        setTraceStepStatement.setLong("p_job_step_id", jobStepId);
         setTraceStepStatement.execute();
 
     }
@@ -240,7 +294,8 @@ public class DbloggerForOracle extends AbstractDblogger implements Dblogger {
      */
     @Override
     public String getTraceFileName() throws SQLException {
-        logger.info("getTraceFileName: {}", OracleSessionInfo.getConnectionInfo(getConnection()));
+        // logger.info("getTraceFileName: {}",
+        // OracleSessionInfo.getConnectionInfo(getConnection()));
 
         if (getTraceFileStatement == null) {
             getTraceFileStatement = prepareCall("begin :trace_file_name := logger.get_my_tracefile_name(); end;");
@@ -253,19 +308,28 @@ public class DbloggerForOracle extends AbstractDblogger implements Dblogger {
         return retval;
     }
 
-    public String setTracefileIdentifier(long identifier) throws SQLException {
-        if (setTracefileIdentifierStatement == null) {
-            setTracefileIdentifierStatement = prepareCall(
-                    "begin :trace_file_name := logger.set_tracefile_identifier(:p_identifier); end;");
-            setTracefileIdentifierStatement.registerOutParameter("trace_file_name", java.sql.Types.VARCHAR);
+    public String setTracefileIdentifier(long identifier) {
+        String retval = null;
+        try {
+            if (setTracefileIdentifierStatement == null) {
+                setTracefileIdentifierStatement = prepareCall(
+                        "begin :trace_file_name := logger.set_tracefile_identifier(:p_identifier); end;");
+                setTracefileIdentifierStatement.registerOutParameter("trace_file_name", java.sql.Types.VARCHAR);
+            }
+
+            setTracefileIdentifierStatement.setLong("p_identifier", identifier);
+            setTracefileIdentifierStatement.execute();
+
+            retval = setTracefileIdentifierStatement.getString("trace_file_name");
+            return retval;
+        } catch (SQLException sqe) {
+            logger.error(sqe.getMessage());
+            if (throwExceptions) {
+                throw new RuntimeException(sqe);
+            }
         }
-
-        setTracefileIdentifierStatement.setLong("p_identifier", identifier);
-        setTracefileIdentifierStatement.execute();
-
-        final String retval = setTracefileIdentifierStatement.getString("trace_file_name");
-
         return retval;
+
     }
 
     /*
@@ -303,7 +367,7 @@ public class DbloggerForOracle extends AbstractDblogger implements Dblogger {
      * org.javautil.dblogging.DatabaseInstrumentation#getMyTraceFile(java.io.Writer)
      */
     @Override
-    public void getMyTraceFile(Writer writer) throws SQLException{
+    public void getMyTraceFile(Writer writer) throws SQLException {
         if (getMyTraceFileStatement == null) {
             getMyTraceFileStatement = prepareCall("begin :my_tracefile_data := logger.get_my_tracefile(); end;");
             getMyTraceFileStatement.registerOutParameter(1, java.sql.Types.CLOB);
@@ -314,11 +378,11 @@ public class DbloggerForOracle extends AbstractDblogger implements Dblogger {
         try {
             OracleConnectionHelper.clobWrite(clob, writer);
         } catch (IOException e) {
-           logger.error("Unable to write trace file " + e.getMessage());
+            logger.error("Unable to write trace file " + e.getMessage());
         }
     }
-    
-    public Clob getMyTraceFile() throws SQLException{
+
+    public Clob getMyTraceFile() throws SQLException {
         if (getMyTraceFileStatement == null) {
             getMyTraceFileStatement = prepareCall("begin :my_tracefile_data := logger.get_my_tracefile(); end;");
             getMyTraceFileStatement.registerOutParameter(1, java.sql.Types.CLOB);
@@ -329,7 +393,7 @@ public class DbloggerForOracle extends AbstractDblogger implements Dblogger {
             throw new IllegalStateException("null returned from logger.get_my_trace_file");
         }
         return getMyTraceFileStatement.getClob(1);
-       
+
     }
 
     // // TODO should be in jdbcHelper
@@ -372,17 +436,69 @@ public class DbloggerForOracle extends AbstractDblogger implements Dblogger {
 
     }
 
+    
     @Override
-    public void updateTraceFileName(String appTracefileName) throws SQLException {
-        if (updateTracefileNameStatement == null) {
-            updateTracefileNameStatement = prepareCall("begin logger.update_tracefile_name(:p_tracefile_name); end;");
+    public long getNextJobId() {
+        long retval = -1;
+        try {
+            retval = sequenceHelper.getSequence("job_id_seq");
+        } catch (SQLException e) {
+           logger.error(e.getMessage(),e);
+           if (throwExceptions) {
+               throw new RuntimeException(e);
+           }
         }
-        updateTracefileNameStatement.setString(1, appTracefileName);
-        updateTracefileNameStatement.execute();
-
+        return retval;
     }
 
-    
 
+
+
+    // @Override
+    // public void updateTraceFileName(String appTracefileName) throws SQLException
+    // {
+    // if (updateTracefileNameStatement == null) {
+    // updateTracefileNameStatement = prepareCall("begin
+    // logger.update_tracefile_name(:p_tracefile_name); end;");
+    // }
+    // updateTracefileNameStatement.setString(1, appTracefileName);
+    // updateTracefileNameStatement.execute();
+    //
+    // }
+
+    // @Override
+    // public void setJobId(long jobId) {
+    // this.jobId = jobId;
+    //
+    // }
+    //
+    // @Override
+    // public long getJobId() {
+    // return jobId;
+    // }
+
+    // @Override
+    // public long getUtProcessStatusId() {
+    // // TODO Auto-generated method stub
+    // return 0;
+    // }
+    //
+    // @Override
+    // public Clob createClob() throws SQLException {
+    // // TODO Auto-generated method stub
+    // return null;
+    // }
+    //
+    // @Override
+    // public void setPersistTraceOnJobCompletion(boolean persistTrace) {
+    // // TODO Auto-generated method stub
+    //
+    // }
+    //
+    // @Override
+    // public void setPersistPlansOnJobCompletion(boolean persistPlans) {
+    // // TODO Auto-generated method stub
+    //
+    // }
 
 }

@@ -10,7 +10,7 @@ import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.javautil.dblogging.Dblogger;
+import org.javautil.dblogging.logger.Dblogger;
 import org.javautil.io.ResourceHelper;
 import org.javautil.sql.Binds;
 import org.javautil.sql.Dialect;
@@ -84,7 +84,7 @@ public class CdsBatchDataLoader implements FilenameFilter {
      */
     public long process(InputStream dataStream, String dataStreamDescr, String distributorCd, boolean validate)
             throws ParseException, IOException, SQLException {
-        logger.info("CDSDataLoader:process job_log_id {}",dblogger.getUtProcessStatusId());
+   //     logger.info("CDSDataLoader:process job_log_id {}",dblogger.getUtProcessStatusId());
         dblogger.insertStep("CdsDataLoader", dataStreamDescr, getClass().getName());
         dblogger.setModule("CdsDataLoader", null);
         dblogger.setAction("initial insert");

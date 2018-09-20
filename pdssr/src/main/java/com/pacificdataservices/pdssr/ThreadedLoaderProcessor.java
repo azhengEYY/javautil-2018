@@ -10,9 +10,10 @@ import java.util.concurrent.TimeUnit;
 
 import javax.sql.DataSource;
 
-import org.javautil.dblogging.Dblogger;
-import org.javautil.dblogging.DbloggerForOracle;
-import org.javautil.dblogging.SplitLoggerForOracle;
+
+import org.javautil.dblogging.logger.SplitLoggerForOracle;
+import org.javautil.dblogging.tracepersistence.DbloggerPersistence;
+import org.javautil.dblogging.tracepersistence.DbloggerPersistenceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,13 +24,16 @@ public class ThreadedLoaderProcessor implements Runnable {
     private int                       threadCount;
     private LoadFileInputStreamSource fileSource;
     private boolean batch;
+    private boolean persistToAppConnection;
 
-    public ThreadedLoaderProcessor(DataSource appDataSource, DataSource dbloggerDataSource, int threadCount, boolean batch) {
+    
+    public ThreadedLoaderProcessor(DataSource appDataSource, DataSource dbloggerDataSource, int threadCount, boolean batch, boolean persistToAppConnection) {
         this.appDataSource = appDataSource;
         this.dbloggerDataSource = dbloggerDataSource;
         this.threadCount = threadCount;
         fileSource = new LoadFileInputStreamSource();
         this.batch = batch;
+        this.persistToAppConnection = persistToAppConnection;
     }
 
 
@@ -38,7 +42,8 @@ public class ThreadedLoaderProcessor implements Runnable {
         Runnable processor = null;
         try {
             Connection appConnection = appDataSource.getConnection();
-            Dblogger persistenceLogger = new DbloggerForOracle(dbloggerDataSource.getConnection());
+            Connection persistenceConnection = persistToAppConnection ? appDataSource.getConnection() : dbloggerDataSource.getConnection();
+            DbloggerPersistence persistenceLogger = new DbloggerPersistenceImpl(persistenceConnection);
             final SplitLoggerForOracle dblogger = new SplitLoggerForOracle(appConnection, persistenceLogger);
             processor = new LoadProcessor(appConnection, dblogger, fileSource, batch);
         

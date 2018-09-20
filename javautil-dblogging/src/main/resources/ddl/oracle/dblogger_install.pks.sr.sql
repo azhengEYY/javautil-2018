@@ -11,16 +11,18 @@ CREATE OR REPLACE PACKAGE logger AS
     G_FINEST       CONSTANT PLS_INTEGER := 9 ;
     G_NONE         CONSTANT PLS_INTEGER := 10 ;
 
-    procedure begin_job (p_process_name in varchar2);
-    function get_my_tracefile return clob;
+--    procedure begin_job (p_process_name in varchar2);
+--    function get_my_tracefile return clob;
 
-    FUNCTION begin_java_job ( p_process_name in varchar2,
+    FUNCTION begin_java_job ( 
+    						 p_job_log_id          in number,
+    						 p_process_name in varchar2,
                              p_classname   in varchar2,
                              p_module_name  in varchar2,
                              p_status_msg   in varchar2,
                              p_thread_name  in varchar2,
                              p_trace_level  in pls_integer default G_INFO) 
-   return number;
+   return varchar;
 
     
     PROCEDURE end_job ;
@@ -35,12 +37,13 @@ CREATE OR REPLACE PACKAGE logger AS
         p_action_name in   varchar) ;
 
 
+   function get_my_tracefile return clob ;
     
     function get_directory_path return varchar;
 
     function get_tracefile(p_file_name in varchar) return clob;
 
-    function get_my_tracefile_name return varchar ;
+    function get_my_tracefile_name return varchar;
 
 
     function basename (p_full_path in varchar2,
@@ -53,7 +56,18 @@ CREATE OR REPLACE PACKAGE logger AS
 
     function set_tracefile_identifier(p_job_nbr in number) return varchar;
     
-    procedure update_tracefile_name(p_tracefile_name in varchar);
+--    procedure update_tracefile_name(p_tracefile_name in varchar);
+    
+--     procedure save_job_log    (p_job_log_id          in number,
+--   							 p_schema_name  in varchar2,
+--    						 p_process_name in varchar2,
+--                             p_classname    in varchar2,
+--                             p_module_name  in varchar2,
+--                             p_status_msg   in varchar2,
+--                             p_thread_name  in varchar2,
+--                             p_trace_level  in pls_integer default G_INFO,
+--                             p_tracefile_name in varchar2,
+--                             p_sid          in pls_integer);
 END logger ;
 /
 --#<

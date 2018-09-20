@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import org.javautil.dblogging.logger.Dblogger;
 import org.javautil.sql.Binds;
 import org.javautil.sql.ConnectionUtil;
 import org.javautil.sql.SqlStatement;
@@ -25,8 +26,8 @@ public class SampleUsage {
     public long process() throws SQLException {
         dblogger.prepareConnection();
 
-        final long id = dblogger.beginJob(processName, getClass().getCanonicalName(), "ExampleLogging", null,
-                Thread.currentThread().getName(), null);
+        long id =  dblogger.startJobLogging(processName,getClass().getName(), "SampleUsage","", 8);
+
         actionNoStep();
         stepNoAction();
         dblogger.endJob();
@@ -35,15 +36,16 @@ public class SampleUsage {
     }
 
     public long processException() throws SQLException, FileNotFoundException, IOException {
-        final long id = dblogger.beginJob(processName, getClass().getCanonicalName(), "ExampleLogging", null,
-                Thread.currentThread().getName(), null);
+       // id = dblogger.startJobLogging(processName, "ExampleLogging", null, 12);
+        long logJobId = dblogger.startJobLogging(processName, getClass().getName(), "SamplueUsage", null,  8);
+ 
         try {
             int x  = 1 / 0;
         } catch (Exception e) {
             dblogger.abortJob(e);
         }
  
-        return id;
+        return logJobId;
     }
 
     private void actionNoStep() throws SQLException {

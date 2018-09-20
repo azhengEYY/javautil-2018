@@ -11,7 +11,7 @@ import java.util.Map;
 
 import org.javautil.conditionidentification.ConditionIdentification;
 import org.javautil.conditionidentification.ConditionIdentificationPersistence;
-import org.javautil.dblogging.Dblogger;
+import org.javautil.dblogging.logger.Dblogger;
 import org.javautil.io.ResourceHelper;
 import org.javautil.sql.Binds;
 import org.javautil.sql.DataNotFoundException;

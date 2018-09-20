@@ -1,3 +1,4 @@
+
 CREATE OR REPLACE PACKAGE BODY logger
 is
    g_job_msg_dir    varchar2 (32) := 'UT_PROCESS_LOG_DIR';
@@ -23,6 +24,7 @@ is
    g_session_user          varchar2 (32);
    g_proxy_user            varchar2 (32);
    g_who_called_me_level   BINARY_integer     := 6;
+   g_job_log_id            pls_integer;
 
    procedure set_trace (p_trace_level in pls_integer)
    is
@@ -31,21 +33,21 @@ is
    end set_trace;
 
 
-   function get_g_process_status_id return number is
-   begin
-       if g_process_status_id  is  null then
-           g_process_status_id := job_log_id_seq.nextval;
-       end if;
-       return g_process_status_id;
-   end;
-
-  procedure update_tracefile_name(p_tracefile_name in varchar) is
-     pragma autonomous_transaction ;
-  begin
-	  update job_log set tracefile_name = p_tracefile_name 
-	  where job_log_id = g_process_status_id;
-	  commit;
-  end;
+--   function get_g_process_status_id return number is
+--   begin
+--       if g_process_status_id  is  null then
+--           g_process_status_id := job_log_id_seq.nextval;
+--       end if;
+--       return g_process_status_id;
+--   end;
+--
+--  procedure update_tracefile_name(p_tracefile_name in varchar) is
+--     pragma autonomous_transaction ;
+--  begin
+--	  update job_log set tracefile_name = p_tracefile_name 
+--	  where job_log_id = g_process_status_id;
+--	  commit;
+--  end;
 
   function get_my_tracefile_name return varchar is
          tracefile_name varchar2(4096);
@@ -64,12 +66,12 @@ is
         return get_my_tracefile_name;
    end set_tracefile_identifier;
 
-   function set_tracefile_identifier return varchar is
-       identifier varchar2(32) := 'job_' || to_char(get_g_process_status_id);
-   begin
-        execute immediate 'alter session set tracefile_identifier = ''' || identifier || '''';
-        return get_my_tracefile_name;
-   end set_tracefile_identifier;
+--   function set_tracefile_identifier return varchar is
+--       identifier varchar2(32) := 'job_' || to_char(get_g_process_job_log_id);
+--   begin
+--        execute immediate 'alter session set tracefile_identifier = ''' || identifier || '''';
+--        return get_my_tracefile_name;
+--   end set_tracefile_identifier;
 
 
    procedure set_context
@@ -87,89 +89,91 @@ is
         from DUAL;
    end set_context;
 
+  procedure save_job_log    (p_job_log_id   in number,
+   							 p_schema_name  in varchar2,
+    						 p_process_name in varchar2,
+                             p_classname    in varchar2,
+                             p_module_name  in varchar2,
+                             p_status_msg   in varchar2,
+                             p_thread_name  in varchar2,
+                             p_trace_level  in pls_integer default G_INFO,
+                             p_tracefile_name in varchar2,
+                             p_sid          in pls_integer) is
+    pragma autonomous_transaction ;                
+    begin  
+            
+      insert into job_log (
+          job_log_id,   schema_name, process_name, thread_name,        
+          status_msg, status_ts,   sid,          module_name,
+          classname,   tracefile_name
+   
+      ) values (
+          p_job_log_id,  p_schema_name, p_process_name,  p_thread_name, 
+          p_status_msg,    systimestamp,  p_sid,         p_module_name,
+          p_classname,    p_tracefile_name
+      );
+      commit;
+      
+   end save_job_log;
 
+--   procedure begin_job (p_process_name in varchar2)
+--   is
+--      PRAGMA AUTONOMOUS_TRANSACTION;
+--      my_tracefile_name varchar2(4000) := set_tracefile_identifier;
+--   begin
+--      if p_process_name is NULL
+--      then
+--         g_process_name := g_caller_name;
+--      else
+--         g_process_name := p_process_name;
+--      end if;
+--
+--      g_process_start_tm := current_timestamp;
+--
+--      g_job_log_id := job_log_id_seq.nextval;
+--
+--
+--
+--      INSERT into job_log (
+--	  process_name,         schema_name, thread_name, process_run_nbr,      
+--	  status_msg,           status_id,   status_ts,   SID,
+--          job_log_id, tracefile_name
+--      ) VALUES (
+--	  g_process_name,       g_current_schema,    'main',  g_job_log_id,  
+--          'init',               'A',                 SYSDATE,
+--          g_sid,                g_process_status_id, my_tracefile_name
+--     );
+--
+--      g_last_log_seq_nbr := 1;
+--
+--      COMMIT;
+--   end begin_job;
 
-   procedure begin_job (p_process_name in varchar2)
-   is
-      PRAGMA AUTONOMOUS_TRANSACTION;
-      my_tracefile_name varchar2(4000) := set_tracefile_identifier;
-   begin
-      if p_process_name is NULL
-      then
-         g_process_name := g_caller_name;
-      else
-         g_process_name := p_process_name;
-      end if;
-
-      g_process_start_tm := current_timestamp;
-
-      g_process_status_id := job_log_id_seq.nextval;
-
-
-
-      INSERT into job_log (
-	  process_name,         schema_name, thread_name, process_run_nbr,      
-	  status_msg,           status_id,   status_ts,   SID,
-          job_log_id, tracefile_name
-      ) VALUES (
-	  g_process_name,       g_current_schema,    'main',  g_process_status_id,  
-          'init',               'A',                 SYSDATE,
-          g_sid,                g_process_status_id, my_tracefile_name
-     );
-
-      g_last_log_seq_nbr := 1;
-
-      COMMIT;
-   end begin_job;
-
-  FUNCTION begin_java_job ( 
-    p_process_name in varchar2,
-    p_classname   in varchar2,
-    p_module_name  in varchar2,
-    p_status_msg   in varchar2,
-    p_thread_name  in varchar2,
-    p_trace_level  in pls_integer default G_INFO
-  ) RETURN number
+    FUNCTION begin_java_job ( 
+    						 p_job_log_id          in number,
+    						 p_process_name in varchar2,
+                             p_classname   in varchar2,
+                             p_module_name  in varchar2,
+                             p_status_msg   in varchar2,
+                             p_thread_name  in varchar2,
+                             p_trace_level  in pls_integer default G_INFO) 
+                             return varchar
    is
       PRAGMA AUTONOMOUS_TRANSACTION;
       my_tracefile_name varchar2(256);
    begin
-
+      g_job_log_id := p_job_log_id;
       set_trace(p_trace_level);
-      if p_process_name is NULL
-      then
-         g_process_name := g_caller_name;
-      else
-         g_process_name := p_process_name;
-      end if;
-
-      g_process_status_id := job_log_id_seq.NEXTVAL;
-      dbms_output.put_line('begin java job ' || to_char(g_process_status_id));
-
+      dbms_output.put_line('begin java job ' || to_char(g_job_log_id));
       g_process_start_tm := current_timestamp;
-      dbms_output.put_line('get_my_tracefile_name about');
-
-      my_tracefile_name := set_tracefile_identifier;
-
-      set_action('begin_java_job ' || to_char(g_process_status_id));
-
-      insert into job_log (
-        process_name,         schema_name, thread_name, process_run_nbr,
-        status_msg,           status_id,   status_ts,   SID,
-        job_log_id, classname,  module_name, tracefile_name
-      ) values (
-        g_process_name,        g_current_schema, p_thread_name, g_process_status_id,
-        p_status_msg,          'A',              systimestamp,  g_sid,
-        g_process_status_id,   p_classname,     p_module_name, my_tracefile_name
-      );
-
-      g_last_log_seq_nbr := 1;
-
-      commit;
-      return g_process_status_id;
+      my_tracefile_name := set_tracefile_identifier(p_job_log_id);
+      set_action('begin_java_job ' || to_char(g_job_log_id)); 
+ --     commit;
+      return my_tracefile_name;
    end begin_java_job;
+   
+   
 
-   --::<
    procedure end_job
    --::* update job_log.status_id to 'C' and status_msg to 'DONE'
    --::>
@@ -185,7 +189,6 @@ is
          SET 
              SID = NULL,
              status_msg = 'DONE',
-             status_id = 'C',
              status_ts = SYSDATE
        where job_log_id = g_process_status_id;
 
@@ -213,7 +216,6 @@ is
          SET 
              SID = NULL,
              status_msg = 'ABORT',
-             status_id = 'A',
              status_ts = SYSDATE,
              abort_stacktrace = p_stacktrace
        where job_log_id = g_process_status_id;

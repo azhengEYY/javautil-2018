@@ -40,7 +40,7 @@ public enum RecordType {
             String firstWord = record.substring(0, firstSpace);
             returnValue = textMap.get(firstWord);
         }
-        logger.info(String.format("%s -- %s", returnValue, record));
+  //      logger.info(String.format("%s -- %s", returnValue, record));
         if (returnValue == null) {
             // if (record.startsWith("XCTEND")) {
             // returnValue = XCTEND;
@@ -78,6 +78,7 @@ public enum RecordType {
         }
         if (returnValue == null) {
             returnValue = IGNORED;
+    //        logger.warn(String.format("%s -- %s", returnValue, record));
         }
         return returnValue;
     }

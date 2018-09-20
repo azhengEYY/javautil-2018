@@ -61,7 +61,7 @@ r          rowCount
 tim
 
  */
-public abstract class TimeAndIO extends DbTime implements Record {
+public class TimeAndIO extends DbTime {
     private static Logger          logger                       = LoggerFactory
             .getLogger(TimeAndIO.class.getName());
 
@@ -102,7 +102,7 @@ public abstract class TimeAndIO extends DbTime implements Record {
     private long                   time;
 
     
-    private int recursionDepth;
+   // private int recursionDepth;
 
     public TimeAndIO(int lineNumber, final String traceLine) {
         super(lineNumber, traceLine);
@@ -176,6 +176,12 @@ public abstract class TimeAndIO extends DbTime implements Record {
             logger.info("time not set");
         }
         this.time = time;
+    }
+
+
+    @Override
+    public RecordType getRecordType() {
+        throw new UnsupportedOperationException();
     }
     
 

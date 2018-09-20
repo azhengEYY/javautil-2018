@@ -10,7 +10,6 @@ set echo on
         THREAD_NAME          VARCHAR2(128),
         PROCESS_RUN_NBR      NUMBER(9,0),
         STATUS_MSG           VARCHAR2(256),
-        STATUS_ID 	     VARCHAR2(1),
         STATUS_TS 	     TIMESTAMP (6),
         TOTAL_ELAPSED        INTERVAL DAY (2) TO SECOND (6),
         SID                  NUMBER,

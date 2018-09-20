@@ -1,4 +1,4 @@
-package org.javautil.dblogging;
+package org.javautil.dblogging.tracepersistence;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -21,13 +21,13 @@ import org.javautil.util.NameValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class AbstractDblogger implements Dblogger {
+public abstract class AbstractDbloggerPersistence implements DbloggerPersistence {
 
     protected final Connection   connection;
 
     protected NamedSqlStatements statements;
 
-    Logger                       logger            = LoggerFactory.getLogger(getClass());
+    Logger                       logger          = LoggerFactory.getLogger(getClass());
     private long                 jobStartMilliseconds;
 
     private String               moduleName;
@@ -36,63 +36,78 @@ public abstract class AbstractDblogger implements Dblogger {
 
     private SequenceHelper       sequenceHelper;
 
-    private long                 utProcessStatusId = -1;
+    private long                 jobLogId        = -1;
 
-    long                         utProcessStepId;
+    private long                 jobStepId;
 
-    private boolean persistTrace;
+    private boolean              persistTrace;
 
-    private boolean persistPlans;
+    private boolean              persistPlans;
 
-    public AbstractDblogger(Connection connection) throws SQLException, SqlSplitterException, IOException {
+    // private long jobId;
+
+    private boolean              throwExceptions = true;
+
+    public AbstractDbloggerPersistence(Connection connection) throws SQLException, SqlSplitterException, IOException {
         super();
+        this.connection = connection;
         if (connection == null) {
             throw new IllegalArgumentException("null connection");
         }
-        this.connection = connection;
+
         sequenceHelper = new SequenceHelper(connection);
         statements = NamedSqlStatements.getNameSqlStatementsFromSqlSplitterResource(this, "ddl/h2/dblogger_dml.ss.sql");
     }
 
     @Override
-    public long beginJob(final String processName, String className, String moduleName, String statusMsg,
-            String threadName, String tracefileName)
+    public long persistJob(final String processName, String className, String moduleName, String statusMsg,
+            String schema,
+            String tracefileName, long jobLogId)
             throws SQLException {
 
-        setUtProcessStatusId(sequenceHelper.getSequence("job_log_id_seq"));
         SqlStatement ss = statements.getSqlStatement("job_log_insert");
         ss.setConnection(connection);
         Binds binds = new Binds();
-        binds.put("job_log_id", utProcessStatusId);
+        binds.put("job_log_id", jobLogId);
         binds.put("process_name", processName);
         binds.put("classname", className);
         binds.put("module_name", moduleName);
         binds.put("status_msg", statusMsg);
-        binds.put("thread_name", threadName);
-        binds.put("schema_name", null);
+        binds.put("thread_name", Thread.currentThread().getName());
+        binds.put("schema_name", schema);
         binds.put("tracefile_name", tracefileName);
         binds.put("status_ts", new java.sql.Timestamp(System.currentTimeMillis()));
-        System.out.println("about to startJob with " + binds.toString());
+        if (logger.isDebugEnabled()) {
+            logger.debug("job_log_insert\n{}", ss.getSql());
+        }
         ss.executeUpdate(binds);
         connection.commit();
-        logger.warn("started job {} ", utProcessStatusId);
+        if (logger.isDebugEnabled()) {
+            logger.debug("started job {} ", jobLogId);
+            SqlStatement ss2 = new SqlStatement("select * from job_log where job_log_id = :job_log_id");
+            ss2.setConnection(connection);
+            Binds selBinds = new Binds();
+            selBinds.put("job_log_id", jobLogId);
+            NameValue nvs = ss2.getNameValue(selBinds, true);
+            logger.debug("persistJob select: {}", nvs.toString());
+        }
 
-        // String appTracefileName = getTraceFileName();
-        // logger.debug("*************updating tracefile name to {}", appTracefileName);
-        // updateTraceFileName(appTracefileName);
-        return (int) utProcessStatusId;
-    }
-
-    protected void setUtProcessStatusId(long id) {
-        logger.info("setUtProcessStatusId: {} after {}", utProcessStatusId, id);
-        this.utProcessStatusId = id;
-
-    }
+        this.jobLogId = jobLogId;
     
+        connection.commit();
+        return jobLogId;
+    }
+
+    // protected void setUtProcessStatusId(long id) {
+    // logger.info("setUtProcessStatusId: {} after {}", jobLogId, id);
+    // this.jobLogId = id;
+    //
+    // }
+    //
 
     public long insertStep(String stepName, String stepInfo, String className) throws SQLException {
-        String stackTrace  = ThreadUtil.getStackTrace(2);
-        return insertStep(stepName,stepInfo,className,stackTrace);
+        String stackTrace = ThreadUtil.getStackTrace(2);
+        return insertStep(stepName, stepInfo, className, stackTrace);
     }
 
     @Override
@@ -102,10 +117,11 @@ public abstract class AbstractDblogger implements Dblogger {
             if (sequenceHelper == null) {
                 throw new IllegalStateException("sequencehelper is null");
             }
-            this.utProcessStepId = sequenceHelper.getSequence("job_step_id_seq");
+            this.jobStepId = sequenceHelper.getSequence("job_step_id_seq");
+
             Binds binds = new Binds();
-            binds.put("job_step_id", utProcessStepId);
-            binds.put("job_log_id", utProcessStatusId);
+            binds.put("job_step_id", jobStepId);
+            binds.put("job_log_id", jobLogId);
             binds.put("step_name", stepName);
             binds.put("step_info", stepInfo);
             binds.put("classname", className);
@@ -117,9 +133,12 @@ public abstract class AbstractDblogger implements Dblogger {
             SqlStatement ss = statements.get("job_step_insert");
             ss.setConnection(connection);
             ss.executeUpdate(binds);
-            connection.commit();
+            if (logger.isDebugEnabled()) {
+                logger.debug("sql:\n{}\n{}", ss.getSql(), binds);
+            }
+            connection.commit(); // TODO should be autocommit on transaction or
             logger.debug("insertStep {} with binds {} " + stepName, binds);
-            retval = utProcessStepId;
+            retval = jobStepId;
         } catch (SQLException sqe) {
             sqe.printStackTrace();
             logger.error(sqe.getMessage());
@@ -130,14 +149,14 @@ public abstract class AbstractDblogger implements Dblogger {
     @Override
     public void finishStep() throws SQLException {
         Binds binds = new Binds();
-        binds.put("job_step_id", utProcessStepId);
+        binds.put("job_step_id", jobStepId);
         binds.put("end_ts", new java.sql.Timestamp(System.currentTimeMillis()));
         SqlStatement ss = statements.get("end_step");
         ss.setConnection(connection);
         int rowCount = ss.executeUpdate(binds);
         if (rowCount != 1) {
             // should have option to abort
-            logger.error(String.format("finishStep stepId %d updated %d rows", utProcessStepId, rowCount));
+            logger.error(String.format("finishStep stepId %d updated %d rows", jobStepId, rowCount));
             // now what? rollback TODO
         }
 
@@ -145,23 +164,23 @@ public abstract class AbstractDblogger implements Dblogger {
     }
 
     private void finishJob(SqlStatement ss) throws SQLException {
-        logger.warn("finishing {} ", utProcessStatusId);
+        logger.warn("=================finishing {} {}", jobLogId, ss.getSql());
         ss.setConnection(connection);
         Binds binds = new Binds();
-        binds.put("job_log_id", utProcessStatusId);
+        binds.put("job_log_id", jobLogId);
         binds.put("end_ts", new java.sql.Timestamp(System.currentTimeMillis()));
         int rowcount = ss.executeUpdate(binds);
         // connection.commit(); // TODO is this a hack?
         if (rowcount != 1) {
-            logger.warn("job_log not updated for {}", utProcessStatusId);
+            logger.warn("job_log not updated for {}", jobLogId);
         } else {
-            logger.warn("finishJob: {}", utProcessStatusId);
+            logger.warn("finishJob: {}", jobLogId);
         }
-        
-            updateJob(utProcessStatusId);
-        
+
+        updateJob(jobLogId);
+
         connection.commit();
-        logger.info("job " + utProcessStatusId + " finished =====");
+        logger.info("job " + jobLogId + " finished =====");
     }
 
     @Override
@@ -171,6 +190,7 @@ public abstract class AbstractDblogger implements Dblogger {
 
     @Override
     public void endJob() throws SQLException {
+
         finishJob(statements.getSqlStatement("end_job"));
     }
 
@@ -246,7 +266,7 @@ public abstract class AbstractDblogger implements Dblogger {
             e.printStackTrace();
             logger.error(e.getMessage());
         }
-       
+
     }
 
     public Connection getConnection() {
@@ -258,10 +278,10 @@ public abstract class AbstractDblogger implements Dblogger {
         System.out.println(connection);
     }
 
-    @Override
-    public long getUtProcessStatusId() {
-        return utProcessStatusId;
-    }
+    // @Override
+    // public long getUtProcessStatusId() {
+    // return jobLogId;
+    // }
 
     public void updateTraceFileName(String appTracefileName) throws SQLException {
         logger.info("*** updating trace to {}", appTracefileName);
@@ -270,17 +290,17 @@ public abstract class AbstractDblogger implements Dblogger {
                         + "where job_log_id = :job_log_id");
         Binds binds = new Binds();
         binds.put("tracefile_name", appTracefileName);
-        binds.put("job_log_id", utProcessStatusId);
+        binds.put("job_log_id", jobLogId);
         int rowCount = ss.executeUpdate(binds);
         connection.commit();
         if (rowCount != 1) {
-            logger.error("Unable to update job_log for {}", utProcessStatusId);
+            logger.error("Unable to update job_log for {}", jobLogId);
         } else {
             logger.info("updated job_log {}", appTracefileName);
         }
 
     }
-    
+
     public void persistenceUpdateTrace(long jobId, Clob traceClob) throws SQLException {
         if (traceClob == null) {
             throw new IllegalArgumentException("null traceClob");
@@ -289,51 +309,79 @@ public abstract class AbstractDblogger implements Dblogger {
         String upd = "update job_log "
                 + "set tracefile_data =  ? "
                 + "where job_log_id = ?";
-       
-    
-        Reader traceReader = traceClob.getCharacterStream();
-        
 
-     
-        
+        Reader traceReader = traceClob.getCharacterStream();
+
         PreparedStatement updateTraceFile = connection.prepareStatement(upd);
 
         updateTraceFile.setCharacterStream(1, traceReader);
-    //    updateTraceFile.setClob(1, clob);
+        // updateTraceFile.setClob(1, clob);
         updateTraceFile.setLong(2, jobId);
-      
+
         int rowcount = updateTraceFile.executeUpdate();
 
         if (rowcount != 1) {
             throw new IllegalArgumentException("unable to update job_log_id " + jobId);
         }
-    
+
     }
-    
-   
+
+    // long getNextUtProcessStatusId() {
+    // long utProcessStatusId = -1;
+    // try {
+    // utProcessStatusId = sequenceHelper.getSequence("job_log_id_seq");
+    // } catch (SQLException sqe) {
+    // logger.error(sqe.getMessage());
+    // }
+    // return utProcessStatusId;
+    // }
+    //
 
     public Clob createClob() throws SQLException {
         // TODO Auto-generated method stub
         return connection.createClob();
     }
 
-
-
-    @Override
-    public String openFile(String fileName) throws SQLException {
-       throw new UnsupportedOperationException();
-    }
-
     @Override
     public void setPersistTraceOnJobCompletion(boolean persistTrace) {
-      this.persistTrace = persistTrace;
-        
+        this.persistTrace = persistTrace;
+
     }
 
     @Override
     public void setPersistPlansOnJobCompletion(boolean persistPlans) {
         this.persistPlans = persistPlans;
-        
+
+    }
+
+    // @Override
+    // public void setJobId(long jobId) {
+    // this.jobId = jobId;
+    //
+    // }
+
+    // @Override
+    // public long getJobId() {
+    // return jobId;
+    // }
+    //
+    @Override
+    public long getNextJobLogId() {
+        long retval = -1;
+        try {
+            retval = sequenceHelper.getSequence("job_log_id_seq");
+        } catch (SQLException e) {
+            logger.error(e.getMessage(), e);
+            if (throwExceptions) {
+                throw new RuntimeException(e);
+            }
+        }
+        return retval;
+    }
+
+    @Override
+    public long getJobLogId() {
+        return jobLogId;
     }
 
 }

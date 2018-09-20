@@ -7,7 +7,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Date;
 
-import org.javautil.dblogging.Dblogger;
+import org.javautil.dblogging.logger.Dblogger;
 import org.javautil.io.ResourceHelper;
 import org.javautil.sql.Binds;
 import org.javautil.sql.SqlRunner;

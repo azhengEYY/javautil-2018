@@ -1,12 +1,12 @@
 --@name job_log_insert
 insert into job_log (    
-	job_log_id, process_name, thread_name,
-	status_msg, status_id, status_ts, tracefile_name,
-	classname
+	job_log_id,     process_name, thread_name,
+	status_msg,     status_ts,    tracefile_name,
+	classname,      schema_name,   module_name
 ) values (
-	:job_log_id,       :process_name, :thread_name,
-        :status_msg,  'A',           :status_ts, :tracefile_name,
-	:classname
+	:job_log_id,   :process_name, :thread_name,
+    :status_msg,   :status_ts,    :tracefile_name,
+	:classname,    :schema_name,  :module_name
 );
 --@name job_step_insert
 insert into job_step (
@@ -37,13 +37,11 @@ where job_log_id = :job_log_id;
 UPDATE job_log
 SET 
     status_msg = 'ABORT',
-    status_id = 'I',
     end_ts = :end_ts
 where job_log_id = :job_log_id;
 --@name end_job
 UPDATE job_log
 SET   
        status_msg = 'DONE',
-       status_id = 'C',
        end_ts    = :end_ts
 where job_log_id = :job_log_id;

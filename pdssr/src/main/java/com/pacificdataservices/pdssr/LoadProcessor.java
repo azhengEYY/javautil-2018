@@ -12,7 +12,7 @@ import java.util.Arrays;
 
 import javax.sql.DataSource;
 
-import org.javautil.dblogging.Dblogger;
+import org.javautil.dblogging.logger.Dblogger;
 import org.javautil.sql.SqlSplitterException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -81,16 +81,22 @@ public class LoadProcessor implements FilenameFilter, Runnable {
         logger.info("process: {}",dataFileDescr);
         long etlFileId;
 
-        final String jobName = "=====LoadProcessor " + dataFileDescr;
-        logger.info("about to getTraceFileName");
-        final String traceFileName = dblogger.getTraceFileName();
-        logger.info("====== tracing to {}",traceFileName);
-        logger.info("about to beginJob");
-        long jobNbr = dblogger.beginJob(jobName, this.getClass().getCanonicalName(), "LoadProcessor", getClass().getName(),
-                Thread.currentThread().getName(), traceFileName);
-        logger.info("starting job {} utProcessStatusId {} {}", jobNbr,  dblogger.getUtProcessStatusId());
+       final String jobName = "=====LoadProcessor " + dataFileDescr;
+//        logger.info("about to getTraceFileName");
+//        final String traceFileName = dblogger.getTraceFileName();
+//        logger.info("====== tracing to {}",traceFileName);
+//        logger.info("about to beginJob");
+
+//        long jobNbr = dblogger.beginJob(jobName, String className, 
+ //       String moduleName, String statusMsg, String threadName,
+//                String tracefileName, int traceLevel);
+
+    //   long jobNbr =  dblogger.startJobLogging(proc, "SampleUsage","", 8);
+        long jobNbr = dblogger.startJobLogging(jobName, getClass().getName(), "LoadProcessor", null,12);
+
+   //     logger.info("starting job {} utProcessStatusId {} {}", jobNbr,  dblogger.getUtProcessStatusId());
         try {
-            logger.info("tracing to" + traceFileName);
+          //  logger.info("tracing to" + traceFileName);
             dblogger.setAction("loadFile");
             logger.info("about to load file: {}",dataFileDescr);
             etlFileId = loadFile(datafile, dataFileDescr, dblogger);

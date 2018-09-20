@@ -40,7 +40,7 @@ public class ThreadedLoaderProcessorTest extends CreateSchemaTest {
         condiobj.process();
     
         Timer timer = new Timer();
-        final ThreadedLoaderProcessor loadProcessor = new ThreadedLoaderProcessor(dataSource, xeDatasource,1,true);
+        final ThreadedLoaderProcessor loadProcessor = new ThreadedLoaderProcessor(dataSource, xeDatasource,1,true, false);
         loadProcessor.run();
         logger.info("elapsed " + timer.getElapsedMillis());
        

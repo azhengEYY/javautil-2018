@@ -1,0 +1,23 @@
+  procedure save_job_log    (p_job_log_id          in number,
+   								p_schema_name in varchar2,
+    						 p_process_name in varchar2,
+                             p_classname   in varchar2,
+                             p_module_name  in varchar2,
+                             p_status_msg   in varchar2,
+                             p_thread_name  in varchar2,
+                             p_trace_level  in pls_integer default G_INFO
+                             p_tracefile_name in varchar2,
+                             p_sid          in pls_integer) 
+                             
+       
+            
+      insert into job_log (
+          job_log_id,   schema_name, process_name, thread_name         
+          status_msg, status_ts,   sid,          module_name,
+          classname,   tracefile_name
+   
+      ) values (
+          p_job_log_id,  p_schema_name, p_process_name,  p_thread_name, 
+        p_status_msg,    systimestamp,  p_sid,           p_module_name
+       p_classname,      my_tracefile_name
+      );

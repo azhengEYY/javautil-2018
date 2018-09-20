@@ -1,5 +1,6 @@
 package org.javautil.dblogging.installer;
 
+import java.io.Closeable;
 import java.sql.Connection;
 
 import javax.sql.DataSource;
@@ -20,6 +21,8 @@ public class DbloggerOracleInstallTest {
         DbloggerOracleInstall oralog = new DbloggerOracleInstall(xeConnection,true,false);
         oralog.drop();
         oralog.process();
+        xeConnection.close();
+        ((Closeable)xeDatasource).close();
 
        
     }

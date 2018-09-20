@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import org.javautil.dblogging.Dblogger;
+import org.javautil.dblogging.logger.Dblogger;
 import org.javautil.misc.Timer;
 import org.javautil.sql.Binds;
 import org.javautil.sql.SqlSplitterException;
@@ -122,7 +122,7 @@ public class ConditionIdentification {
 		new Timer(getClass(), "ConditionIdentification:processRule", rule.getRuleName() +
 				" " + binds.toString());
 
-		dblogger.showConnectionInformation();
+	//	dblogger.showConnectionInformation();
 		if (verbosity > 6) {
 			logger.info("processing rule " + rule.getRuleName());
 		}
